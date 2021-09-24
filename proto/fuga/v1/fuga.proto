@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package fuga.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./fuga";
+
+message Fuga {
+    string id = 1;
+    string name = 2;
+    sint32 number = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+service FugaService {
+    rpc Create (CreateRequest) returns (CreateResponse);
+    rpc Fetch (FetchRequest) returns (FetchResponse);
+    rpc FetchAll (FetchAllRequest) returns (FetchAllResponse);
+    rpc Update (UpdateRequest) returns (UpdateResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message CreateRequest {
+    string name = 1;
+    sint32 number = 2;
+}
+
+message CreateResponse {
+    Fuga fuga = 1;
+}
+
+message FetchRequest {
+    string id = 1;
+}
+
+message FetchResponse {
+    Fuga fuga = 1;
+}
+
+message FetchAllRequest {
+}
+
+message FetchAllResponse {
+    repeated Fuga fugas = 1;
+}
+
+message UpdateRequest {
+    string id = 1;
+    string name = 2;
+    sint32 number = 3;
+}
+
+message UpdateResponse {
+    Fuga fuga = 1;
+}
+
+message DeleteRequest {
+    string id = 1;
+}
+
+message DeleteResponse {
+    Fuga fuga = 1;
+}

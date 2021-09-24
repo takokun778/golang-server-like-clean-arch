@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+    dev_db:
+        container_name: ${APP_NAME}_dev_db
+        image: postgres:13.3-alpine
+        ports:
+            - 5432:5432
+        environment:
+            TZ: "UTC"
+            LANG: ja_JP.UTF-8
+            POSTGRES_DB: ${APP_NAME}
+            POSTGRES_USER: ${APP_NAME}
+            POSTGRES_PASSWORD: ${APP_NAME}
+            POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+            POSTGRES_HOST_AUTH_METHOD: trust
+    test_db:
+        container_name: ${APP_NAME}_test_db
+        image: postgres:13.3-alpine
+        ports:
+            - 54321:5432
+        environment:
+            TZ: "UTC"
+            LANG: ja_JP.UTF-8
+            POSTGRES_DB: test
+            POSTGRES_USER: test
+            POSTGRES_PASSWORD: test
+            POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+            POSTGRES_HOST_AUTH_METHOD: trust
