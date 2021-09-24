@@ -16,11 +16,7 @@ func (u *hogeUsecase) Update(ctx context.Context, input hoge.UpdateUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	props := hoge.UpdateProps{
-		Name:   input.Name,
-		Number: input.Number,
-	}
-	result.Update(props)
+	result.Update(input.Name, input.Number)
 
 	result, repoErr = u.hogeRepository.Update(timeOutCtx, result)
 	if repoErr != nil {

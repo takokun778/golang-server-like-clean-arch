@@ -32,46 +32,35 @@ func (h *Hoge) UpdatedAt() c.Time {
 	return h.updatedAt
 }
 
-type NewProps struct {
-	Id        c.Id
-	Name      Name
-	Number    Number
-	CreatedAt c.Time
-	UpdatedAt c.Time
-}
-
-func New(props NewProps) *Hoge {
+func New(
+	id c.Id,
+	name Name,
+	number Number,
+	createdAt c.Time,
+	updatedAt c.Time,
+) *Hoge {
 	hoge := new(Hoge)
-	hoge.id = props.Id
-	hoge.name = props.Name
-	hoge.number = props.Number
-	hoge.createdAt = props.CreatedAt
-	hoge.updatedAt = props.UpdatedAt
+	hoge.id = id
+	hoge.name = name
+	hoge.number = number
+	hoge.createdAt = createdAt
+	hoge.updatedAt = updatedAt
 	return hoge
 }
 
-type CreateNewProps struct {
-	Name   Name
-	Number Number
+func CreateNew(name Name, number Number) *Hoge {
+	now := c.Now()
+	return New(
+		c.CreateRandomId(),
+		name,
+		number,
+		now,
+		now,
+	)
 }
 
-func CreateNew(props CreateNewProps) *Hoge {
-	hoge := new(Hoge)
-	hoge.id = c.CreateRandomId()
-	hoge.name = props.Name
-	hoge.number = props.Number
-	hoge.createdAt = c.Now()
-	hoge.updatedAt = c.Now()
-	return hoge
-}
-
-type UpdateProps struct {
-	Name   Name
-	Number Number
-}
-
-func (h *Hoge) Update(props UpdateProps) {
-	h.name = props.Name
-	h.number = props.Number
+func (h *Hoge) Update(name Name, number Number) {
+	h.name = name
+	h.number = number
 	h.updatedAt = c.Now()
 }

@@ -16,11 +16,7 @@ func (u *fugaUsecase) Update(ctx context.Context, input fuga.UpdateUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	props := fuga.UpdateProps{
-		Name:   input.Name,
-		Number: input.Number,
-	}
-	result.Update(props)
+	result.Update(input.Name, input.Number)
 
 	result, repoErr = u.fugaRepository.Update(timeOutCtx, result)
 	if repoErr != nil {

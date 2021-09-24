@@ -11,8 +11,7 @@ func (u *hogeUsecase) Create(ctx context.Context, input hoge.CreateUsecaseInput)
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	props := hoge.CreateNewProps(input)
-	result := hoge.CreateNew(props)
+	result := hoge.CreateNew(input.Name, input.Number)
 
 	result, repoErr := u.hogeRepository.Save(timeOutCtx, result)
 	if repoErr != nil {

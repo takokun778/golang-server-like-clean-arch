@@ -41,15 +41,13 @@ func (g *hogeGateway) Find(ctx context.Context, id c.Id) (*hoge.Hoge, error) {
 		return nil, err
 	}
 
-	props := hoge.NewProps{
-		Id:        c.NewId(res.ID),
-		Name:      hoge.NewName(res.Name),
-		Number:    hoge.NewNumber(res.Number),
-		CreatedAt: c.NewTime(res.CreatedAt),
-		UpdatedAt: c.NewTime(res.UpdatedAt),
-	}
-
-	return hoge.New(props), nil
+	return hoge.New(
+		c.NewId(res.ID),
+		hoge.NewName(res.Name),
+		hoge.NewNumber(res.Number),
+		c.NewTime(res.CreatedAt),
+		c.NewTime(res.UpdatedAt),
+	), nil
 }
 
 func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
@@ -63,14 +61,13 @@ func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
 	list := make([]*hoge.Hoge, 0)
 
 	for _, r := range res {
-		props := hoge.NewProps{
-			Id:        c.NewId(r.ID),
-			Name:      hoge.NewName(r.Name),
-			Number:    hoge.NewNumber(r.Number),
-			CreatedAt: c.NewTime(r.CreatedAt),
-			UpdatedAt: c.NewTime(r.UpdatedAt),
-		}
-		list = append(list, hoge.New(props))
+		list = append(list, hoge.New(
+			c.NewId(r.ID),
+			hoge.NewName(r.Name),
+			hoge.NewNumber(r.Number),
+			c.NewTime(r.CreatedAt),
+			c.NewTime(r.UpdatedAt),
+		))
 	}
 
 	return hoge.NewList(list), nil

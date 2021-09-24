@@ -41,15 +41,13 @@ func (g *fugaGateway) Find(ctx context.Context, id c.Id) (*fuga.Fuga, error) {
 		return nil, err
 	}
 
-	props := fuga.NewProps{
-		Id:        c.NewId(res.ID),
-		Name:      fuga.NewName(res.Name),
-		Number:    fuga.NewNumber(res.Number),
-		CreatedAt: c.NewTime(res.CreatedAt),
-		UpdatedAt: c.NewTime(res.UpdatedAt),
-	}
-
-	return fuga.New(props), nil
+	return fuga.New(
+		c.NewId(res.ID),
+		fuga.NewName(res.Name),
+		fuga.NewNumber(res.Number),
+		c.NewTime(res.CreatedAt),
+		c.NewTime(res.UpdatedAt),
+	), nil
 }
 
 func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
@@ -63,14 +61,13 @@ func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
 	list := make([]*fuga.Fuga, 0)
 
 	for _, r := range res {
-		props := fuga.NewProps{
-			Id:        c.NewId(r.ID),
-			Name:      fuga.NewName(r.Name),
-			Number:    fuga.NewNumber(r.Number),
-			CreatedAt: c.NewTime(r.CreatedAt),
-			UpdatedAt: c.NewTime(r.UpdatedAt),
-		}
-		list = append(list, fuga.New(props))
+		list = append(list, fuga.New(
+			c.NewId(r.ID),
+			fuga.NewName(r.Name),
+			fuga.NewNumber(r.Number),
+			c.NewTime(r.CreatedAt),
+			c.NewTime(r.UpdatedAt),
+		))
 	}
 
 	return fuga.NewList(list), nil

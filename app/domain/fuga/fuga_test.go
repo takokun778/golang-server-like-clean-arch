@@ -17,15 +17,7 @@ func TestNew(t *testing.T) {
 	createdAt := now
 	updatedAt := now
 
-	props := fuga.NewProps{
-		Id:        id,
-		Name:      name,
-		Number:    number,
-		CreatedAt: createdAt,
-		UpdatedAt: updatedAt,
-	}
-
-	result := fuga.New(props)
+	result := fuga.New(id, name, number, createdAt, updatedAt)
 
 	assert.Equal(t, result.Id(), id)
 	assert.Equal(t, result.Name(), name)
@@ -38,12 +30,7 @@ func TestNewCreate(t *testing.T) {
 	name := fuga.NewName("create")
 	number := fuga.NewNumber(1)
 
-	props := fuga.CreateNewProps{
-		Name:   name,
-		Number: number,
-	}
-
-	result := fuga.CreateNew(props)
+	result := fuga.CreateNew(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)
@@ -51,24 +38,15 @@ func TestNewCreate(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	createNewProps := fuga.CreateNewProps{
-		Name:   fuga.NewName("new"),
-		Number: fuga.NewNumber(1),
-	}
 
-	result := fuga.CreateNew(createNewProps)
+	result := fuga.CreateNew(fuga.NewName("new"), fuga.NewNumber(1))
 
 	time.Sleep(time.Millisecond)
 
 	name := fuga.NewName("update")
 	number := fuga.NewNumber(2)
 
-	props := fuga.UpdateProps{
-		Name:   name,
-		Number: number,
-	}
-
-	result.Update(props)
+	result.Update(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)

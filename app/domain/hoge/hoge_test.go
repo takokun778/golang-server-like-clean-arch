@@ -17,15 +17,13 @@ func TestNew(t *testing.T) {
 	createdAt := now
 	updatedAt := now
 
-	props := hoge.NewProps{
-		Id:        id,
-		Name:      name,
-		Number:    number,
-		CreatedAt: createdAt,
-		UpdatedAt: updatedAt,
-	}
-
-	result := hoge.New(props)
+	result := hoge.New(
+		id,
+		name,
+		number,
+		now,
+		now,
+	)
 
 	assert.Equal(t, result.Id(), id)
 	assert.Equal(t, result.Name(), name)
@@ -38,12 +36,7 @@ func TestNewCreate(t *testing.T) {
 	name := hoge.NewName("create")
 	number := hoge.NewNumber(1)
 
-	props := hoge.CreateNewProps{
-		Name:   name,
-		Number: number,
-	}
-
-	result := hoge.CreateNew(props)
+	result := hoge.CreateNew(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)
@@ -51,24 +44,14 @@ func TestNewCreate(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	createNewProps := hoge.CreateNewProps{
-		Name:   hoge.NewName("new"),
-		Number: hoge.NewNumber(1),
-	}
-
-	result := hoge.CreateNew(createNewProps)
+	result := hoge.CreateNew(hoge.NewName("new"), hoge.NewNumber(1))
 
 	time.Sleep(time.Millisecond)
 
 	name := hoge.NewName("update")
 	number := hoge.NewNumber(2)
 
-	props := hoge.UpdateProps{
-		Name:   name,
-		Number: number,
-	}
-
-	result.Update(props)
+	result.Update(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)
