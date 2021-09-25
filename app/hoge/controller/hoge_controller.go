@@ -20,8 +20,8 @@ func NewHogeController(hogeUsecase hoge.Usecase) *hogeController {
 
 func (c *hogeController) Create(ctx context.Context, req *pbHoge.CreateRequest) (*pbHoge.CreateResponse, error) {
 	input := hoge.CreateUsecaseInput{
-		Name:   hoge.NewName(req.Name),
-		Number: hoge.NewNumber(req.Number),
+		Name:   hoge.Name(req.Name),
+		Number: hoge.Number(req.Number),
 	}
 
 	output, appErr := c.hogeUsecase.Create(ctx, input)
@@ -77,8 +77,8 @@ func (c *hogeController) Update(ctx context.Context, req *pbHoge.UpdateRequest) 
 
 	input := hoge.UpdateUsecaseInput{
 		Id:     id,
-		Name:   hoge.NewName(req.Name),
-		Number: hoge.NewNumber(req.Number),
+		Name:   hoge.Name(req.Name),
+		Number: hoge.Number(req.Number),
 	}
 
 	output, appErr := c.hogeUsecase.Update(ctx, input)

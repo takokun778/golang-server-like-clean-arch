@@ -20,8 +20,8 @@ func NewFugaController(fugaUsecase fuga.Usecase) *fugaController {
 
 func (c *fugaController) Create(ctx context.Context, req *pbFuga.CreateRequest) (*pbFuga.CreateResponse, error) {
 	input := fuga.CreateUsecaseInput{
-		Name:   fuga.NewName(req.Name),
-		Number: fuga.NewNumber(req.Number),
+		Name:   fuga.Name(req.Name),
+		Number: fuga.Number(req.Number),
 	}
 
 	output, appErr := c.fugaUsecase.Create(ctx, input)
@@ -77,8 +77,8 @@ func (c *fugaController) Update(ctx context.Context, req *pbFuga.UpdateRequest) 
 
 	input := fuga.UpdateUsecaseInput{
 		Id:     id,
-		Name:   fuga.NewName(req.Name),
-		Number: fuga.NewNumber(req.Number),
+		Name:   fuga.Name(req.Name),
+		Number: fuga.Number(req.Number),
 	}
 
 	output, appErr := c.fugaUsecase.Update(ctx, input)

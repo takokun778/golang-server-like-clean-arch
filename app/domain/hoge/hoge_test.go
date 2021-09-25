@@ -11,8 +11,8 @@ import (
 
 func TestNew(t *testing.T) {
 	id := common.CreateRandomId()
-	name := hoge.NewName("name")
-	number := hoge.NewNumber(1)
+	name := hoge.Name("name")
+	number := hoge.Number(1)
 	now := common.Now()
 	createdAt := now
 	updatedAt := now
@@ -33,8 +33,8 @@ func TestNew(t *testing.T) {
 }
 
 func TestNewCreate(t *testing.T) {
-	name := hoge.NewName("create")
-	number := hoge.NewNumber(1)
+	name := hoge.Name("create")
+	number := hoge.Number(1)
 
 	result := hoge.CreateNew(name, number)
 
@@ -44,12 +44,12 @@ func TestNewCreate(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	result := hoge.CreateNew(hoge.NewName("new"), hoge.NewNumber(1))
+	result := hoge.CreateNew(hoge.Name("new"), hoge.Number(1))
 
 	time.Sleep(time.Millisecond)
 
-	name := hoge.NewName("update")
-	number := hoge.NewNumber(2)
+	name := hoge.Name("update")
+	number := hoge.Number(2)
 
 	result.Update(name, number)
 

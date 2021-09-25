@@ -42,11 +42,11 @@ func (g *fugaGateway) Find(ctx context.Context, id c.Id) (*fuga.Fuga, error) {
 	}
 
 	return fuga.New(
-		c.NewId(res.ID),
-		fuga.NewName(res.Name),
-		fuga.NewNumber(res.Number),
-		c.NewTime(res.CreatedAt),
-		c.NewTime(res.UpdatedAt),
+		c.Id(res.ID),
+		fuga.Name(res.Name),
+		fuga.Number(res.Number),
+		c.Time(res.CreatedAt),
+		c.Time(res.UpdatedAt),
 	), nil
 }
 
@@ -62,11 +62,11 @@ func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
 
 	for _, r := range res {
 		list = append(list, fuga.New(
-			c.NewId(r.ID),
-			fuga.NewName(r.Name),
-			fuga.NewNumber(r.Number),
-			c.NewTime(r.CreatedAt),
-			c.NewTime(r.UpdatedAt),
+			c.Id(r.ID),
+			fuga.Name(r.Name),
+			fuga.Number(r.Number),
+			c.Time(r.CreatedAt),
+			c.Time(r.UpdatedAt),
 		))
 	}
 

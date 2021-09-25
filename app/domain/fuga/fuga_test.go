@@ -11,8 +11,8 @@ import (
 
 func TestNew(t *testing.T) {
 	id := common.CreateRandomId()
-	name := fuga.NewName("name")
-	number := fuga.NewNumber(1)
+	name := fuga.Name("name")
+	number := fuga.Number(1)
 	now := common.Now()
 	createdAt := now
 	updatedAt := now
@@ -27,8 +27,8 @@ func TestNew(t *testing.T) {
 }
 
 func TestNewCreate(t *testing.T) {
-	name := fuga.NewName("create")
-	number := fuga.NewNumber(1)
+	name := fuga.Name("create")
+	number := fuga.Number(1)
 
 	result := fuga.CreateNew(name, number)
 
@@ -39,12 +39,12 @@ func TestNewCreate(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 
-	result := fuga.CreateNew(fuga.NewName("new"), fuga.NewNumber(1))
+	result := fuga.CreateNew(fuga.Name("new"), fuga.Number(1))
 
 	time.Sleep(time.Millisecond)
 
-	name := fuga.NewName("update")
-	number := fuga.NewNumber(2)
+	name := fuga.Name("update")
+	number := fuga.Number(2)
 
 	result.Update(name, number)
 
