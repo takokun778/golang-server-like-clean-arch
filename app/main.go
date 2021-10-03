@@ -4,10 +4,10 @@ import (
 	"net"
 	"os"
 
-	"clean/app/domain/logger"
 	hc "clean/app/hoge/controller"
 	hg "clean/app/hoge/gateway"
 	hu "clean/app/hoge/usecase"
+	"clean/logger"
 	pbh "clean/proto/hoge"
 
 	fc "clean/app/fuga/controller"
