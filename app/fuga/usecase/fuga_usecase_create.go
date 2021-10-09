@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Create(ctx context.Context, input fuga.CreateUsecaseInput) (*fuga.CreateUsecaseOutput, *c.Error) {
+func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -18,7 +18,7 @@ func (u *fugaUsecase) Create(ctx context.Context, input fuga.CreateUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	output := new(fuga.CreateUsecaseOutput)
+	output := new(fuga.UsecaseCreateOutput)
 	output.Fuga = result
 	return output, nil
 }

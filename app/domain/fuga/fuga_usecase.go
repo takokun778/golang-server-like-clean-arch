@@ -1,3 +1,4 @@
+//go:generate mockgen -source=$GOFILE -package=mock_$GOPACKAGE -destination=../../../mock/$GOPACKAGE/$GOFILE
 package fuga
 
 import (
@@ -7,51 +8,51 @@ import (
 )
 
 type Usecase interface {
-	Create(ctx context.Context, input CreateUsecaseInput) (*CreateUsecaseOutput, *c.Error)
-	Fetch(ctx context.Context, input FetchUsecaseInput) (*FetchUsecaseOutput, *c.Error)
-	FetchAll(ctx context.Context, input FetchAllUsecaseInput) (*FetchAllUsecaseOutput, *c.Error)
-	Update(ctx context.Context, input UpdateUsecaseInput) (*UpdateUsecaseOutput, *c.Error)
-	Delete(ctx context.Context, input DeleteUsecaseInput) (*DeleteUsecaseOutput, *c.Error)
+	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, *c.Error)
+	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, *c.Error)
+	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, *c.Error)
+	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, *c.Error)
+	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, *c.Error)
 }
 
-type CreateUsecaseInput struct {
+type UsecaseCreateInput struct {
 	Name   Name
 	Number Number
 }
 
-type CreateUsecaseOutput struct {
+type UsecaseCreateOutput struct {
 	Fuga *Fuga
 }
 
-type FetchUsecaseInput struct {
+type UsecaseFetchInput struct {
 	Id c.Id
 }
 
-type FetchUsecaseOutput struct {
+type UsecaseFetchOutput struct {
 	Fuga *Fuga
 }
 
-type FetchAllUsecaseInput struct {
+type UsecaseFetchAllInput struct {
 }
 
-type FetchAllUsecaseOutput struct {
+type UsecaseFetchAllOutput struct {
 	FugaList *FugaList
 }
 
-type UpdateUsecaseInput struct {
+type UsecaseUpdateInput struct {
 	Id     c.Id
 	Name   Name
 	Number Number
 }
 
-type UpdateUsecaseOutput struct {
+type UsecaseUpdateOutput struct {
 	Fuga *Fuga
 }
 
-type DeleteUsecaseInput struct {
+type UsecaseDeleteInput struct {
 	Id c.Id
 }
 
-type DeleteUsecaseOutput struct {
+type UsecaseDeleteOutput struct {
 	Fuga *Fuga
 }

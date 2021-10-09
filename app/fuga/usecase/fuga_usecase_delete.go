@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Update(ctx context.Context, input fuga.UpdateUsecaseInput) (*fuga.UpdateUsecaseOutput, *c.Error) {
+func (u *fugaUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput) (*fuga.UsecaseDeleteOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -16,14 +16,12 @@ func (u *fugaUsecase) Update(ctx context.Context, input fuga.UpdateUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	result.Update(input.Name, input.Number)
-
-	result, repoErr = u.fugaRepository.Update(timeOutCtx, result)
+	repoErr = u.fugaRepository.Delete(timeOutCtx, input.Id)
 	if repoErr != nil {
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	output := new(fuga.UpdateUsecaseOutput)
+	output := new(fuga.UsecaseDeleteOutput)
 	output.Fuga = result
 	return output, nil
 }

@@ -1,3 +1,4 @@
+//go:generate mockgen -source=$GOFILE -package=mock_$GOPACKAGE -destination=../../../mock/$GOPACKAGE/$GOFILE
 package hoge
 
 import (
@@ -7,9 +8,9 @@ import (
 )
 
 type Repository interface {
-	Save(ctx context.Context, hoge *Hoge) (*Hoge, error)
+	Save(ctx context.Context, model *Hoge) (*Hoge, error)
 	Find(ctx context.Context, id c.Id) (*Hoge, error)
 	FindAll(ctx context.Context) (*HogeList, error)
-	Update(ctx context.Context, hoge *Hoge) (*Hoge, error)
+	Update(ctx context.Context, model *Hoge) (*Hoge, error)
 	Delete(ctx context.Context, id c.Id) error
 }

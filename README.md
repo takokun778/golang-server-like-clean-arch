@@ -1,138 +1,74 @@
 # golang-server-like-clean-arch
 
-## ディレクトリ構成
+# ディレクトリ構成
+- クリーンアーキテクチャライクな構成を採用
+- ドメインモデル中心でコーディングすることを意識
 ```bash
-.
-├── Makefile
-├── README.md
 ├── app
-│   ├── common
-│   │   ├── controller
-│   │   │   └── error_translator.go
-│   │   └── gateway
-│   │       └── database.go
+│   ├── main.go
 │   ├── domain
-│   │   ├── common
-│   │   │   ├── error.go
-│   │   │   ├── id.go
-│   │   │   └── time.go
-│   │   ├── fuga
-│   │   │   ├── fuga.go
-│   │   │   ├── fuga_list.go
-│   │   │   ├── fuga_repository.go
-│   │   │   ├── fuga_test.go
-│   │   │   ├── fuga_usecase.go
-│   │   │   ├── name.go
-│   │   │   └── number.go
-│   │   ├── hoge
-│   │   │   ├── hoge.go
-│   │   │   ├── hoge_list.go
-│   │   │   ├── hoge_repository.go
-│   │   │   ├── hoge_test.go
-│   │   │   ├── hoge_usecase.go
-│   │   │   ├── name.go
-│   │   │   └── number.go
-│   │   └── logger
-│   │       └── logger.go
-│   ├── fuga
-│   │   ├── controller
-│   │   │   ├── fuga_controller.go
-│   │   │   ├── fuga_controller_test.go
-│   │   │   └── fuga_translator.go
-│   │   ├── gateway
-│   │   │   └── fuga_gateway.go
-│   │   └── usecase
-│   │       ├── fuga_create_usecase.go
-│   │       ├── fuga_delete_usecase.go
-│   │       ├── fuga_fetch_all_usecase.go
-│   │       ├── fuga_fetch_usecase.go
-│   │       ├── fuga_update_usecase.go
-│   │       └── fuga_usecase.go
-│   ├── hoge
-│   │   ├── controller
-│   │   │   ├── hoge_controller.go
-│   │   │   ├── hoge_controller_test.go
-│   │   │   └── hoge_translator.go
-│   │   ├── gateway
-│   │   │   └── hoge_gateway.go
-│   │   └── usecase
-│   │       ├── hoge_create_usecase.go
-│   │       ├── hoge_delete_usecase.go
-│   │       ├── hoge_fetch_all_usecase.go
-│   │       ├── hoge_fetch_usecase.go
-│   │       ├── hoge_update_usecase.go
-│   │       └── hoge_usecase.go
-│   └── main.go
-├── docker-compose.yml
-├── ent
-│   ├── client.go
-│   ├── config.go
-│   ├── context.go
-│   ├── ent.go
-│   ├── enttest
-│   │   └── enttest.go
-│   ├── fuga
-│   │   ├── fuga.go
-│   │   └── where.go
-│   ├── fuga.go
-│   ├── fuga_create.go
-│   ├── fuga_delete.go
-│   ├── fuga_query.go
-│   ├── fuga_update.go
-│   ├── generate.go
-│   ├── hoge
-│   │   ├── hoge.go
-│   │   └── where.go
-│   ├── hoge.go
-│   ├── hoge_create.go
-│   ├── hoge_delete.go
-│   ├── hoge_query.go
-│   ├── hoge_update.go
-│   ├── hook
-│   │   └── hook.go
-│   ├── migrate
-│   │   ├── migrate.go
-│   │   └── schema.go
-│   ├── mutation.go
-│   ├── predicate
-│   │   └── predicate.go
-│   ├── runtime
-│   │   └── runtime.go
-│   ├── runtime.go
-│   ├── schema
-│   │   ├── fuga.go
-│   │   └── hoge.go
-│   └── tx.go
-├── go.mod
-├── go.sum
-├── migration
-│   └── main.go
-├── proto
-│   ├── fuga
-│   │   ├── fuga.pb.go
-│   │   ├── fuga_grpc.pb.go
-│   │   └── v1
-│   │       └── fuga.proto
-│   └── hoge
-│       ├── hoge.pb.go
-│       ├── hoge_grpc.pb.go
-│       └── v1
-│           └── hoge.proto
-└── script
-    ├── dev-migrate.sh
-    ├── dev-run.sh
-    └── test.sh
-
+│   │   └── xxx
+│   │       ├── xxx.go # ドメインモデル
+│   │       ├── xxx_repostiroy.go # データストア処理のinterface
+│   │       └── xxx_usecase.go # ドメインモデルにおけるユースケース処理のinterface
+│   └── xxx
+│       ├── controller
+│       │   ├── xxx_controller.go # 外->内の変換
+│       │   └── xxx_translator.go # 内->外の変換
+│       ├── gateway
+│       │   └── xxx_gateway.go # repository interface の実装
+│       └── usecase
+│           └── xxx_usecase.go # usecase interface の実装
+├── ent # entによるDB管理
+├── logger # 共通で利用するlogger
+├── mock # テスト用のmock実装
+├── migration # entを利用したDBマイグレーションの実装
+├── proto # grpcを使用したAPIの型定義
+└── script # 各種操作のスクリプト
 ```
 
-## テスト
-以下2点のテストコードを各ドメインモデルで用意する(必須)
-- app/domain/${domain_name}_test.go  
-    ビジネスロジックの正当性検証
-- app/\${domain\_name}/controller/${domain_name}_controller_test.go  
-    リクエスト単位の確認 ValueObjectのロジック正当性(バリデーション)もここで検証
+# [ent](https://entgo.io/)の使い方
+1. 下記コマンドにて必要となるテーブルを追加する(単数形でOK)
+```bash
+go run entgo.io/ent/cmd/ent init ${Xxx}
+```
+2. `app/ent/schema/xxx.go`というファイルが作成される
+3. カラム要素をコーディングする
+例)
+```go
+package schema
 
-## サーボパーティライブラリ
+import (
+    "entgo.io/ent"
+    "entgo.io/ent/schema/field"
+)
+
+// Fields of the Xxx.
+func (Xxx) Fields() []ent.Field {
+    return []ent.Field{
+        field.UUID("id", uuid.UUID{}),
+		field.String("name"),
+		field.Time("createdAt").Default(time.Now),
+		field.Time("updatedAt").Default(time.Now).UpdateDefault(time.Now),
+    }
+}
+```
+
+# [mock](https://github.com/golang/mock)の使い方
+1. 各ドメインモデルにつき`usecase` `repository` それぞれに次の1文をトップに追加
+- app/domain/xxx/xxx_usecase.go
+- app/domain/xxx/xxx_repository.go
+```go
+//go:generate mockgen -source=$GOFILE -package=mock_$GOPACKAGE -destination=../../../mock/$GOPACKAGE/$GOFILE
+package xxx
+```
+2. `Makefile`に次の1文を追加
+```
+go generate ./app/domain/xxx
+```
+3. `make mock`を実行
+
+# サーボパーティライブラリ
 domain/usecase配下ではなるべく依存しないようにする(標準ライブラリで頑張る)
 
 ### サーバー
@@ -148,5 +84,5 @@ domain/usecase配下ではなるべく依存しないようにする(標準ラ�
 ### テスト
 - [testify](https://pkg.go.dev/github.com/stretchr/testify)
 
-## 参照
+# 参照
 - [go-clean-arch](https://github.com/bxcodec/go-clean-arch)

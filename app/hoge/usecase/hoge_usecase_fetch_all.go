@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) FetchAll(ctx context.Context, input hoge.FetchAllUsecaseInput) (*hoge.FetchAllUsecaseOutput, *c.Error) {
+func (u *hogeUsecase) FetchAll(ctx context.Context, input hoge.UsecaseFetchAllInput) (*hoge.UsecaseFetchAllOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -16,7 +16,7 @@ func (u *hogeUsecase) FetchAll(ctx context.Context, input hoge.FetchAllUsecaseIn
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	output := new(hoge.FetchAllUsecaseOutput)
+	output := new(hoge.UsecaseFetchAllOutput)
 	output.HogeList = result
 	return output, nil
 }

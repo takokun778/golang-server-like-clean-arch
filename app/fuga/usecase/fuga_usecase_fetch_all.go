@@ -7,16 +7,16 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Fetch(ctx context.Context, input fuga.FetchUsecaseInput) (*fuga.FetchUsecaseOutput, *c.Error) {
+func (u *fugaUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllInput) (*fuga.UsecaseFetchAllOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, repoErr := u.fugaRepository.Find(timeOutCtx, input.Id)
+	result, repoErr := u.fugaRepository.FindAll(timeOutCtx)
 	if repoErr != nil {
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	output := new(fuga.FetchUsecaseOutput)
-	output.Fuga = result
+	output := new(fuga.UsecaseFetchAllOutput)
+	output.FugaList = result
 	return output, nil
 }

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) Create(ctx context.Context, input hoge.CreateUsecaseInput) (*hoge.CreateUsecaseOutput, *c.Error) {
+func (u *hogeUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput) (*hoge.UsecaseCreateOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -18,7 +18,7 @@ func (u *hogeUsecase) Create(ctx context.Context, input hoge.CreateUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	output := new(hoge.CreateUsecaseOutput)
+	output := new(hoge.UsecaseCreateOutput)
 	output.Hoge = result
 	return output, nil
 }

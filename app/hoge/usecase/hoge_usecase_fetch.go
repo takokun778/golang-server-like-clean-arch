@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) Delete(ctx context.Context, input hoge.DeleteUsecaseInput) (*hoge.DeleteUsecaseOutput, *c.Error) {
+func (u *hogeUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (*hoge.UsecaseFetchOutput, *c.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -16,12 +16,7 @@ func (u *hogeUsecase) Delete(ctx context.Context, input hoge.DeleteUsecaseInput)
 		return nil, c.NewInternalServerError(repoErr, "")
 	}
 
-	repoErr = u.hogeRepository.Delete(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, c.NewInternalServerError(repoErr, "")
-	}
-
-	output := new(hoge.DeleteUsecaseOutput)
+	output := new(hoge.UsecaseFetchOutput)
 	output.Hoge = result
 	return output, nil
 }
