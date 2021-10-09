@@ -22,7 +22,7 @@ func (FugaTranslator) ToProto(fuga *fuga.Fuga) *pbFuga.Fuga {
 func (FugaTranslator) ToProtoList(fugaList *fuga.FugaList) []*pbFuga.Fuga {
 	proto := make([]*pbFuga.Fuga, 0)
 
-	for _, fuga := range fugaList.Items() {
+	for _, fuga := range *fugaList {
 		proto = append(proto, FugaTranslator{}.ToProto(fuga))
 	}
 

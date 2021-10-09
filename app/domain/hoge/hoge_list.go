@@ -1,19 +1,12 @@
 package hoge
 
-type HogeList struct {
-	items []*Hoge
-}
+type HogeList []*Hoge
 
-func (l *HogeList) Items() []*Hoge {
-	return l.items
-}
-
-func NewList(items []*Hoge) *HogeList {
-	res := new(HogeList)
-	res.items = items
-	return res
+func NewList(list []*Hoge) *HogeList {
+	hl := HogeList(list)
+	return &hl
 }
 
 func (l *HogeList) Len() int {
-	return len(l.items)
+	return len(*l)
 }

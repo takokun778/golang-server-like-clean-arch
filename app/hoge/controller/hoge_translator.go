@@ -22,7 +22,7 @@ func (HogeTranslator) ToProto(hoge *hoge.Hoge) *pbHoge.Hoge {
 func (HogeTranslator) ToProtoList(hogeList *hoge.HogeList) []*pbHoge.Hoge {
 	proto := make([]*pbHoge.Hoge, 0)
 
-	for _, hoge := range hogeList.Items() {
+	for _, hoge := range *hogeList {
 		proto = append(proto, HogeTranslator{}.ToProto(hoge))
 	}
 
