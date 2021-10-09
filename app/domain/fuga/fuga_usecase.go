@@ -4,15 +4,15 @@ package fuga
 import (
 	"context"
 
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 )
 
 type Usecase interface {
-	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, *c.Error)
-	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, *c.Error)
-	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, *c.Error)
-	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, *c.Error)
-	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, *c.Error)
+	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, *common.Error)
+	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, *common.Error)
+	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, *common.Error)
+	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, *common.Error)
+	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, *common.Error)
 }
 
 type UsecaseCreateInput struct {
@@ -25,7 +25,7 @@ type UsecaseCreateOutput struct {
 }
 
 type UsecaseFetchInput struct {
-	Id c.Id
+	Id common.Id
 }
 
 type UsecaseFetchOutput struct {
@@ -40,7 +40,7 @@ type UsecaseFetchAllOutput struct {
 }
 
 type UsecaseUpdateInput struct {
-	Id     c.Id
+	Id     common.Id
 	Name   Name
 	Number Number
 }
@@ -50,7 +50,7 @@ type UsecaseUpdateOutput struct {
 }
 
 type UsecaseDeleteInput struct {
-	Id c.Id
+	Id common.Id
 }
 
 type UsecaseDeleteOutput struct {

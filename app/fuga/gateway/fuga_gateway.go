@@ -2,7 +2,7 @@ package gateway
 
 import (
 	"clean/app/common/gateway"
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 	"clean/app/domain/fuga"
 	"context"
 )
@@ -35,18 +35,18 @@ func (g *fugaGateway) Save(ctx context.Context, fuga *fuga.Fuga) (*fuga.Fuga, er
 	return fuga, nil
 }
 
-func (g *fugaGateway) Find(ctx context.Context, id c.Id) (*fuga.Fuga, error) {
+func (g *fugaGateway) Find(ctx context.Context, id common.Id) (*fuga.Fuga, error) {
 	res, err := g.db.Fuga.Get(ctx, id.Value())
 	if err != nil {
 		return nil, err
 	}
 
 	return fuga.New(
-		c.Id(res.ID),
+		common.Id(res.ID),
 		fuga.Name(res.Name),
 		fuga.Number(res.Number),
-		c.Time(res.CreatedAt),
-		c.Time(res.UpdatedAt),
+		common.Time(res.CreatedAt),
+		common.Time(res.UpdatedAt),
 	), nil
 }
 
@@ -62,11 +62,11 @@ func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
 
 	for _, r := range res {
 		list = append(list, fuga.New(
-			c.Id(r.ID),
+			common.Id(r.ID),
 			fuga.Name(r.Name),
 			fuga.Number(r.Number),
-			c.Time(r.CreatedAt),
-			c.Time(r.UpdatedAt),
+			common.Time(r.CreatedAt),
+			common.Time(r.UpdatedAt),
 		))
 	}
 
@@ -88,7 +88,7 @@ func (g *fugaGateway) Update(ctx context.Context, fuga *fuga.Fuga) (*fuga.Fuga, 
 	return fuga, nil
 }
 
-func (g *fugaGateway) Delete(ctx context.Context, id c.Id) error {
+func (g *fugaGateway) Delete(ctx context.Context, id common.Id) error {
 	err := g.db.Fuga.DeleteOneID(id.Value()).Exec(ctx)
 
 	if err != nil {

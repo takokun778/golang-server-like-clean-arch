@@ -1,7 +1,7 @@
 package controller
 
 import (
-	common "clean/app/domain/common"
+	"clean/app/domain/common"
 	"clean/app/domain/hoge"
 	pbHoge "clean/proto/hoge"
 	"context"

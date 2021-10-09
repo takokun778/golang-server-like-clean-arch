@@ -2,7 +2,7 @@ package gateway
 
 import (
 	"clean/app/common/gateway"
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 	"clean/app/domain/hoge"
 	"context"
 )
@@ -35,18 +35,18 @@ func (g *hogeGateway) Save(ctx context.Context, hoge *hoge.Hoge) (*hoge.Hoge, er
 	return hoge, nil
 }
 
-func (g *hogeGateway) Find(ctx context.Context, id c.Id) (*hoge.Hoge, error) {
+func (g *hogeGateway) Find(ctx context.Context, id common.Id) (*hoge.Hoge, error) {
 	res, err := g.db.Hoge.Get(ctx, id.Value())
 	if err != nil {
 		return nil, err
 	}
 
 	return hoge.New(
-		c.Id(res.ID),
+		common.Id(res.ID),
 		hoge.Name(res.Name),
 		hoge.Number(res.Number),
-		c.Time(res.CreatedAt),
-		c.Time(res.UpdatedAt),
+		common.Time(res.CreatedAt),
+		common.Time(res.UpdatedAt),
 	), nil
 }
 
@@ -62,11 +62,11 @@ func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
 
 	for _, r := range res {
 		list = append(list, hoge.New(
-			c.Id(r.ID),
+			common.Id(r.ID),
 			hoge.Name(r.Name),
 			hoge.Number(r.Number),
-			c.Time(r.CreatedAt),
-			c.Time(r.UpdatedAt),
+			common.Time(r.CreatedAt),
+			common.Time(r.UpdatedAt),
 		))
 	}
 
@@ -88,7 +88,7 @@ func (g *hogeGateway) Update(ctx context.Context, hoge *hoge.Hoge) (*hoge.Hoge, 
 	return hoge, nil
 }
 
-func (g *hogeGateway) Delete(ctx context.Context, id c.Id) error {
+func (g *hogeGateway) Delete(ctx context.Context, id common.Id) error {
 	err := g.db.Hoge.DeleteOneID(id.Value()).Exec(ctx)
 
 	if err != nil {

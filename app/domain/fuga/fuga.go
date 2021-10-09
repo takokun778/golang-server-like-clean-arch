@@ -1,18 +1,18 @@
 package fuga
 
 import (
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 )
 
 type Fuga struct {
-	id        c.Id
+	id        common.Id
 	name      Name
 	number    Number
-	createdAt c.Time
-	updatedAt c.Time
+	createdAt common.Time
+	updatedAt common.Time
 }
 
-func (f *Fuga) Id() c.Id {
+func (f *Fuga) Id() common.Id {
 	return f.id
 }
 
@@ -24,20 +24,20 @@ func (f *Fuga) Number() Number {
 	return f.number
 }
 
-func (f *Fuga) CreatedAt() c.Time {
+func (f *Fuga) CreatedAt() common.Time {
 	return f.createdAt
 }
 
-func (f *Fuga) UpdatedAt() c.Time {
+func (f *Fuga) UpdatedAt() common.Time {
 	return f.updatedAt
 }
 
 func New(
-	id c.Id,
+	id common.Id,
 	name Name,
 	number Number,
-	createdAt c.Time,
-	updatedAt c.Time,
+	createdAt common.Time,
+	updatedAt common.Time,
 ) *Fuga {
 	hoge := new(Fuga)
 	hoge.id = id
@@ -49,9 +49,9 @@ func New(
 }
 
 func CreateNew(name Name, number Number) *Fuga {
-	now := c.Now()
+	now := common.Now()
 	return New(
-		c.CreateRandomId(),
+		common.CreateRandomId(),
 		name,
 		number,
 		now,
@@ -62,5 +62,5 @@ func CreateNew(name Name, number Number) *Fuga {
 func (f *Fuga) Update(name Name, number Number) {
 	f.name = name
 	f.number = number
-	f.updatedAt = c.Now()
+	f.updatedAt = common.Now()
 }

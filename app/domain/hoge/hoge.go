@@ -1,18 +1,18 @@
 package hoge
 
 import (
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 )
 
 type Hoge struct {
-	id        c.Id
+	id        common.Id
 	name      Name
 	number    Number
-	createdAt c.Time
-	updatedAt c.Time
+	createdAt common.Time
+	updatedAt common.Time
 }
 
-func (h *Hoge) Id() c.Id {
+func (h *Hoge) Id() common.Id {
 	return h.id
 }
 
@@ -24,20 +24,20 @@ func (h *Hoge) Number() Number {
 	return h.number
 }
 
-func (h *Hoge) CreatedAt() c.Time {
+func (h *Hoge) CreatedAt() common.Time {
 	return h.createdAt
 }
 
-func (h *Hoge) UpdatedAt() c.Time {
+func (h *Hoge) UpdatedAt() common.Time {
 	return h.updatedAt
 }
 
 func New(
-	id c.Id,
+	id common.Id,
 	name Name,
 	number Number,
-	createdAt c.Time,
-	updatedAt c.Time,
+	createdAt common.Time,
+	updatedAt common.Time,
 ) *Hoge {
 	hoge := new(Hoge)
 	hoge.id = id
@@ -49,9 +49,9 @@ func New(
 }
 
 func CreateNew(name Name, number Number) *Hoge {
-	now := c.Now()
+	now := common.Now()
 	return New(
-		c.CreateRandomId(),
+		common.CreateRandomId(),
 		name,
 		number,
 		now,
@@ -62,5 +62,5 @@ func CreateNew(name Name, number Number) *Hoge {
 func (h *Hoge) Update(name Name, number Number) {
 	h.name = name
 	h.number = number
-	h.updatedAt = c.Now()
+	h.updatedAt = common.Now()
 }

@@ -1,13 +1,13 @@
 package usecase
 
 import (
-	c "clean/app/domain/common"
+	"clean/app/domain/common"
 	"clean/app/domain/fuga"
 	"context"
 	"time"
 )
 
-func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, *c.Error) {
+func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, *common.Error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -15,7 +15,7 @@ func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput)
 
 	result, repoErr := u.fugaRepository.Save(timeOutCtx, result)
 	if repoErr != nil {
-		return nil, c.NewInternalServerError(repoErr, "")
+		return nil, common.NewInternalServerError(repoErr, "")
 	}
 
 	output := new(fuga.UsecaseCreateOutput)

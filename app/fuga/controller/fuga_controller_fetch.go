@@ -1,7 +1,7 @@
 package controller
 
 import (
-	common "clean/app/domain/common"
+	"clean/app/domain/common"
 	"clean/app/domain/fuga"
 	pbFuga "clean/proto/fuga"
 	"context"
