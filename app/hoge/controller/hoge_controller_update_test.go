@@ -18,8 +18,8 @@ func TestHogeControllerUpdate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		model := hoge.CreateNew("hoge", 1)
-		model.Update("hogehoge", 2)
+		src := hoge.CreateNew("hoge", 1)
+		model := src.Update("hogehoge", 2)
 
 		mhu := mh.NewMockUsecase(ctrl)
 

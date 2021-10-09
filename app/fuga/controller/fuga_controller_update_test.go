@@ -18,8 +18,8 @@ func TestFugaControllerUpdate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		model := fuga.CreateNew("fuga", 1)
-		model.Update("fugafuga", 2)
+		src := fuga.CreateNew("fuga", 1)
+		model := src.Update("fugafuga", 2)
 
 		mfu := mf.NewMockUsecase(ctrl)
 

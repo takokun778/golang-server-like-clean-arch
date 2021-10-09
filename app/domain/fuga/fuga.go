@@ -59,8 +59,12 @@ func CreateNew(name Name, number Number) *Fuga {
 	)
 }
 
-func (f *Fuga) Update(name Name, number Number) {
-	f.name = name
-	f.number = number
-	f.updatedAt = common.Now()
+func (f *Fuga) Update(name Name, number Number) *Fuga {
+	return New(
+		f.id,
+		name,
+		number,
+		f.createdAt,
+		common.Now(),
+	)
 }

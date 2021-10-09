@@ -44,14 +44,14 @@ func TestNewCreate(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	result := hoge.CreateNew(hoge.Name("new"), hoge.Number(1))
+	src := hoge.CreateNew(hoge.Name("new"), hoge.Number(1))
 
 	time.Sleep(time.Millisecond)
 
 	name := hoge.Name("update")
 	number := hoge.Number(2)
 
-	result.Update(name, number)
+	result := src.Update(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)

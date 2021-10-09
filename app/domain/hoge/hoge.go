@@ -59,8 +59,12 @@ func CreateNew(name Name, number Number) *Hoge {
 	)
 }
 
-func (h *Hoge) Update(name Name, number Number) {
-	h.name = name
-	h.number = number
-	h.updatedAt = common.Now()
+func (h *Hoge) Update(name Name, number Number) *Hoge {
+	return New(
+		h.id,
+		name,
+		number,
+		h.createdAt,
+		common.Now(),
+	)
 }

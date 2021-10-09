@@ -39,14 +39,14 @@ func TestNewCreate(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 
-	result := fuga.CreateNew(fuga.Name("new"), fuga.Number(1))
+	src := fuga.CreateNew(fuga.Name("new"), fuga.Number(1))
 
 	time.Sleep(time.Millisecond)
 
 	name := fuga.Name("update")
 	number := fuga.Number(2)
 
-	result.Update(name, number)
+	result := src.Update(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)
