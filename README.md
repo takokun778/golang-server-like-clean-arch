@@ -68,7 +68,7 @@ go generate ./app/domain/xxx
 ```
 3. `make mock`を実行
 
-# サーボパーティライブラリ
+# サードパーティライブラリ
 domain/usecase配下ではなるべく依存しないようにする(標準ライブラリで頑張る)
 
 ### サーバー
