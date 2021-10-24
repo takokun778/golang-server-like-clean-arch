@@ -20,9 +20,9 @@ func (c *fugaController) Update(ctx context.Context, req *pbFuga.UpdateRequest) 
 		Number: fuga.Number(req.Number),
 	}
 
-	output, appErr := c.fugaUsecase.Update(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.fugaUsecase.Update(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbFuga.UpdateResponse)

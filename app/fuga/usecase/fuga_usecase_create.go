@@ -13,9 +13,9 @@ func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput)
 
 	result := fuga.CreateNew(input.Name, input.Number)
 
-	result, repoErr := u.fugaRepository.Save(timeOutCtx, result)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.fugaRepository.Save(timeOutCtx, result)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(fuga.UsecaseCreateOutput)

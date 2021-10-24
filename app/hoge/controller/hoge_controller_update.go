@@ -20,9 +20,9 @@ func (c *hogeController) Update(ctx context.Context, req *pbHoge.UpdateRequest) 
 		Number: hoge.Number(req.Number),
 	}
 
-	output, appErr := c.hogeUsecase.Update(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.hogeUsecase.Update(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbHoge.UpdateResponse)

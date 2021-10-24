@@ -18,9 +18,9 @@ func (c *fugaController) Fetch(ctx context.Context, req *pbFuga.FetchRequest) (*
 		Id: id,
 	}
 
-	output, appErr := c.fugaUsecase.Fetch(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.fugaUsecase.Fetch(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbFuga.FetchResponse)

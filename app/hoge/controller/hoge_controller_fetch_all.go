@@ -9,9 +9,9 @@ import (
 func (c *hogeController) FetchAll(ctx context.Context, req *pbHoge.FetchAllRequest) (*pbHoge.FetchAllResponse, error) {
 	input := hoge.UsecaseFetchAllInput{}
 
-	output, appErr := c.hogeUsecase.FetchAll(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.hogeUsecase.FetchAll(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbHoge.FetchAllResponse)

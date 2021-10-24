@@ -18,9 +18,9 @@ func (c *hogeController) Fetch(ctx context.Context, req *pbHoge.FetchRequest) (*
 		Id: id,
 	}
 
-	output, appErr := c.hogeUsecase.Fetch(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.hogeUsecase.Fetch(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbHoge.FetchResponse)

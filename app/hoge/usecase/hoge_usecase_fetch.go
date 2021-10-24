@@ -11,9 +11,9 @@ func (u *hogeUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, repoErr := u.hogeRepository.Find(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.hogeRepository.Find(timeOutCtx, input.Id)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(hoge.UsecaseFetchOutput)

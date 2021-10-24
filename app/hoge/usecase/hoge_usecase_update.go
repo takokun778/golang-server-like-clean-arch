@@ -11,16 +11,16 @@ func (u *hogeUsecase) Update(ctx context.Context, input hoge.UsecaseUpdateInput)
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	src, repoErr := u.hogeRepository.Find(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	src, err := u.hogeRepository.Find(timeOutCtx, input.Id)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	dst := src.Update(input.Name, input.Number)
 
-	dst, repoErr = u.hogeRepository.Update(timeOutCtx, dst)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	dst, err = u.hogeRepository.Update(timeOutCtx, dst)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(hoge.UsecaseUpdateOutput)

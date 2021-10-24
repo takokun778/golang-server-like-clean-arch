@@ -9,9 +9,9 @@ import (
 func (c *fugaController) FetchAll(ctx context.Context, req *pbFuga.FetchAllRequest) (*pbFuga.FetchAllResponse, error) {
 	input := fuga.UsecaseFetchAllInput{}
 
-	output, appErr := c.fugaUsecase.FetchAll(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.fugaUsecase.FetchAll(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbFuga.FetchAllResponse)

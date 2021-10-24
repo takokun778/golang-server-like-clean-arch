@@ -18,9 +18,9 @@ func (c *hogeController) Delete(ctx context.Context, req *pbHoge.DeleteRequest) 
 		Id: id,
 	}
 
-	output, appErr := c.hogeUsecase.Delete(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.hogeUsecase.Delete(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbHoge.DeleteResponse)

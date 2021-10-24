@@ -12,9 +12,9 @@ func (c *hogeController) Create(ctx context.Context, req *pbHoge.CreateRequest) 
 		Number: hoge.Number(req.Number),
 	}
 
-	output, appErr := c.hogeUsecase.Create(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.hogeUsecase.Create(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbHoge.CreateResponse)

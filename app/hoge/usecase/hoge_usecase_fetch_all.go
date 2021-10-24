@@ -11,9 +11,9 @@ func (u *hogeUsecase) FetchAll(ctx context.Context, input hoge.UsecaseFetchAllIn
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, repoErr := u.hogeRepository.FindAll(timeOutCtx)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.hogeRepository.FindAll(timeOutCtx)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(hoge.UsecaseFetchAllOutput)

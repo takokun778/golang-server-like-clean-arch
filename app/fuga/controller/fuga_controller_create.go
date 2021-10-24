@@ -12,9 +12,9 @@ func (c *fugaController) Create(ctx context.Context, req *pbFuga.CreateRequest) 
 		Number: fuga.Number(req.Number),
 	}
 
-	output, appErr := c.fugaUsecase.Create(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.fugaUsecase.Create(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbFuga.CreateResponse)

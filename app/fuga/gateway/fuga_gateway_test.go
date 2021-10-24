@@ -103,12 +103,12 @@ func TestFugaGatewayDelete(t *testing.T) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		delErr := gateway.Delete(ctx, fuga.Id())
-		if delErr != nil {
+		err = gateway.Delete(ctx, fuga.Id())
+		if err != nil {
 			log.Fatal(err)
 		}
-		_, finErr := gateway.Find(ctx, fuga.Id())
-		if finErr == nil {
+		_, err = gateway.Find(ctx, fuga.Id())
+		if err == nil {
 			log.Fatal(err)
 		}
 	})

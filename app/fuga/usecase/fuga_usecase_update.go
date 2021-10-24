@@ -11,16 +11,16 @@ func (u *fugaUsecase) Update(ctx context.Context, input fuga.UsecaseUpdateInput)
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	src, repoErr := u.fugaRepository.Find(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	src, err := u.fugaRepository.Find(timeOutCtx, input.Id)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	dst := src.Update(input.Name, input.Number)
 
-	dst, repoErr = u.fugaRepository.Update(timeOutCtx, dst)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	dst, err = u.fugaRepository.Update(timeOutCtx, dst)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(fuga.UsecaseUpdateOutput)

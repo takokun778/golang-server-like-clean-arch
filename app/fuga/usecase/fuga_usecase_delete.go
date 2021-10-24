@@ -11,14 +11,14 @@ func (u *fugaUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput)
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, repoErr := u.fugaRepository.Find(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.fugaRepository.Find(timeOutCtx, input.Id)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
-	repoErr = u.fugaRepository.Delete(timeOutCtx, input.Id)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	err = u.fugaRepository.Delete(timeOutCtx, input.Id)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(fuga.UsecaseDeleteOutput)

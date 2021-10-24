@@ -13,9 +13,9 @@ func (u *hogeUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput)
 
 	result := hoge.CreateNew(input.Name, input.Number)
 
-	result, repoErr := u.hogeRepository.Save(timeOutCtx, result)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.hogeRepository.Save(timeOutCtx, result)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(hoge.UsecaseCreateOutput)

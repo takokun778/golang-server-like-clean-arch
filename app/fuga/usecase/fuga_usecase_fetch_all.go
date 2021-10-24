@@ -11,9 +11,9 @@ func (u *fugaUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllIn
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, repoErr := u.fugaRepository.FindAll(timeOutCtx)
-	if repoErr != nil {
-		return nil, common.NewInternalServerError(repoErr, "")
+	result, err := u.fugaRepository.FindAll(timeOutCtx)
+	if err != nil {
+		return nil, common.NewInternalServerError(err, "")
 	}
 
 	output := new(fuga.UsecaseFetchAllOutput)

@@ -18,9 +18,9 @@ func (c *fugaController) Delete(ctx context.Context, req *pbFuga.DeleteRequest) 
 		Id: id,
 	}
 
-	output, appErr := c.fugaUsecase.Delete(ctx, input)
-	if appErr != nil {
-		return nil, appErr
+	output, err := c.fugaUsecase.Delete(ctx, input)
+	if err != nil {
+		return nil, err
 	}
 
 	res := new(pbFuga.DeleteResponse)
