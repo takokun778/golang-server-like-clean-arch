@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Fetch(ctx context.Context, input fuga.UsecaseFetchInput) (*fuga.UsecaseFetchOutput, *common.Error) {
+func (u *fugaUsecase) Fetch(ctx context.Context, input fuga.UsecaseFetchInput) (*fuga.UsecaseFetchOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 

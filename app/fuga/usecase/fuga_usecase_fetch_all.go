@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllInput) (*fuga.UsecaseFetchAllOutput, *common.Error) {
+func (u *fugaUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllInput) (*fuga.UsecaseFetchAllOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 

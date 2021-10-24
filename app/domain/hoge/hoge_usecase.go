@@ -8,11 +8,11 @@ import (
 )
 
 type Usecase interface {
-	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, *common.Error)
-	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, *common.Error)
-	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, *common.Error)
-	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, *common.Error)
-	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, *common.Error)
+	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, error)
+	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, error)
+	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, error)
+	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, error)
+	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, error)
 }
 
 type UsecaseCreateInput struct {

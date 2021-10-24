@@ -5,7 +5,6 @@
 package mock_fuga
 
 import (
-	common "clean/app/domain/common"
 	fuga "clean/app/domain/fuga"
 	context "context"
 	reflect "reflect"
@@ -37,11 +36,11 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, *common.Error) {
+func (m *MockUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, input)
 	ret0, _ := ret[0].(*fuga.UsecaseCreateOutput)
-	ret1, _ := ret[1].(*common.Error)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
@@ -52,11 +51,11 @@ func (mr *MockUsecaseMockRecorder) Create(ctx, input interface{}) *gomock.Call {
 }
 
 // Delete mocks base method.
-func (m *MockUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput) (*fuga.UsecaseDeleteOutput, *common.Error) {
+func (m *MockUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput) (*fuga.UsecaseDeleteOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, input)
 	ret0, _ := ret[0].(*fuga.UsecaseDeleteOutput)
-	ret1, _ := ret[1].(*common.Error)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
@@ -67,11 +66,11 @@ func (mr *MockUsecaseMockRecorder) Delete(ctx, input interface{}) *gomock.Call {
 }
 
 // Fetch mocks base method.
-func (m *MockUsecase) Fetch(ctx context.Context, input fuga.UsecaseFetchInput) (*fuga.UsecaseFetchOutput, *common.Error) {
+func (m *MockUsecase) Fetch(ctx context.Context, input fuga.UsecaseFetchInput) (*fuga.UsecaseFetchOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Fetch", ctx, input)
 	ret0, _ := ret[0].(*fuga.UsecaseFetchOutput)
-	ret1, _ := ret[1].(*common.Error)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
@@ -82,11 +81,11 @@ func (mr *MockUsecaseMockRecorder) Fetch(ctx, input interface{}) *gomock.Call {
 }
 
 // FetchAll mocks base method.
-func (m *MockUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllInput) (*fuga.UsecaseFetchAllOutput, *common.Error) {
+func (m *MockUsecase) FetchAll(ctx context.Context, input fuga.UsecaseFetchAllInput) (*fuga.UsecaseFetchAllOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchAll", ctx, input)
 	ret0, _ := ret[0].(*fuga.UsecaseFetchAllOutput)
-	ret1, _ := ret[1].(*common.Error)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
@@ -97,11 +96,11 @@ func (mr *MockUsecaseMockRecorder) FetchAll(ctx, input interface{}) *gomock.Call
 }
 
 // Update mocks base method.
-func (m *MockUsecase) Update(ctx context.Context, input fuga.UsecaseUpdateInput) (*fuga.UsecaseUpdateOutput, *common.Error) {
+func (m *MockUsecase) Update(ctx context.Context, input fuga.UsecaseUpdateInput) (*fuga.UsecaseUpdateOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, input)
 	ret0, _ := ret[0].(*fuga.UsecaseUpdateOutput)
-	ret1, _ := ret[1].(*common.Error)
+	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
