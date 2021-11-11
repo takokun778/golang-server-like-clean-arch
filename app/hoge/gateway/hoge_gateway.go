@@ -41,13 +41,9 @@ func (g *hogeGateway) Find(ctx context.Context, id common.Id) (*hoge.Hoge, error
 		return nil, err
 	}
 
-	return hoge.New(
-		common.Id(res.ID),
-		hoge.Name(res.Name),
-		hoge.Number(res.Number),
-		common.Time(res.CreatedAt),
-		common.Time(res.UpdatedAt),
-	), nil
+	entity := HogeEntity(*res)
+
+	return entity.ToDomain(), nil
 }
 
 func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
@@ -61,13 +57,8 @@ func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
 	list := make([]*hoge.Hoge, 0)
 
 	for _, r := range res {
-		list = append(list, hoge.New(
-			common.Id(r.ID),
-			hoge.Name(r.Name),
-			hoge.Number(r.Number),
-			common.Time(r.CreatedAt),
-			common.Time(r.UpdatedAt),
-		))
+		entity := HogeEntity(*r)
+		list = append(list, entity.ToDomain())
 	}
 
 	return hoge.NewList(list), nil

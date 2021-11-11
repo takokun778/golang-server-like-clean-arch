@@ -41,13 +41,9 @@ func (g *fugaGateway) Find(ctx context.Context, id common.Id) (*fuga.Fuga, error
 		return nil, err
 	}
 
-	return fuga.New(
-		common.Id(res.ID),
-		fuga.Name(res.Name),
-		fuga.Number(res.Number),
-		common.Time(res.CreatedAt),
-		common.Time(res.UpdatedAt),
-	), nil
+	entity := FugaEntity(*res)
+
+	return entity.ToDomain(), nil
 }
 
 func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
@@ -61,13 +57,8 @@ func (g *fugaGateway) FindAll(ctx context.Context) (*fuga.FugaList, error) {
 	list := make([]*fuga.Fuga, 0)
 
 	for _, r := range res {
-		list = append(list, fuga.New(
-			common.Id(r.ID),
-			fuga.Name(r.Name),
-			fuga.Number(r.Number),
-			common.Time(r.CreatedAt),
-			common.Time(r.UpdatedAt),
-		))
+		entity := FugaEntity(*r)
+		list = append(list, entity.ToDomain())
 	}
 
 	return fuga.NewList(list), nil
