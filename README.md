@@ -15,7 +15,6 @@
 ## Controller
 - 外部内部とのやりとり(入出力)を管理
 - スキーマ駆動により実装
-- スキーマ定義には[OpenAPI](https://swagger.io/)を採用
 
 ## Gateway(Repository)
 - Domainモデルを永続化を管理
@@ -66,9 +65,9 @@
 │       │   # ユースケースの抽象モデル
 │       └── xxx_usecase.go
 └── xxx
-    │   # openapiの実装
+    │   # クライアント間通信の実装
     ├── controller
-    │   │   # oepenapiモデル -> domainモデル
+    │   │   # 外部モデル -> domainモデル
     │   ├── xxx_controller.go
     │   │   # 各種操作メソッド実装とそのテスト
     │   ├── xxx_controller_create.go
@@ -79,7 +78,7 @@
     │   ├── xxx_controller_update_test.go
     │   ├── xxx_controller_delete.go
     │   ├── xxx_controller_delete_test.go
-    │   │   # domainモデル -> openapiモデル
+    │   │   # domainモデル -> 外部モデル
     │   └── xxx_translator.go
     │   # repositoryの実装
     ├── gateway
