@@ -6,8 +6,5 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Fuga is the predicate function for fuga builders.
-type Fuga func(*sql.Selector)
-
-// Hoge is the predicate function for hoge builders.
-type Hoge func(*sql.Selector)
+// Xxx is the predicate function for xxx builders.
+type Xxx func(*sql.Selector)

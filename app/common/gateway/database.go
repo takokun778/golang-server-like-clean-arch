@@ -1,10 +1,11 @@
 package gateway
 
 import (
-	"clean/ent"
 	"fmt"
 	"log"
 	"os"
+
+	"xxx/ent"
 
 	_ "github.com/lib/pq"
 )
@@ -67,19 +68,19 @@ func newDbConfig() dbConfig {
 
 	user := os.Getenv("DB_USER")
 	if user == "" {
-		user = "clean"
+		user = "xxx"
 	}
 	conf.user = user
 
 	name := os.Getenv("DB_NAME")
 	if name == "" {
-		name = "clean"
+		name = "xxx"
 	}
 	conf.name = name
 
 	pass := os.Getenv("DB_PASS")
 	if pass == "" {
-		pass = "clean"
+		pass = "xxx"
 	}
 	conf.pass = pass
 

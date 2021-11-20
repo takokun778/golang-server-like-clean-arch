@@ -30,22 +30,22 @@
 ├── app                 # アプリケーション(メイン実装管理)
 │   ├── main.go         # アプリケーション起点
 │   ├── domain          # ドメイン(ビジネスロジック)
-│   │   ├── hoge        # Hogeモデル
-│   │   └── fuga        # Fugaモデル
-│   ├── hoge
-│   │   ├── controller  # Hogeモデルにおける入出力変換機能
-│   │   ├── gateway     # Hogeモデルにおける永続化機能
-│   │   └── usecase     # Hogeモデルにおけるユースケース
-│   └── fuga
-│       ├── controller  # Fugaモデルにおける入出力変換機能
-│       ├── gateway     # Fugaモデルにおける永続化機能
-│       └── usecase     # Fugaモデルにおけるユースケース
+│   │   ├── xxx         # Xxxモデル
+│   │   └── yyy         # Yyyモデル
+│   ├── xxx
+│   │   ├── controller  # Xxxモデルにおける入出力変換機能
+│   │   ├── gateway     # Xxxモデルにおける永続化機能
+│   │   └── usecase     # Xxxモデルにおけるユースケース
+│   └── yyy
+│       ├── controller  # Yyyモデルにおける入出力変換機能
+│       ├── gateway     # Yyyモデルにおける永続化機能
+│       └── usecase     # Yyyモデルにおけるユースケース
 │
 ├── ent                 # entによるDB管理
 ├── logger              # zapによるログ形式管理
 ├── migration           # entを利用したDBマイグレーション管理
 ├── mock                # テスト用のモック実装(自動生成)
-├── openapi             # openapiを使用したAPIの型定義
+├── proto               # grpcを使用したAPIの型定義
 └── script              # 各種操作のスクリプト
 ```
 
@@ -122,24 +122,24 @@
 例)
 ```go
 type Xxx struct {
-    yyy string
-    zzz string
+    hoge string
+    fuga string
 }
 
-func New() *Xxx {
+func New() Xxx {
     xxx := new(Xxx)
-    xxx.yyy = "yyy"
-    xxx.zzz = "zzz"
-    return xxx
+    xxx.hoge = "hoge"
+    xxx.fuga = "fuga"
+    return *xxx
 }
 
-(x *Xxx) execute() {}
+(x Xxx) execute() {}
 
-type XxxList []*Xxx
+type XxxList []Xxx
 
-func NewList(xxxs []*Xxx) *XxxList {
+func NewList(xxxs []Xxx) XxxList {
     xxxList := XxxList(xxxs)
-    return &xxxList
+    return xxxList
 }
 ```
 ※参照:[他言語プログラマが最低限、気にすべきGoのネーミングルール](https://zenn.dev/keitakn/articles/go-naming-rules)

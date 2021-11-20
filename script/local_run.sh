@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-export APP_NAME=clean
+export APP_NAME=xxx
 export ENV=local
 export DB_HOST=localhost
 export DB_NAME=${APP_NAME}

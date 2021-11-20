@@ -3,10 +3,9 @@
 package ent
 
 import (
-	"clean/ent/fuga"
-	"clean/ent/hoge"
 	"errors"
 	"fmt"
+	"xxx/ent/xxx"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -30,8 +29,7 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
-		fuga.Table: fuga.ValidColumn,
-		hoge.Table: hoge.ValidColumn,
+		xxx.Table: xxx.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {

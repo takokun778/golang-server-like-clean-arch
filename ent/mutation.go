@@ -3,13 +3,12 @@
 package ent
 
 import (
-	"clean/ent/fuga"
-	"clean/ent/hoge"
-	"clean/ent/predicate"
 	"context"
 	"fmt"
 	"sync"
 	"time"
+	"xxx/ent/predicate"
+	"xxx/ent/xxx"
 
 	"github.com/google/uuid"
 
@@ -25,38 +24,37 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeFuga = "Fuga"
-	TypeHoge = "Hoge"
+	TypeXxx = "Xxx"
 )
 
-// FugaMutation represents an operation that mutates the Fuga nodes in the graph.
-type FugaMutation struct {
+// XxxMutation represents an operation that mutates the Xxx nodes in the graph.
+type XxxMutation struct {
 	config
 	op            Op
 	typ           string
 	id            *uuid.UUID
 	name          *string
-	number        *int32
-	addnumber     *int32
+	number        *int
+	addnumber     *int
 	createdAt     *time.Time
 	updatedAt     *time.Time
 	clearedFields map[string]struct{}
 	done          bool
-	oldValue      func(context.Context) (*Fuga, error)
-	predicates    []predicate.Fuga
+	oldValue      func(context.Context) (*Xxx, error)
+	predicates    []predicate.Xxx
 }
 
-var _ ent.Mutation = (*FugaMutation)(nil)
+var _ ent.Mutation = (*XxxMutation)(nil)
 
-// fugaOption allows management of the mutation configuration using functional options.
-type fugaOption func(*FugaMutation)
+// xxxOption allows management of the mutation configuration using functional options.
+type xxxOption func(*XxxMutation)
 
-// newFugaMutation creates new mutation for the Fuga entity.
-func newFugaMutation(c config, op Op, opts ...fugaOption) *FugaMutation {
-	m := &FugaMutation{
+// newXxxMutation creates new mutation for the Xxx entity.
+func newXxxMutation(c config, op Op, opts ...xxxOption) *XxxMutation {
+	m := &XxxMutation{
 		config:        c,
 		op:            op,
-		typ:           TypeFuga,
+		typ:           TypeXxx,
 		clearedFields: make(map[string]struct{}),
 	}
 	for _, opt := range opts {
@@ -65,20 +63,20 @@ func newFugaMutation(c config, op Op, opts ...fugaOption) *FugaMutation {
 	return m
 }
 
-// withFugaID sets the ID field of the mutation.
-func withFugaID(id uuid.UUID) fugaOption {
-	return func(m *FugaMutation) {
+// withXxxID sets the ID field of the mutation.
+func withXxxID(id uuid.UUID) xxxOption {
+	return func(m *XxxMutation) {
 		var (
 			err   error
 			once  sync.Once
-			value *Fuga
+			value *Xxx
 		)
-		m.oldValue = func(ctx context.Context) (*Fuga, error) {
+		m.oldValue = func(ctx context.Context) (*Xxx, error) {
 			once.Do(func() {
 				if m.done {
 					err = fmt.Errorf("querying old values post mutation is not allowed")
 				} else {
-					value, err = m.Client().Fuga.Get(ctx, id)
+					value, err = m.Client().Xxx.Get(ctx, id)
 				}
 			})
 			return value, err
@@ -87,10 +85,10 @@ func withFugaID(id uuid.UUID) fugaOption {
 	}
 }
 
-// withFuga sets the old Fuga of the mutation.
-func withFuga(node *Fuga) fugaOption {
-	return func(m *FugaMutation) {
-		m.oldValue = func(context.Context) (*Fuga, error) {
+// withXxx sets the old Xxx of the mutation.
+func withXxx(node *Xxx) xxxOption {
+	return func(m *XxxMutation) {
+		m.oldValue = func(context.Context) (*Xxx, error) {
 			return node, nil
 		}
 		m.id = &node.ID
@@ -99,7 +97,7 @@ func withFuga(node *Fuga) fugaOption {
 
 // Client returns a new `ent.Client` from the mutation. If the mutation was
 // executed in a transaction (ent.Tx), a transactional client is returned.
-func (m FugaMutation) Client() *Client {
+func (m XxxMutation) Client() *Client {
 	client := &Client{config: m.config}
 	client.init()
 	return client
@@ -107,7 +105,7 @@ func (m FugaMutation) Client() *Client {
 
 // Tx returns an `ent.Tx` for mutations that were executed in transactions;
 // it returns an error otherwise.
-func (m FugaMutation) Tx() (*Tx, error) {
+func (m XxxMutation) Tx() (*Tx, error) {
 	if _, ok := m.driver.(*txDriver); !ok {
 		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
 	}
@@ -117,14 +115,14 @@ func (m FugaMutation) Tx() (*Tx, error) {
 }
 
 // SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of Fuga entities.
-func (m *FugaMutation) SetID(id uuid.UUID) {
+// operation is only accepted on creation of Xxx entities.
+func (m *XxxMutation) SetID(id uuid.UUID) {
 	m.id = &id
 }
 
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *FugaMutation) ID() (id uuid.UUID, exists bool) {
+func (m *XxxMutation) ID() (id uuid.UUID, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -132,12 +130,12 @@ func (m *FugaMutation) ID() (id uuid.UUID, exists bool) {
 }
 
 // SetName sets the "name" field.
-func (m *FugaMutation) SetName(s string) {
+func (m *XxxMutation) SetName(s string) {
 	m.name = &s
 }
 
 // Name returns the value of the "name" field in the mutation.
-func (m *FugaMutation) Name() (r string, exists bool) {
+func (m *XxxMutation) Name() (r string, exists bool) {
 	v := m.name
 	if v == nil {
 		return
@@ -145,10 +143,10 @@ func (m *FugaMutation) Name() (r string, exists bool) {
 	return *v, true
 }
 
-// OldName returns the old "name" field's value of the Fuga entity.
-// If the Fuga object wasn't provided to the builder, the object is fetched from the database.
+// OldName returns the old "name" field's value of the Xxx entity.
+// If the Xxx object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FugaMutation) OldName(ctx context.Context) (v string, err error) {
+func (m *XxxMutation) OldName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
 	}
@@ -162,19 +160,32 @@ func (m *FugaMutation) OldName(ctx context.Context) (v string, err error) {
 	return oldValue.Name, nil
 }
 
-// ResetName resets all changes to the "name" field.
-func (m *FugaMutation) ResetName() {
+// ClearName clears the value of the "name" field.
+func (m *XxxMutation) ClearName() {
 	m.name = nil
+	m.clearedFields[xxx.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *XxxMutation) NameCleared() bool {
+	_, ok := m.clearedFields[xxx.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *XxxMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, xxx.FieldName)
 }
 
 // SetNumber sets the "number" field.
-func (m *FugaMutation) SetNumber(i int32) {
+func (m *XxxMutation) SetNumber(i int) {
 	m.number = &i
 	m.addnumber = nil
 }
 
 // Number returns the value of the "number" field in the mutation.
-func (m *FugaMutation) Number() (r int32, exists bool) {
+func (m *XxxMutation) Number() (r int, exists bool) {
 	v := m.number
 	if v == nil {
 		return
@@ -182,10 +193,10 @@ func (m *FugaMutation) Number() (r int32, exists bool) {
 	return *v, true
 }
 
-// OldNumber returns the old "number" field's value of the Fuga entity.
-// If the Fuga object wasn't provided to the builder, the object is fetched from the database.
+// OldNumber returns the old "number" field's value of the Xxx entity.
+// If the Xxx object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FugaMutation) OldNumber(ctx context.Context) (v int32, err error) {
+func (m *XxxMutation) OldNumber(ctx context.Context) (v int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldNumber is only allowed on UpdateOne operations")
 	}
@@ -200,7 +211,7 @@ func (m *FugaMutation) OldNumber(ctx context.Context) (v int32, err error) {
 }
 
 // AddNumber adds i to the "number" field.
-func (m *FugaMutation) AddNumber(i int32) {
+func (m *XxxMutation) AddNumber(i int) {
 	if m.addnumber != nil {
 		*m.addnumber += i
 	} else {
@@ -209,7 +220,7 @@ func (m *FugaMutation) AddNumber(i int32) {
 }
 
 // AddedNumber returns the value that was added to the "number" field in this mutation.
-func (m *FugaMutation) AddedNumber() (r int32, exists bool) {
+func (m *XxxMutation) AddedNumber() (r int, exists bool) {
 	v := m.addnumber
 	if v == nil {
 		return
@@ -217,19 +228,33 @@ func (m *FugaMutation) AddedNumber() (r int32, exists bool) {
 	return *v, true
 }
 
-// ResetNumber resets all changes to the "number" field.
-func (m *FugaMutation) ResetNumber() {
+// ClearNumber clears the value of the "number" field.
+func (m *XxxMutation) ClearNumber() {
 	m.number = nil
 	m.addnumber = nil
+	m.clearedFields[xxx.FieldNumber] = struct{}{}
+}
+
+// NumberCleared returns if the "number" field was cleared in this mutation.
+func (m *XxxMutation) NumberCleared() bool {
+	_, ok := m.clearedFields[xxx.FieldNumber]
+	return ok
+}
+
+// ResetNumber resets all changes to the "number" field.
+func (m *XxxMutation) ResetNumber() {
+	m.number = nil
+	m.addnumber = nil
+	delete(m.clearedFields, xxx.FieldNumber)
 }
 
 // SetCreatedAt sets the "createdAt" field.
-func (m *FugaMutation) SetCreatedAt(t time.Time) {
+func (m *XxxMutation) SetCreatedAt(t time.Time) {
 	m.createdAt = &t
 }
 
 // CreatedAt returns the value of the "createdAt" field in the mutation.
-func (m *FugaMutation) CreatedAt() (r time.Time, exists bool) {
+func (m *XxxMutation) CreatedAt() (r time.Time, exists bool) {
 	v := m.createdAt
 	if v == nil {
 		return
@@ -237,10 +262,10 @@ func (m *FugaMutation) CreatedAt() (r time.Time, exists bool) {
 	return *v, true
 }
 
-// OldCreatedAt returns the old "createdAt" field's value of the Fuga entity.
-// If the Fuga object wasn't provided to the builder, the object is fetched from the database.
+// OldCreatedAt returns the old "createdAt" field's value of the Xxx entity.
+// If the Xxx object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FugaMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+func (m *XxxMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldCreatedAt is only allowed on UpdateOne operations")
 	}
@@ -255,17 +280,17 @@ func (m *FugaMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error
 }
 
 // ResetCreatedAt resets all changes to the "createdAt" field.
-func (m *FugaMutation) ResetCreatedAt() {
+func (m *XxxMutation) ResetCreatedAt() {
 	m.createdAt = nil
 }
 
 // SetUpdatedAt sets the "updatedAt" field.
-func (m *FugaMutation) SetUpdatedAt(t time.Time) {
+func (m *XxxMutation) SetUpdatedAt(t time.Time) {
 	m.updatedAt = &t
 }
 
 // UpdatedAt returns the value of the "updatedAt" field in the mutation.
-func (m *FugaMutation) UpdatedAt() (r time.Time, exists bool) {
+func (m *XxxMutation) UpdatedAt() (r time.Time, exists bool) {
 	v := m.updatedAt
 	if v == nil {
 		return
@@ -273,10 +298,10 @@ func (m *FugaMutation) UpdatedAt() (r time.Time, exists bool) {
 	return *v, true
 }
 
-// OldUpdatedAt returns the old "updatedAt" field's value of the Fuga entity.
-// If the Fuga object wasn't provided to the builder, the object is fetched from the database.
+// OldUpdatedAt returns the old "updatedAt" field's value of the Xxx entity.
+// If the Xxx object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *FugaMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
+func (m *XxxMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, fmt.Errorf("OldUpdatedAt is only allowed on UpdateOne operations")
 	}
@@ -291,41 +316,41 @@ func (m *FugaMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error
 }
 
 // ResetUpdatedAt resets all changes to the "updatedAt" field.
-func (m *FugaMutation) ResetUpdatedAt() {
+func (m *XxxMutation) ResetUpdatedAt() {
 	m.updatedAt = nil
 }
 
-// Where appends a list predicates to the FugaMutation builder.
-func (m *FugaMutation) Where(ps ...predicate.Fuga) {
+// Where appends a list predicates to the XxxMutation builder.
+func (m *XxxMutation) Where(ps ...predicate.Xxx) {
 	m.predicates = append(m.predicates, ps...)
 }
 
 // Op returns the operation name.
-func (m *FugaMutation) Op() Op {
+func (m *XxxMutation) Op() Op {
 	return m.op
 }
 
-// Type returns the node type of this mutation (Fuga).
-func (m *FugaMutation) Type() string {
+// Type returns the node type of this mutation (Xxx).
+func (m *XxxMutation) Type() string {
 	return m.typ
 }
 
 // Fields returns all fields that were changed during this mutation. Note that in
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
-func (m *FugaMutation) Fields() []string {
+func (m *XxxMutation) Fields() []string {
 	fields := make([]string, 0, 4)
 	if m.name != nil {
-		fields = append(fields, fuga.FieldName)
+		fields = append(fields, xxx.FieldName)
 	}
 	if m.number != nil {
-		fields = append(fields, fuga.FieldNumber)
+		fields = append(fields, xxx.FieldNumber)
 	}
 	if m.createdAt != nil {
-		fields = append(fields, fuga.FieldCreatedAt)
+		fields = append(fields, xxx.FieldCreatedAt)
 	}
 	if m.updatedAt != nil {
-		fields = append(fields, fuga.FieldUpdatedAt)
+		fields = append(fields, xxx.FieldUpdatedAt)
 	}
 	return fields
 }
@@ -333,15 +358,15 @@ func (m *FugaMutation) Fields() []string {
 // Field returns the value of a field with the given name. The second boolean
 // return value indicates that this field was not set, or was not defined in the
 // schema.
-func (m *FugaMutation) Field(name string) (ent.Value, bool) {
+func (m *XxxMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case fuga.FieldName:
+	case xxx.FieldName:
 		return m.Name()
-	case fuga.FieldNumber:
+	case xxx.FieldNumber:
 		return m.Number()
-	case fuga.FieldCreatedAt:
+	case xxx.FieldCreatedAt:
 		return m.CreatedAt()
-	case fuga.FieldUpdatedAt:
+	case xxx.FieldUpdatedAt:
 		return m.UpdatedAt()
 	}
 	return nil, false
@@ -350,47 +375,47 @@ func (m *FugaMutation) Field(name string) (ent.Value, bool) {
 // OldField returns the old value of the field from the database. An error is
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
-func (m *FugaMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+func (m *XxxMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case fuga.FieldName:
+	case xxx.FieldName:
 		return m.OldName(ctx)
-	case fuga.FieldNumber:
+	case xxx.FieldNumber:
 		return m.OldNumber(ctx)
-	case fuga.FieldCreatedAt:
+	case xxx.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
-	case fuga.FieldUpdatedAt:
+	case xxx.FieldUpdatedAt:
 		return m.OldUpdatedAt(ctx)
 	}
-	return nil, fmt.Errorf("unknown Fuga field %s", name)
+	return nil, fmt.Errorf("unknown Xxx field %s", name)
 }
 
 // SetField sets the value of a field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *FugaMutation) SetField(name string, value ent.Value) error {
+func (m *XxxMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case fuga.FieldName:
+	case xxx.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetName(v)
 		return nil
-	case fuga.FieldNumber:
-		v, ok := value.(int32)
+	case xxx.FieldNumber:
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetNumber(v)
 		return nil
-	case fuga.FieldCreatedAt:
+	case xxx.FieldCreatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreatedAt(v)
 		return nil
-	case fuga.FieldUpdatedAt:
+	case xxx.FieldUpdatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -398,15 +423,15 @@ func (m *FugaMutation) SetField(name string, value ent.Value) error {
 		m.SetUpdatedAt(v)
 		return nil
 	}
-	return fmt.Errorf("unknown Fuga field %s", name)
+	return fmt.Errorf("unknown Xxx field %s", name)
 }
 
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
-func (m *FugaMutation) AddedFields() []string {
+func (m *XxxMutation) AddedFields() []string {
 	var fields []string
 	if m.addnumber != nil {
-		fields = append(fields, fuga.FieldNumber)
+		fields = append(fields, xxx.FieldNumber)
 	}
 	return fields
 }
@@ -414,9 +439,9 @@ func (m *FugaMutation) AddedFields() []string {
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
-func (m *FugaMutation) AddedField(name string) (ent.Value, bool) {
+func (m *XxxMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case fuga.FieldNumber:
+	case xxx.FieldNumber:
 		return m.AddedNumber()
 	}
 	return nil, false
@@ -425,598 +450,117 @@ func (m *FugaMutation) AddedField(name string) (ent.Value, bool) {
 // AddField adds the value to the field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *FugaMutation) AddField(name string, value ent.Value) error {
+func (m *XxxMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case fuga.FieldNumber:
-		v, ok := value.(int32)
+	case xxx.FieldNumber:
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddNumber(v)
 		return nil
 	}
-	return fmt.Errorf("unknown Fuga numeric field %s", name)
+	return fmt.Errorf("unknown Xxx numeric field %s", name)
 }
 
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
-func (m *FugaMutation) ClearedFields() []string {
-	return nil
-}
-
-// FieldCleared returns a boolean indicating if a field with the given name was
-// cleared in this mutation.
-func (m *FugaMutation) FieldCleared(name string) bool {
-	_, ok := m.clearedFields[name]
-	return ok
-}
-
-// ClearField clears the value of the field with the given name. It returns an
-// error if the field is not defined in the schema.
-func (m *FugaMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown Fuga nullable field %s", name)
-}
-
-// ResetField resets all changes in the mutation for the field with the given name.
-// It returns an error if the field is not defined in the schema.
-func (m *FugaMutation) ResetField(name string) error {
-	switch name {
-	case fuga.FieldName:
-		m.ResetName()
-		return nil
-	case fuga.FieldNumber:
-		m.ResetNumber()
-		return nil
-	case fuga.FieldCreatedAt:
-		m.ResetCreatedAt()
-		return nil
-	case fuga.FieldUpdatedAt:
-		m.ResetUpdatedAt()
-		return nil
-	}
-	return fmt.Errorf("unknown Fuga field %s", name)
-}
-
-// AddedEdges returns all edge names that were set/added in this mutation.
-func (m *FugaMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// AddedIDs returns all IDs (to other nodes) that were added for the given edge
-// name in this mutation.
-func (m *FugaMutation) AddedIDs(name string) []ent.Value {
-	return nil
-}
-
-// RemovedEdges returns all edge names that were removed in this mutation.
-func (m *FugaMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
-// the given name in this mutation.
-func (m *FugaMutation) RemovedIDs(name string) []ent.Value {
-	return nil
-}
-
-// ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *FugaMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
-	return edges
-}
-
-// EdgeCleared returns a boolean which indicates if the edge with the given name
-// was cleared in this mutation.
-func (m *FugaMutation) EdgeCleared(name string) bool {
-	return false
-}
-
-// ClearEdge clears the value of the edge with the given name. It returns an error
-// if that edge is not defined in the schema.
-func (m *FugaMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown Fuga unique edge %s", name)
-}
-
-// ResetEdge resets all changes to the edge with the given name in this mutation.
-// It returns an error if the edge is not defined in the schema.
-func (m *FugaMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown Fuga edge %s", name)
-}
-
-// HogeMutation represents an operation that mutates the Hoge nodes in the graph.
-type HogeMutation struct {
-	config
-	op            Op
-	typ           string
-	id            *uuid.UUID
-	name          *string
-	number        *int32
-	addnumber     *int32
-	createdAt     *time.Time
-	updatedAt     *time.Time
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*Hoge, error)
-	predicates    []predicate.Hoge
-}
-
-var _ ent.Mutation = (*HogeMutation)(nil)
-
-// hogeOption allows management of the mutation configuration using functional options.
-type hogeOption func(*HogeMutation)
-
-// newHogeMutation creates new mutation for the Hoge entity.
-func newHogeMutation(c config, op Op, opts ...hogeOption) *HogeMutation {
-	m := &HogeMutation{
-		config:        c,
-		op:            op,
-		typ:           TypeHoge,
-		clearedFields: make(map[string]struct{}),
-	}
-	for _, opt := range opts {
-		opt(m)
-	}
-	return m
-}
-
-// withHogeID sets the ID field of the mutation.
-func withHogeID(id uuid.UUID) hogeOption {
-	return func(m *HogeMutation) {
-		var (
-			err   error
-			once  sync.Once
-			value *Hoge
-		)
-		m.oldValue = func(ctx context.Context) (*Hoge, error) {
-			once.Do(func() {
-				if m.done {
-					err = fmt.Errorf("querying old values post mutation is not allowed")
-				} else {
-					value, err = m.Client().Hoge.Get(ctx, id)
-				}
-			})
-			return value, err
-		}
-		m.id = &id
-	}
-}
-
-// withHoge sets the old Hoge of the mutation.
-func withHoge(node *Hoge) hogeOption {
-	return func(m *HogeMutation) {
-		m.oldValue = func(context.Context) (*Hoge, error) {
-			return node, nil
-		}
-		m.id = &node.ID
-	}
-}
-
-// Client returns a new `ent.Client` from the mutation. If the mutation was
-// executed in a transaction (ent.Tx), a transactional client is returned.
-func (m HogeMutation) Client() *Client {
-	client := &Client{config: m.config}
-	client.init()
-	return client
-}
-
-// Tx returns an `ent.Tx` for mutations that were executed in transactions;
-// it returns an error otherwise.
-func (m HogeMutation) Tx() (*Tx, error) {
-	if _, ok := m.driver.(*txDriver); !ok {
-		return nil, fmt.Errorf("ent: mutation is not running in a transaction")
-	}
-	tx := &Tx{config: m.config}
-	tx.init()
-	return tx, nil
-}
-
-// SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of Hoge entities.
-func (m *HogeMutation) SetID(id uuid.UUID) {
-	m.id = &id
-}
-
-// ID returns the ID value in the mutation. Note that the ID is only available
-// if it was provided to the builder or after it was returned from the database.
-func (m *HogeMutation) ID() (id uuid.UUID, exists bool) {
-	if m.id == nil {
-		return
-	}
-	return *m.id, true
-}
-
-// SetName sets the "name" field.
-func (m *HogeMutation) SetName(s string) {
-	m.name = &s
-}
-
-// Name returns the value of the "name" field in the mutation.
-func (m *HogeMutation) Name() (r string, exists bool) {
-	v := m.name
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldName returns the old "name" field's value of the Hoge entity.
-// If the Hoge object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *HogeMutation) OldName(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldName requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldName: %w", err)
-	}
-	return oldValue.Name, nil
-}
-
-// ResetName resets all changes to the "name" field.
-func (m *HogeMutation) ResetName() {
-	m.name = nil
-}
-
-// SetNumber sets the "number" field.
-func (m *HogeMutation) SetNumber(i int32) {
-	m.number = &i
-	m.addnumber = nil
-}
-
-// Number returns the value of the "number" field in the mutation.
-func (m *HogeMutation) Number() (r int32, exists bool) {
-	v := m.number
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldNumber returns the old "number" field's value of the Hoge entity.
-// If the Hoge object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *HogeMutation) OldNumber(ctx context.Context) (v int32, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldNumber is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldNumber requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldNumber: %w", err)
-	}
-	return oldValue.Number, nil
-}
-
-// AddNumber adds i to the "number" field.
-func (m *HogeMutation) AddNumber(i int32) {
-	if m.addnumber != nil {
-		*m.addnumber += i
-	} else {
-		m.addnumber = &i
-	}
-}
-
-// AddedNumber returns the value that was added to the "number" field in this mutation.
-func (m *HogeMutation) AddedNumber() (r int32, exists bool) {
-	v := m.addnumber
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetNumber resets all changes to the "number" field.
-func (m *HogeMutation) ResetNumber() {
-	m.number = nil
-	m.addnumber = nil
-}
-
-// SetCreatedAt sets the "createdAt" field.
-func (m *HogeMutation) SetCreatedAt(t time.Time) {
-	m.createdAt = &t
-}
-
-// CreatedAt returns the value of the "createdAt" field in the mutation.
-func (m *HogeMutation) CreatedAt() (r time.Time, exists bool) {
-	v := m.createdAt
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCreatedAt returns the old "createdAt" field's value of the Hoge entity.
-// If the Hoge object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *HogeMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldCreatedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldCreatedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
-	}
-	return oldValue.CreatedAt, nil
-}
-
-// ResetCreatedAt resets all changes to the "createdAt" field.
-func (m *HogeMutation) ResetCreatedAt() {
-	m.createdAt = nil
-}
-
-// SetUpdatedAt sets the "updatedAt" field.
-func (m *HogeMutation) SetUpdatedAt(t time.Time) {
-	m.updatedAt = &t
-}
-
-// UpdatedAt returns the value of the "updatedAt" field in the mutation.
-func (m *HogeMutation) UpdatedAt() (r time.Time, exists bool) {
-	v := m.updatedAt
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldUpdatedAt returns the old "updatedAt" field's value of the Hoge entity.
-// If the Hoge object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *HogeMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldUpdatedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldUpdatedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
-	}
-	return oldValue.UpdatedAt, nil
-}
-
-// ResetUpdatedAt resets all changes to the "updatedAt" field.
-func (m *HogeMutation) ResetUpdatedAt() {
-	m.updatedAt = nil
-}
-
-// Where appends a list predicates to the HogeMutation builder.
-func (m *HogeMutation) Where(ps ...predicate.Hoge) {
-	m.predicates = append(m.predicates, ps...)
-}
-
-// Op returns the operation name.
-func (m *HogeMutation) Op() Op {
-	return m.op
-}
-
-// Type returns the node type of this mutation (Hoge).
-func (m *HogeMutation) Type() string {
-	return m.typ
-}
-
-// Fields returns all fields that were changed during this mutation. Note that in
-// order to get all numeric fields that were incremented/decremented, call
-// AddedFields().
-func (m *HogeMutation) Fields() []string {
-	fields := make([]string, 0, 4)
-	if m.name != nil {
-		fields = append(fields, hoge.FieldName)
-	}
-	if m.number != nil {
-		fields = append(fields, hoge.FieldNumber)
-	}
-	if m.createdAt != nil {
-		fields = append(fields, hoge.FieldCreatedAt)
-	}
-	if m.updatedAt != nil {
-		fields = append(fields, hoge.FieldUpdatedAt)
-	}
-	return fields
-}
-
-// Field returns the value of a field with the given name. The second boolean
-// return value indicates that this field was not set, or was not defined in the
-// schema.
-func (m *HogeMutation) Field(name string) (ent.Value, bool) {
-	switch name {
-	case hoge.FieldName:
-		return m.Name()
-	case hoge.FieldNumber:
-		return m.Number()
-	case hoge.FieldCreatedAt:
-		return m.CreatedAt()
-	case hoge.FieldUpdatedAt:
-		return m.UpdatedAt()
-	}
-	return nil, false
-}
-
-// OldField returns the old value of the field from the database. An error is
-// returned if the mutation operation is not UpdateOne, or the query to the
-// database failed.
-func (m *HogeMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
-	switch name {
-	case hoge.FieldName:
-		return m.OldName(ctx)
-	case hoge.FieldNumber:
-		return m.OldNumber(ctx)
-	case hoge.FieldCreatedAt:
-		return m.OldCreatedAt(ctx)
-	case hoge.FieldUpdatedAt:
-		return m.OldUpdatedAt(ctx)
-	}
-	return nil, fmt.Errorf("unknown Hoge field %s", name)
-}
-
-// SetField sets the value of a field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *HogeMutation) SetField(name string, value ent.Value) error {
-	switch name {
-	case hoge.FieldName:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetName(v)
-		return nil
-	case hoge.FieldNumber:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetNumber(v)
-		return nil
-	case hoge.FieldCreatedAt:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCreatedAt(v)
-		return nil
-	case hoge.FieldUpdatedAt:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetUpdatedAt(v)
-		return nil
-	}
-	return fmt.Errorf("unknown Hoge field %s", name)
-}
-
-// AddedFields returns all numeric fields that were incremented/decremented during
-// this mutation.
-func (m *HogeMutation) AddedFields() []string {
+func (m *XxxMutation) ClearedFields() []string {
 	var fields []string
-	if m.addnumber != nil {
-		fields = append(fields, hoge.FieldNumber)
+	if m.FieldCleared(xxx.FieldName) {
+		fields = append(fields, xxx.FieldName)
+	}
+	if m.FieldCleared(xxx.FieldNumber) {
+		fields = append(fields, xxx.FieldNumber)
 	}
 	return fields
 }
 
-// AddedField returns the numeric value that was incremented/decremented on a field
-// with the given name. The second boolean return value indicates that this field
-// was not set, or was not defined in the schema.
-func (m *HogeMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case hoge.FieldNumber:
-		return m.AddedNumber()
-	}
-	return nil, false
-}
-
-// AddField adds the value to the field with the given name. It returns an error if
-// the field is not defined in the schema, or if the type mismatched the field
-// type.
-func (m *HogeMutation) AddField(name string, value ent.Value) error {
-	switch name {
-	case hoge.FieldNumber:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddNumber(v)
-		return nil
-	}
-	return fmt.Errorf("unknown Hoge numeric field %s", name)
-}
-
-// ClearedFields returns all nullable fields that were cleared during this
-// mutation.
-func (m *HogeMutation) ClearedFields() []string {
-	return nil
-}
-
 // FieldCleared returns a boolean indicating if a field with the given name was
 // cleared in this mutation.
-func (m *HogeMutation) FieldCleared(name string) bool {
+func (m *XxxMutation) FieldCleared(name string) bool {
 	_, ok := m.clearedFields[name]
 	return ok
 }
 
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
-func (m *HogeMutation) ClearField(name string) error {
-	return fmt.Errorf("unknown Hoge nullable field %s", name)
+func (m *XxxMutation) ClearField(name string) error {
+	switch name {
+	case xxx.FieldName:
+		m.ClearName()
+		return nil
+	case xxx.FieldNumber:
+		m.ClearNumber()
+		return nil
+	}
+	return fmt.Errorf("unknown Xxx nullable field %s", name)
 }
 
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
-func (m *HogeMutation) ResetField(name string) error {
+func (m *XxxMutation) ResetField(name string) error {
 	switch name {
-	case hoge.FieldName:
+	case xxx.FieldName:
 		m.ResetName()
 		return nil
-	case hoge.FieldNumber:
+	case xxx.FieldNumber:
 		m.ResetNumber()
 		return nil
-	case hoge.FieldCreatedAt:
+	case xxx.FieldCreatedAt:
 		m.ResetCreatedAt()
 		return nil
-	case hoge.FieldUpdatedAt:
+	case xxx.FieldUpdatedAt:
 		m.ResetUpdatedAt()
 		return nil
 	}
-	return fmt.Errorf("unknown Hoge field %s", name)
+	return fmt.Errorf("unknown Xxx field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
-func (m *HogeMutation) AddedEdges() []string {
+func (m *XxxMutation) AddedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
-func (m *HogeMutation) AddedIDs(name string) []ent.Value {
+func (m *XxxMutation) AddedIDs(name string) []ent.Value {
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
-func (m *HogeMutation) RemovedEdges() []string {
+func (m *XxxMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
-func (m *HogeMutation) RemovedIDs(name string) []ent.Value {
+func (m *XxxMutation) RemovedIDs(name string) []ent.Value {
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *HogeMutation) ClearedEdges() []string {
+func (m *XxxMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 0)
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
-func (m *HogeMutation) EdgeCleared(name string) bool {
+func (m *XxxMutation) EdgeCleared(name string) bool {
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
-func (m *HogeMutation) ClearEdge(name string) error {
-	return fmt.Errorf("unknown Hoge unique edge %s", name)
+func (m *XxxMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown Xxx unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
-func (m *HogeMutation) ResetEdge(name string) error {
-	return fmt.Errorf("unknown Hoge edge %s", name)
+func (m *XxxMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown Xxx edge %s", name)
 }

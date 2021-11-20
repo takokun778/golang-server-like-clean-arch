@@ -4,17 +4,12 @@ import (
 	"net"
 	"os"
 
-	"clean/logger"
+	"xxx/logger"
 
-	hc "clean/app/hoge/controller"
-	hg "clean/app/hoge/gateway"
-	hu "clean/app/hoge/usecase"
-	pbh "clean/proto/hoge"
-
-	fc "clean/app/fuga/controller"
-	fg "clean/app/fuga/gateway"
-	fu "clean/app/fuga/usecase"
-	pbf "clean/proto/fuga"
+	xc "xxx/app/xxx/controller"
+	xg "xxx/app/xxx/gateway"
+	xu "xxx/app/xxx/usecase"
+	pbx "xxx/proto/xxx"
 
 	"google.golang.org/grpc"
 )
@@ -32,21 +27,13 @@ func main() {
 
 	server := grpc.NewServer()
 
-	hogeGateway := hg.NewHogeGateway()
+	xxxGateway := xg.NewXxxGateway()
 
-	hogeUsecase := hu.NewHogeUsecase(hogeGateway)
+	xxxUsecase := xu.NewXxxUsecase(xxxGateway)
 
-	hogeController := hc.NewHogeController(hogeUsecase)
+	xxxController := xc.NewXxxController(xxxUsecase)
 
-	pbh.RegisterHogeServiceServer(server, hogeController)
-
-	fugaGateway := fg.NewFugaGateway()
-
-	fugaUsecase := fu.NewFugaUsecase(fugaGateway)
-
-	fugaController := fc.NewFugaController(fugaUsecase)
-
-	pbf.RegisterFugaServiceServer(server, fugaController)
+	pbx.RegisterXxxServiceServer(server, xxxController)
 
 	logger.StartLog()
 

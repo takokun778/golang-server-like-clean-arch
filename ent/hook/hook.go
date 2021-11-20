@@ -3,33 +3,20 @@
 package hook
 
 import (
-	"clean/ent"
 	"context"
 	"fmt"
+	"xxx/ent"
 )
 
-// The FugaFunc type is an adapter to allow the use of ordinary
-// function as Fuga mutator.
-type FugaFunc func(context.Context, *ent.FugaMutation) (ent.Value, error)
+// The XxxFunc type is an adapter to allow the use of ordinary
+// function as Xxx mutator.
+type XxxFunc func(context.Context, *ent.XxxMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f FugaFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.FugaMutation)
+func (f XxxFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.XxxMutation)
 	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.FugaMutation", m)
-	}
-	return f(ctx, mv)
-}
-
-// The HogeFunc type is an adapter to allow the use of ordinary
-// function as Hoge mutator.
-type HogeFunc func(context.Context, *ent.HogeMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f HogeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.HogeMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.HogeMutation", m)
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.XxxMutation", m)
 	}
 	return f(ctx, mv)
 }

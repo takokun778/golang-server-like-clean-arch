@@ -8,38 +8,23 @@ import (
 )
 
 var (
-	// FugasColumns holds the columns for the "fugas" table.
-	FugasColumns = []*schema.Column{
+	// XxxesColumns holds the columns for the "xxxes" table.
+	XxxesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeUUID},
-		{Name: "name", Type: field.TypeString},
-		{Name: "number", Type: field.TypeInt32},
+		{Name: "name", Type: field.TypeString, Nullable: true},
+		{Name: "number", Type: field.TypeInt, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 	}
-	// FugasTable holds the schema information for the "fugas" table.
-	FugasTable = &schema.Table{
-		Name:       "fugas",
-		Columns:    FugasColumns,
-		PrimaryKey: []*schema.Column{FugasColumns[0]},
-	}
-	// HogesColumns holds the columns for the "hoges" table.
-	HogesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID},
-		{Name: "name", Type: field.TypeString},
-		{Name: "number", Type: field.TypeInt32},
-		{Name: "created_at", Type: field.TypeTime},
-		{Name: "updated_at", Type: field.TypeTime},
-	}
-	// HogesTable holds the schema information for the "hoges" table.
-	HogesTable = &schema.Table{
-		Name:       "hoges",
-		Columns:    HogesColumns,
-		PrimaryKey: []*schema.Column{HogesColumns[0]},
+	// XxxesTable holds the schema information for the "xxxes" table.
+	XxxesTable = &schema.Table{
+		Name:       "xxxes",
+		Columns:    XxxesColumns,
+		PrimaryKey: []*schema.Column{XxxesColumns[0]},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		FugasTable,
-		HogesTable,
+		XxxesTable,
 	}
 )
 

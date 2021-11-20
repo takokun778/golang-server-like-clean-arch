@@ -3,38 +3,25 @@
 package ent
 
 import (
-	"clean/ent/fuga"
-	"clean/ent/hoge"
-	"clean/ent/schema"
 	"time"
+	"xxx/ent/schema"
+	"xxx/ent/xxx"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	fugaFields := schema.Fuga{}.Fields()
-	_ = fugaFields
-	// fugaDescCreatedAt is the schema descriptor for createdAt field.
-	fugaDescCreatedAt := fugaFields[3].Descriptor()
-	// fuga.DefaultCreatedAt holds the default value on creation for the createdAt field.
-	fuga.DefaultCreatedAt = fugaDescCreatedAt.Default.(func() time.Time)
-	// fugaDescUpdatedAt is the schema descriptor for updatedAt field.
-	fugaDescUpdatedAt := fugaFields[4].Descriptor()
-	// fuga.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
-	fuga.DefaultUpdatedAt = fugaDescUpdatedAt.Default.(func() time.Time)
-	// fuga.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
-	fuga.UpdateDefaultUpdatedAt = fugaDescUpdatedAt.UpdateDefault.(func() time.Time)
-	hogeFields := schema.Hoge{}.Fields()
-	_ = hogeFields
-	// hogeDescCreatedAt is the schema descriptor for createdAt field.
-	hogeDescCreatedAt := hogeFields[3].Descriptor()
-	// hoge.DefaultCreatedAt holds the default value on creation for the createdAt field.
-	hoge.DefaultCreatedAt = hogeDescCreatedAt.Default.(func() time.Time)
-	// hogeDescUpdatedAt is the schema descriptor for updatedAt field.
-	hogeDescUpdatedAt := hogeFields[4].Descriptor()
-	// hoge.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
-	hoge.DefaultUpdatedAt = hogeDescUpdatedAt.Default.(func() time.Time)
-	// hoge.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
-	hoge.UpdateDefaultUpdatedAt = hogeDescUpdatedAt.UpdateDefault.(func() time.Time)
+	xxxFields := schema.Xxx{}.Fields()
+	_ = xxxFields
+	// xxxDescCreatedAt is the schema descriptor for createdAt field.
+	xxxDescCreatedAt := xxxFields[3].Descriptor()
+	// xxx.DefaultCreatedAt holds the default value on creation for the createdAt field.
+	xxx.DefaultCreatedAt = xxxDescCreatedAt.Default.(func() time.Time)
+	// xxxDescUpdatedAt is the schema descriptor for updatedAt field.
+	xxxDescUpdatedAt := xxxFields[4].Descriptor()
+	// xxx.DefaultUpdatedAt holds the default value on creation for the updatedAt field.
+	xxx.DefaultUpdatedAt = xxxDescUpdatedAt.Default.(func() time.Time)
+	// xxx.UpdateDefaultUpdatedAt holds the default value on update for the updatedAt field.
+	xxx.UpdateDefaultUpdatedAt = xxxDescUpdatedAt.UpdateDefault.(func() time.Time)
 }

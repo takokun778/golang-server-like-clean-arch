@@ -7,10 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	"clean/ent/migrate"
+	"xxx/ent/migrate"
 
-	"clean/ent/fuga"
-	"clean/ent/hoge"
+	"xxx/ent/xxx"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -22,10 +21,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// Fuga is the client for interacting with the Fuga builders.
-	Fuga *FugaClient
-	// Hoge is the client for interacting with the Hoge builders.
-	Hoge *HogeClient
+	// Xxx is the client for interacting with the Xxx builders.
+	Xxx *XxxClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -39,8 +36,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.Fuga = NewFugaClient(c.config)
-	c.Hoge = NewHogeClient(c.config)
+	c.Xxx = NewXxxClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -74,8 +70,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:    ctx,
 		config: cfg,
-		Fuga:   NewFugaClient(cfg),
-		Hoge:   NewHogeClient(cfg),
+		Xxx:    NewXxxClient(cfg),
 	}, nil
 }
 
@@ -94,15 +89,14 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
 		config: cfg,
-		Fuga:   NewFugaClient(cfg),
-		Hoge:   NewHogeClient(cfg),
+		Xxx:    NewXxxClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		Fuga.
+//		Xxx.
 //		Query().
 //		Count(ctx)
 //
@@ -125,88 +119,87 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.Fuga.Use(hooks...)
-	c.Hoge.Use(hooks...)
+	c.Xxx.Use(hooks...)
 }
 
-// FugaClient is a client for the Fuga schema.
-type FugaClient struct {
+// XxxClient is a client for the Xxx schema.
+type XxxClient struct {
 	config
 }
 
-// NewFugaClient returns a client for the Fuga from the given config.
-func NewFugaClient(c config) *FugaClient {
-	return &FugaClient{config: c}
+// NewXxxClient returns a client for the Xxx from the given config.
+func NewXxxClient(c config) *XxxClient {
+	return &XxxClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `fuga.Hooks(f(g(h())))`.
-func (c *FugaClient) Use(hooks ...Hook) {
-	c.hooks.Fuga = append(c.hooks.Fuga, hooks...)
+// A call to `Use(f, g, h)` equals to `xxx.Hooks(f(g(h())))`.
+func (c *XxxClient) Use(hooks ...Hook) {
+	c.hooks.Xxx = append(c.hooks.Xxx, hooks...)
 }
 
-// Create returns a create builder for Fuga.
-func (c *FugaClient) Create() *FugaCreate {
-	mutation := newFugaMutation(c.config, OpCreate)
-	return &FugaCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a create builder for Xxx.
+func (c *XxxClient) Create() *XxxCreate {
+	mutation := newXxxMutation(c.config, OpCreate)
+	return &XxxCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of Fuga entities.
-func (c *FugaClient) CreateBulk(builders ...*FugaCreate) *FugaCreateBulk {
-	return &FugaCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of Xxx entities.
+func (c *XxxClient) CreateBulk(builders ...*XxxCreate) *XxxCreateBulk {
+	return &XxxCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for Fuga.
-func (c *FugaClient) Update() *FugaUpdate {
-	mutation := newFugaMutation(c.config, OpUpdate)
-	return &FugaUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Xxx.
+func (c *XxxClient) Update() *XxxUpdate {
+	mutation := newXxxMutation(c.config, OpUpdate)
+	return &XxxUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *FugaClient) UpdateOne(f *Fuga) *FugaUpdateOne {
-	mutation := newFugaMutation(c.config, OpUpdateOne, withFuga(f))
-	return &FugaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *XxxClient) UpdateOne(x *Xxx) *XxxUpdateOne {
+	mutation := newXxxMutation(c.config, OpUpdateOne, withXxx(x))
+	return &XxxUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *FugaClient) UpdateOneID(id uuid.UUID) *FugaUpdateOne {
-	mutation := newFugaMutation(c.config, OpUpdateOne, withFugaID(id))
-	return &FugaUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *XxxClient) UpdateOneID(id uuid.UUID) *XxxUpdateOne {
+	mutation := newXxxMutation(c.config, OpUpdateOne, withXxxID(id))
+	return &XxxUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Fuga.
-func (c *FugaClient) Delete() *FugaDelete {
-	mutation := newFugaMutation(c.config, OpDelete)
-	return &FugaDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Xxx.
+func (c *XxxClient) Delete() *XxxDelete {
+	mutation := newXxxMutation(c.config, OpDelete)
+	return &XxxDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a delete builder for the given entity.
-func (c *FugaClient) DeleteOne(f *Fuga) *FugaDeleteOne {
-	return c.DeleteOneID(f.ID)
+func (c *XxxClient) DeleteOne(x *Xxx) *XxxDeleteOne {
+	return c.DeleteOneID(x.ID)
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *FugaClient) DeleteOneID(id uuid.UUID) *FugaDeleteOne {
-	builder := c.Delete().Where(fuga.ID(id))
+func (c *XxxClient) DeleteOneID(id uuid.UUID) *XxxDeleteOne {
+	builder := c.Delete().Where(xxx.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &FugaDeleteOne{builder}
+	return &XxxDeleteOne{builder}
 }
 
-// Query returns a query builder for Fuga.
-func (c *FugaClient) Query() *FugaQuery {
-	return &FugaQuery{
+// Query returns a query builder for Xxx.
+func (c *XxxClient) Query() *XxxQuery {
+	return &XxxQuery{
 		config: c.config,
 	}
 }
 
-// Get returns a Fuga entity by its id.
-func (c *FugaClient) Get(ctx context.Context, id uuid.UUID) (*Fuga, error) {
-	return c.Query().Where(fuga.ID(id)).Only(ctx)
+// Get returns a Xxx entity by its id.
+func (c *XxxClient) Get(ctx context.Context, id uuid.UUID) (*Xxx, error) {
+	return c.Query().Where(xxx.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *FugaClient) GetX(ctx context.Context, id uuid.UUID) *Fuga {
+func (c *XxxClient) GetX(ctx context.Context, id uuid.UUID) *Xxx {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -215,96 +208,6 @@ func (c *FugaClient) GetX(ctx context.Context, id uuid.UUID) *Fuga {
 }
 
 // Hooks returns the client hooks.
-func (c *FugaClient) Hooks() []Hook {
-	return c.hooks.Fuga
-}
-
-// HogeClient is a client for the Hoge schema.
-type HogeClient struct {
-	config
-}
-
-// NewHogeClient returns a client for the Hoge from the given config.
-func NewHogeClient(c config) *HogeClient {
-	return &HogeClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `hoge.Hooks(f(g(h())))`.
-func (c *HogeClient) Use(hooks ...Hook) {
-	c.hooks.Hoge = append(c.hooks.Hoge, hooks...)
-}
-
-// Create returns a create builder for Hoge.
-func (c *HogeClient) Create() *HogeCreate {
-	mutation := newHogeMutation(c.config, OpCreate)
-	return &HogeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Hoge entities.
-func (c *HogeClient) CreateBulk(builders ...*HogeCreate) *HogeCreateBulk {
-	return &HogeCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Hoge.
-func (c *HogeClient) Update() *HogeUpdate {
-	mutation := newHogeMutation(c.config, OpUpdate)
-	return &HogeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *HogeClient) UpdateOne(h *Hoge) *HogeUpdateOne {
-	mutation := newHogeMutation(c.config, OpUpdateOne, withHoge(h))
-	return &HogeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *HogeClient) UpdateOneID(id uuid.UUID) *HogeUpdateOne {
-	mutation := newHogeMutation(c.config, OpUpdateOne, withHogeID(id))
-	return &HogeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Hoge.
-func (c *HogeClient) Delete() *HogeDelete {
-	mutation := newHogeMutation(c.config, OpDelete)
-	return &HogeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *HogeClient) DeleteOne(h *Hoge) *HogeDeleteOne {
-	return c.DeleteOneID(h.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *HogeClient) DeleteOneID(id uuid.UUID) *HogeDeleteOne {
-	builder := c.Delete().Where(hoge.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &HogeDeleteOne{builder}
-}
-
-// Query returns a query builder for Hoge.
-func (c *HogeClient) Query() *HogeQuery {
-	return &HogeQuery{
-		config: c.config,
-	}
-}
-
-// Get returns a Hoge entity by its id.
-func (c *HogeClient) Get(ctx context.Context, id uuid.UUID) (*Hoge, error) {
-	return c.Query().Where(hoge.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *HogeClient) GetX(ctx context.Context, id uuid.UUID) *Hoge {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *HogeClient) Hooks() []Hook {
-	return c.hooks.Hoge
+func (c *XxxClient) Hooks() []Hook {
+	return c.hooks.Xxx
 }

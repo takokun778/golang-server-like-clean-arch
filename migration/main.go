@@ -1,11 +1,12 @@
 package main
 
 import (
-	"clean/ent"
 	"context"
 	"fmt"
 	"log"
 	"os"
+
+	"xxx/ent"
 
 	_ "github.com/lib/pq"
 )

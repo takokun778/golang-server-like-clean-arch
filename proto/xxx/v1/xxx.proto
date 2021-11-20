@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package xxx.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./xxx";
+
+message Xxx {
+    string id = 1;
+    string name = 2;
+    int32 number = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+service XxxService {
+    rpc Create (CreateRequest) returns (CreateResponse);
+    rpc Read (ReadRequest) returns (ReadResponse);
+    rpc ReadAll (ReadAllRequest) returns (ReadAllResponse);
+    rpc Update (UpdateRequest) returns (UpdateResponse);
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
+}
+
+message CreateRequest {
+    string name = 1;
+    int32 number = 2;
+}
+
+message CreateResponse {
+    Xxx xxx = 1;
+}
+
+message ReadRequest {
+    string id = 1;
+}
+
+message ReadResponse {
+    Xxx xxx = 1;
+}
+
+message ReadAllRequest {
+}
+
+message ReadAllResponse {
+    repeated Xxx xxxs = 1;
+}
+
+message UpdateRequest {
+    string id = 1;
+    string name = 2;
+    int32 number = 3;
+}
+
+message UpdateResponse {
+    Xxx xxx = 1;
+}
+
+message DeleteRequest {
+    string id = 1;
+}
+
+message DeleteResponse {
+    Xxx xxx = 1;
+}
