@@ -7,21 +7,23 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput) (*fuga.UsecaseDeleteOutput, error) {
+func (u *fugaUsecase) Delete(ctx context.Context, input fuga.UsecaseDeleteInput) (fuga.UsecaseDeleteOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
 	result, err := u.fugaRepository.Find(timeOutCtx, input.Id)
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return fuga.UsecaseDeleteOutput{}, common.NewInternalServerError(err, "")
 	}
 
 	err = u.fugaRepository.Delete(timeOutCtx, input.Id)
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return fuga.UsecaseDeleteOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	output := new(fuga.UsecaseDeleteOutput)
-	output.Fuga = result
-	return output, nil
+	return fuga.UsecaseDeleteOutput{
+		Fuga: result,
+	}, nil
 }

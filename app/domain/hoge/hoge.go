@@ -5,52 +5,42 @@ import (
 )
 
 type Hoge struct {
-	id        common.Id
-	name      Name
-	number    Number
-	createdAt common.Time
-	updatedAt common.Time
+	values
 }
 
-func (h *Hoge) Id() common.Id {
-	return h.id
+func (h Hoge) Values() Values {
+	return Values{h.values}
 }
 
-func (h *Hoge) Name() Name {
-	return h.name
-}
-
-func (h *Hoge) Number() Number {
-	return h.number
-}
-
-func (h *Hoge) CreatedAt() common.Time {
-	return h.createdAt
-}
-
-func (h *Hoge) UpdatedAt() common.Time {
-	return h.updatedAt
-}
-
-func New(
+func constructor(
 	id common.Id,
 	name Name,
 	number Number,
 	createdAt common.Time,
 	updatedAt common.Time,
-) *Hoge {
+) Hoge {
 	hoge := new(Hoge)
 	hoge.id = id
 	hoge.name = name
 	hoge.number = number
 	hoge.createdAt = createdAt
 	hoge.updatedAt = updatedAt
-	return hoge
+	return *hoge
 }
 
-func CreateNew(name Name, number Number) *Hoge {
+func Reconstruct(values Values) Hoge {
+	return constructor(
+		values.id,
+		values.name,
+		values.number,
+		values.createdAt,
+		values.updatedAt,
+	)
+}
+
+func Create(name Name, number Number) Hoge {
 	now := common.Now()
-	return New(
+	return constructor(
 		common.CreateRandomId(),
 		name,
 		number,
@@ -59,8 +49,8 @@ func CreateNew(name Name, number Number) *Hoge {
 	)
 }
 
-func (h *Hoge) Update(name Name, number Number) *Hoge {
-	return New(
+func (h Hoge) Update(name Name, number Number) Hoge {
+	return constructor(
 		h.id,
 		name,
 		number,

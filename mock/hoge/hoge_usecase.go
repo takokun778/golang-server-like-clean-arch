@@ -36,10 +36,10 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput) (*hoge.UsecaseCreateOutput, error) {
+func (m *MockUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput) (hoge.UsecaseCreateOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, input)
-	ret0, _ := ret[0].(*hoge.UsecaseCreateOutput)
+	ret0, _ := ret[0].(hoge.UsecaseCreateOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -51,10 +51,10 @@ func (mr *MockUsecaseMockRecorder) Create(ctx, input interface{}) *gomock.Call {
 }
 
 // Delete mocks base method.
-func (m *MockUsecase) Delete(ctx context.Context, input hoge.UsecaseDeleteInput) (*hoge.UsecaseDeleteOutput, error) {
+func (m *MockUsecase) Delete(ctx context.Context, input hoge.UsecaseDeleteInput) (hoge.UsecaseDeleteOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", ctx, input)
-	ret0, _ := ret[0].(*hoge.UsecaseDeleteOutput)
+	ret0, _ := ret[0].(hoge.UsecaseDeleteOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -66,10 +66,10 @@ func (mr *MockUsecaseMockRecorder) Delete(ctx, input interface{}) *gomock.Call {
 }
 
 // Fetch mocks base method.
-func (m *MockUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (*hoge.UsecaseFetchOutput, error) {
+func (m *MockUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (hoge.UsecaseFetchOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Fetch", ctx, input)
-	ret0, _ := ret[0].(*hoge.UsecaseFetchOutput)
+	ret0, _ := ret[0].(hoge.UsecaseFetchOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -81,10 +81,10 @@ func (mr *MockUsecaseMockRecorder) Fetch(ctx, input interface{}) *gomock.Call {
 }
 
 // FetchAll mocks base method.
-func (m *MockUsecase) FetchAll(ctx context.Context, input hoge.UsecaseFetchAllInput) (*hoge.UsecaseFetchAllOutput, error) {
+func (m *MockUsecase) FetchAll(ctx context.Context, input hoge.UsecaseFetchAllInput) (hoge.UsecaseFetchAllOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FetchAll", ctx, input)
-	ret0, _ := ret[0].(*hoge.UsecaseFetchAllOutput)
+	ret0, _ := ret[0].(hoge.UsecaseFetchAllOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -96,10 +96,10 @@ func (mr *MockUsecaseMockRecorder) FetchAll(ctx, input interface{}) *gomock.Call
 }
 
 // Update mocks base method.
-func (m *MockUsecase) Update(ctx context.Context, input hoge.UsecaseUpdateInput) (*hoge.UsecaseUpdateOutput, error) {
+func (m *MockUsecase) Update(ctx context.Context, input hoge.UsecaseUpdateInput) (hoge.UsecaseUpdateOutput, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, input)
-	ret0, _ := ret[0].(*hoge.UsecaseUpdateOutput)
+	ret0, _ := ret[0].(hoge.UsecaseUpdateOutput)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

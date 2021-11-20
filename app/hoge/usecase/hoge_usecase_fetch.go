@@ -7,16 +7,17 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (*hoge.UsecaseFetchOutput, error) {
+func (u *hogeUsecase) Fetch(ctx context.Context, input hoge.UsecaseFetchInput) (hoge.UsecaseFetchOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
 	result, err := u.hogeRepository.Find(timeOutCtx, input.Id)
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return hoge.UsecaseFetchOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	output := new(hoge.UsecaseFetchOutput)
-	output.Hoge = result
-	return output, nil
+	return hoge.UsecaseFetchOutput{
+		Hoge: result,
+	}, nil
 }

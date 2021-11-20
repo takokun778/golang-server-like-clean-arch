@@ -19,7 +19,7 @@ func TestFugaUsecaseCreate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		mockResult := fuga.CreateNew("fuga", 1)
+		mockResult := fuga.Create("fuga", 1)
 
 		mmg := mf.NewMockRepository(ctrl)
 

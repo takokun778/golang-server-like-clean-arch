@@ -18,7 +18,7 @@ func TestHogeControllerDelete(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		model := hoge.CreateNew("hoge", 1)
+		model := hoge.Create("hoge", 1)
 
 		mhu := mh.NewMockUsecase(ctrl)
 
@@ -27,7 +27,7 @@ func TestHogeControllerDelete(t *testing.T) {
 		}
 
 		mockResult := hoge.UsecaseDeleteOutput{
-			Hoge: model,
+			Hoge: model.Values(),
 		}
 
 		mhu.EXPECT().Delete(gomock.Any(), mockInput).Return(&mockResult, nil)

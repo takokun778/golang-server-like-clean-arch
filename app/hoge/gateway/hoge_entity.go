@@ -8,8 +8,8 @@ import (
 
 type HogeEntity ent.Hoge
 
-func (e *HogeEntity) ToDomain() *hoge.Hoge {
-	return hoge.New(
+func (e *HogeEntity) ToValues() hoge.Values {
+	return hoge.NewValues(
 		common.Id(e.ID),
 		hoge.Name(e.Name),
 		hoge.Number(e.Number),

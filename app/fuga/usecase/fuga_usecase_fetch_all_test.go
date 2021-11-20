@@ -19,10 +19,10 @@ func TestFugaUsecaseFetchAll(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		list := make([]*fuga.Fuga, 0)
+		list := make([]fuga.Fuga, 0)
 
 		for i := 0; i < 5; i++ {
-			list = append(list, fuga.CreateNew("fuga", 1))
+			list = append(list, fuga.Create("fuga", 1))
 		}
 
 		mockResult := fuga.NewList(list)

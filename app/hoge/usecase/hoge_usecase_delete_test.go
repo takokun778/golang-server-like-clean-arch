@@ -19,7 +19,7 @@ func TestHogeUsecaseDelete(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		mockResult := hoge.CreateNew("hoge", 1)
+		mockResult := hoge.Create("hoge", 1).Values()
 
 		mmg := mh.NewMockRepository(ctrl)
 

@@ -18,7 +18,7 @@ func TestHogeControllerCreate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		model := hoge.CreateNew("hoge", 1)
+		model := hoge.Create("hoge", 1)
 
 		mhu := mh.NewMockUsecase(ctrl)
 
@@ -28,7 +28,7 @@ func TestHogeControllerCreate(t *testing.T) {
 		}
 
 		mockResult := hoge.UsecaseCreateOutput{
-			Hoge: model,
+			Hoge: model.Values(),
 		}
 
 		mhu.EXPECT().Create(gomock.Any(), mockInput).Return(&mockResult, nil)

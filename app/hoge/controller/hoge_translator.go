@@ -9,7 +9,7 @@ import (
 
 type HogeTranslator struct{}
 
-func (HogeTranslator) ToProto(hoge *hoge.Hoge) *pbHoge.Hoge {
+func (HogeTranslator) ToProto(hoge hoge.Values) *pbHoge.Hoge {
 	proto := new(pbHoge.Hoge)
 	proto.Id = hoge.Id().Value().String()
 	proto.Name = hoge.Name().Value()
@@ -19,10 +19,10 @@ func (HogeTranslator) ToProto(hoge *hoge.Hoge) *pbHoge.Hoge {
 	return proto
 }
 
-func (HogeTranslator) ToProtoList(hogeList *hoge.HogeList) []*pbHoge.Hoge {
+func (HogeTranslator) ToProtoList(hogeList hoge.ValuesList) []*pbHoge.Hoge {
 	proto := make([]*pbHoge.Hoge, 0)
 
-	for _, hoge := range *hogeList {
+	for _, hoge := range hogeList {
 		proto = append(proto, HogeTranslator{}.ToProto(hoge))
 	}
 

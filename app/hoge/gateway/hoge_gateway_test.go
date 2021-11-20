@@ -36,11 +36,11 @@ func resetTable() {
 
 func TestHogeGatewaySave(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := dh.CreateNew(
+		fuga := dh.Create(
 			dh.Name("fuga"),
 			dh.Number(1),
 		)
-		result, err := gateway.Save(ctx, fuga)
+		result, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -50,11 +50,11 @@ func TestHogeGatewaySave(t *testing.T) {
 
 func TestHogeGatewayFind(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := dh.CreateNew(
+		fuga := dh.Create(
 			dh.Name("fuga"),
 			dh.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -68,11 +68,11 @@ func TestHogeGatewayFind(t *testing.T) {
 
 func TestHogeGatewayUpdate(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := dh.CreateNew(
+		fuga := dh.Create(
 			dh.Name("fuga"),
 			dh.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -80,7 +80,7 @@ func TestHogeGatewayUpdate(t *testing.T) {
 			dh.Name("fugafuga"),
 			dh.Number(2),
 		)
-		result, err := gateway.Update(ctx, fuga)
+		result, err := gateway.Update(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -95,11 +95,11 @@ func TestHogeGatewayUpdate(t *testing.T) {
 
 func TestHogeGatewayDelete(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := dh.CreateNew(
+		fuga := dh.Create(
 			dh.Name("fuga"),
 			dh.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}

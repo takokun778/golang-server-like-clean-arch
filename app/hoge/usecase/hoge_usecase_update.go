@@ -7,23 +7,25 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) Update(ctx context.Context, input hoge.UsecaseUpdateInput) (*hoge.UsecaseUpdateOutput, error) {
+func (u *hogeUsecase) Update(ctx context.Context, input hoge.UsecaseUpdateInput) (hoge.UsecaseUpdateOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
 	src, err := u.hogeRepository.Find(timeOutCtx, input.Id)
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return hoge.UsecaseUpdateOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	dst := src.Update(input.Name, input.Number)
+	dst := hoge.Reconstruct(src).Update(input.Name, input.Number)
 
-	dst, err = u.hogeRepository.Update(timeOutCtx, dst)
+	_, err = u.hogeRepository.Update(timeOutCtx, dst.Values())
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return hoge.UsecaseUpdateOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	output := new(hoge.UsecaseUpdateOutput)
-	output.Hoge = dst
-	return output, nil
+	return hoge.UsecaseUpdateOutput{
+		Hoge: dst.Values(),
+	}, nil
 }

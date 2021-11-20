@@ -7,18 +7,19 @@ import (
 	"time"
 )
 
-func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (*fuga.UsecaseCreateOutput, error) {
+func (u *fugaUsecase) Create(ctx context.Context, input fuga.UsecaseCreateInput) (fuga.UsecaseCreateOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result := fuga.CreateNew(input.Name, input.Number)
+	result := fuga.Create(input.Name, input.Number)
 
-	result, err := u.fugaRepository.Save(timeOutCtx, result)
+	_, err := u.fugaRepository.Save(timeOutCtx, result.Values())
+
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return fuga.UsecaseCreateOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	output := new(fuga.UsecaseCreateOutput)
-	output.Fuga = result
-	return output, nil
+	return fuga.UsecaseCreateOutput{
+		Fuga: result.Values(),
+	}, nil
 }

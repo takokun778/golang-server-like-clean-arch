@@ -18,7 +18,7 @@ func TestFugaControllerFetch(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		model := fuga.CreateNew("fuga", 1)
+		model := fuga.Create("fuga", 1)
 
 		mfu := mf.NewMockUsecase(ctrl)
 
@@ -27,7 +27,7 @@ func TestFugaControllerFetch(t *testing.T) {
 		}
 
 		mockResult := fuga.UsecaseFetchOutput{
-			Fuga: model,
+			Fuga: model.Values(),
 		}
 
 		mfu.EXPECT().Fetch(gomock.Any(), mockInput).Return(&mockResult, nil)

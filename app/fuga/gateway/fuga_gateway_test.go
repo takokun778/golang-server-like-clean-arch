@@ -36,11 +36,11 @@ func resetTable() {
 
 func TestFugaGatewaySave(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := df.CreateNew(
+		fuga := df.Create(
 			df.Name("fuga"),
 			df.Number(1),
 		)
-		result, err := gateway.Save(ctx, fuga)
+		result, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -50,11 +50,11 @@ func TestFugaGatewaySave(t *testing.T) {
 
 func TestFugaGatewayFind(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := df.CreateNew(
+		fuga := df.Create(
 			df.Name("fuga"),
 			df.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -68,11 +68,11 @@ func TestFugaGatewayFind(t *testing.T) {
 
 func TestFugaGatewayUpdate(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := df.CreateNew(
+		fuga := df.Create(
 			df.Name("fuga"),
 			df.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -80,26 +80,26 @@ func TestFugaGatewayUpdate(t *testing.T) {
 			df.Name("fugafuga"),
 			df.Number(2),
 		)
-		result, err := gateway.Update(ctx, fuga)
+		result, err := gateway.Update(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}
-		assert.Equal(t, result, fuga)
+		assert.Equal(t, result, fuga.Values())
 		foundFuga, err := gateway.Find(ctx, fuga.Id())
 		if err != nil {
 			log.Fatal(err)
 		}
-		assert.Equal(t, foundFuga, fuga)
+		assert.Equal(t, foundFuga, fuga.Values())
 	})
 }
 
 func TestFugaGatewayDelete(t *testing.T) {
 	t.Run("normal", func(t *testing.T) {
-		fuga := df.CreateNew(
+		fuga := df.Create(
 			df.Name("fuga"),
 			df.Number(1),
 		)
-		_, err := gateway.Save(ctx, fuga)
+		_, err := gateway.Save(ctx, fuga.Values())
 		if err != nil {
 			log.Fatal(err)
 		}

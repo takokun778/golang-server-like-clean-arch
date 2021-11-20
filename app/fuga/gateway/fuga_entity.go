@@ -8,8 +8,8 @@ import (
 
 type FugaEntity ent.Fuga
 
-func (e *FugaEntity) ToDomain() *fuga.Fuga {
-	return fuga.New(
+func (e *FugaEntity) ToValues() fuga.Values {
+	return fuga.NewValues(
 		common.Id(e.ID),
 		fuga.Name(e.Name),
 		fuga.Number(e.Number),

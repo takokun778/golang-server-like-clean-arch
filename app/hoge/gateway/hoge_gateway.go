@@ -18,35 +18,35 @@ func NewHogeGateway() hoge.Repository {
 	return gw
 }
 
-func (g *hogeGateway) Save(ctx context.Context, hoge *hoge.Hoge) (*hoge.Hoge, error) {
+func (g *hogeGateway) Save(ctx context.Context, values hoge.Values) (hoge.Values, error) {
 	_, err := g.db.Hoge.
 		Create().
-		SetID(hoge.Id().Value()).
-		SetName(hoge.Name().Value()).
-		SetNumber(hoge.Number().Value()).
-		SetCreatedAt(hoge.CreatedAt().Value()).
-		SetUpdatedAt(hoge.UpdatedAt().Value()).
+		SetID(values.Id().Value()).
+		SetName(values.Name().Value()).
+		SetNumber(values.Number().Value()).
+		SetCreatedAt(values.CreatedAt().Value()).
+		SetUpdatedAt(values.UpdatedAt().Value()).
 		Save(ctx)
 
 	if err != nil {
-		return nil, err
+		return hoge.Values{}, err
 	}
 
-	return hoge, nil
+	return values, nil
 }
 
-func (g *hogeGateway) Find(ctx context.Context, id common.Id) (*hoge.Hoge, error) {
+func (g *hogeGateway) Find(ctx context.Context, id common.Id) (hoge.Values, error) {
 	res, err := g.db.Hoge.Get(ctx, id.Value())
 	if err != nil {
-		return nil, err
+		return hoge.Values{}, err
 	}
 
 	entity := HogeEntity(*res)
 
-	return entity.ToDomain(), nil
+	return entity.ToValues(), nil
 }
 
-func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
+func (g *hogeGateway) FindAll(ctx context.Context) (hoge.ValuesList, error) {
 	res, err := g.db.Hoge.
 		Query().All(ctx)
 
@@ -54,29 +54,29 @@ func (g *hogeGateway) FindAll(ctx context.Context) (*hoge.HogeList, error) {
 		return nil, err
 	}
 
-	list := make([]*hoge.Hoge, 0)
+	list := make([]hoge.Values, 0)
 
 	for _, r := range res {
 		entity := HogeEntity(*r)
-		list = append(list, entity.ToDomain())
+		list = append(list, entity.ToValues())
 	}
 
-	return hoge.NewList(list), nil
+	return hoge.NewValuesList(list), nil
 }
 
-func (g *hogeGateway) Update(ctx context.Context, hoge *hoge.Hoge) (*hoge.Hoge, error) {
+func (g *hogeGateway) Update(ctx context.Context, values hoge.Values) (hoge.Values, error) {
 	_, err := g.db.Hoge.
 		Update().
-		SetName(hoge.Name().Value()).
-		SetNumber(hoge.Number().Value()).
-		SetUpdatedAt(hoge.UpdatedAt().Value()).
+		SetName(values.Name().Value()).
+		SetNumber(values.Number().Value()).
+		SetUpdatedAt(values.UpdatedAt().Value()).
 		Save(ctx)
 
 	if err != nil {
-		return nil, err
+		return hoge.Values{}, err
 	}
 
-	return hoge, nil
+	return values, nil
 }
 
 func (g *hogeGateway) Delete(ctx context.Context, id common.Id) error {

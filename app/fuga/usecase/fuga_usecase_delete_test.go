@@ -19,11 +19,11 @@ func TestFugaUsecaseDelete(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		mockResult := fuga.CreateNew("fuga", 1)
+		mockResult := fuga.Create("fuga", 1)
 
 		mmg := mf.NewMockRepository(ctrl)
 
-		mmg.EXPECT().Find(gomock.Any(), mockResult.Id()).Return(mockResult, nil)
+		mmg.EXPECT().Find(gomock.Any(), mockResult.Id()).Return(mockResult.Values(), nil)
 		mmg.EXPECT().Delete(gomock.Any(), mockResult.Id()).Return(nil)
 
 		usecase := fu.NewFugaUsecase(mmg)
@@ -38,6 +38,6 @@ func TestFugaUsecaseDelete(t *testing.T) {
 			log.Fatal(err)
 		}
 
-		assert.Equal(t, result.Fuga, mockResult)
+		assert.Equal(t, result.Fuga, mockResult.Values())
 	})
 }

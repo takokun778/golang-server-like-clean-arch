@@ -51,10 +51,10 @@ func (mr *MockRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
 }
 
 // Find mocks base method.
-func (m *MockRepository) Find(ctx context.Context, id common.Id) (*hoge.Hoge, error) {
+func (m *MockRepository) Find(ctx context.Context, id common.Id) (hoge.Values, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Find", ctx, id)
-	ret0, _ := ret[0].(*hoge.Hoge)
+	ret0, _ := ret[0].(hoge.Values)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -66,10 +66,10 @@ func (mr *MockRepositoryMockRecorder) Find(ctx, id interface{}) *gomock.Call {
 }
 
 // FindAll mocks base method.
-func (m *MockRepository) FindAll(ctx context.Context) (*hoge.HogeList, error) {
+func (m *MockRepository) FindAll(ctx context.Context) (hoge.ValuesList, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindAll", ctx)
-	ret0, _ := ret[0].(*hoge.HogeList)
+	ret0, _ := ret[0].(hoge.ValuesList)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -81,10 +81,10 @@ func (mr *MockRepositoryMockRecorder) FindAll(ctx interface{}) *gomock.Call {
 }
 
 // Save mocks base method.
-func (m *MockRepository) Save(ctx context.Context, model *hoge.Hoge) (*hoge.Hoge, error) {
+func (m *MockRepository) Save(ctx context.Context, model hoge.Values) (hoge.Values, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Save", ctx, model)
-	ret0, _ := ret[0].(*hoge.Hoge)
+	ret0, _ := ret[0].(hoge.Values)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -96,10 +96,10 @@ func (mr *MockRepositoryMockRecorder) Save(ctx, model interface{}) *gomock.Call 
 }
 
 // Update mocks base method.
-func (m *MockRepository) Update(ctx context.Context, model *hoge.Hoge) (*hoge.Hoge, error) {
+func (m *MockRepository) Update(ctx context.Context, model hoge.Values) (hoge.Values, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", ctx, model)
-	ret0, _ := ret[0].(*hoge.Hoge)
+	ret0, _ := ret[0].(hoge.Values)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

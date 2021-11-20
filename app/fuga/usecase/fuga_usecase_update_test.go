@@ -19,14 +19,14 @@ func TestFugaUsecaseUpdate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		mockResult := fuga.CreateNew("fuga", 1)
-		mockFindResult := fuga.New(mockResult.Id(), mockResult.Name(), mockResult.Number(), mockResult.CreatedAt(), mockResult.UpdatedAt())
+		mockResult := fuga.Create("fuga", 1)
+		mockFindResult := fuga.Reconstruct(mockResult.Values())
 		mockResult.Update("fugafuga", 2)
 
 		mmg := mf.NewMockRepository(ctrl)
 
-		mmg.EXPECT().Find(gomock.Any(), mockFindResult.Id()).Return(mockFindResult, nil)
-		mmg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(mockResult, nil)
+		mmg.EXPECT().Find(gomock.Any(), mockFindResult.Id()).Return(mockFindResult.Values(), nil)
+		mmg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(mockResult.Values(), nil)
 
 		usecase := fu.NewFugaUsecase(mmg)
 

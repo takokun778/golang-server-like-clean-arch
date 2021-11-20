@@ -9,7 +9,7 @@ import (
 
 type FugaTranslator struct{}
 
-func (FugaTranslator) ToProto(fuga *fuga.Fuga) *pbFuga.Fuga {
+func (FugaTranslator) ToProto(fuga fuga.Values) *pbFuga.Fuga {
 	proto := new(pbFuga.Fuga)
 	proto.Id = fuga.Id().Value().String()
 	proto.Name = fuga.Name().Value()
@@ -19,10 +19,10 @@ func (FugaTranslator) ToProto(fuga *fuga.Fuga) *pbFuga.Fuga {
 	return proto
 }
 
-func (FugaTranslator) ToProtoList(fugaList *fuga.FugaList) []*pbFuga.Fuga {
+func (FugaTranslator) ToProtoList(fugaList fuga.ValuesList) []*pbFuga.Fuga {
 	proto := make([]*pbFuga.Fuga, 0)
 
-	for _, fuga := range *fugaList {
+	for _, fuga := range fugaList {
 		proto = append(proto, FugaTranslator{}.ToProto(fuga))
 	}
 

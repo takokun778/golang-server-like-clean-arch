@@ -8,11 +8,11 @@ import (
 )
 
 type Usecase interface {
-	Create(ctx context.Context, input UsecaseCreateInput) (*UsecaseCreateOutput, error)
-	Fetch(ctx context.Context, input UsecaseFetchInput) (*UsecaseFetchOutput, error)
-	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (*UsecaseFetchAllOutput, error)
-	Update(ctx context.Context, input UsecaseUpdateInput) (*UsecaseUpdateOutput, error)
-	Delete(ctx context.Context, input UsecaseDeleteInput) (*UsecaseDeleteOutput, error)
+	Create(ctx context.Context, input UsecaseCreateInput) (UsecaseCreateOutput, error)
+	Fetch(ctx context.Context, input UsecaseFetchInput) (UsecaseFetchOutput, error)
+	FetchAll(ctx context.Context, input UsecaseFetchAllInput) (UsecaseFetchAllOutput, error)
+	Update(ctx context.Context, input UsecaseUpdateInput) (UsecaseUpdateOutput, error)
+	Delete(ctx context.Context, input UsecaseDeleteInput) (UsecaseDeleteOutput, error)
 }
 
 type UsecaseCreateInput struct {
@@ -21,7 +21,7 @@ type UsecaseCreateInput struct {
 }
 
 type UsecaseCreateOutput struct {
-	Fuga *Fuga
+	Fuga Values
 }
 
 type UsecaseFetchInput struct {
@@ -29,14 +29,14 @@ type UsecaseFetchInput struct {
 }
 
 type UsecaseFetchOutput struct {
-	Fuga *Fuga
+	Fuga Values
 }
 
 type UsecaseFetchAllInput struct {
 }
 
 type UsecaseFetchAllOutput struct {
-	FugaList *FugaList
+	FugaList ValuesList
 }
 
 type UsecaseUpdateInput struct {
@@ -46,7 +46,7 @@ type UsecaseUpdateInput struct {
 }
 
 type UsecaseUpdateOutput struct {
-	Fuga *Fuga
+	Fuga Values
 }
 
 type UsecaseDeleteInput struct {
@@ -54,5 +54,5 @@ type UsecaseDeleteInput struct {
 }
 
 type UsecaseDeleteOutput struct {
-	Fuga *Fuga
+	Fuga Values
 }

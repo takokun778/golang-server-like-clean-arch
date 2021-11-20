@@ -7,9 +7,9 @@ import (
 )
 
 type Repository interface {
-	Save(ctx context.Context, model *Fuga) (*Fuga, error)
-	Find(ctx context.Context, id common.Id) (*Fuga, error)
-	FindAll(ctx context.Context) (*FugaList, error)
-	Update(ctx context.Context, model *Fuga) (*Fuga, error)
+	Save(ctx context.Context, values Values) (Values, error)
+	Find(ctx context.Context, id common.Id) (Values, error)
+	FindAll(ctx context.Context) (ValuesList, error)
+	Update(ctx context.Context, values Values) (Values, error)
 	Delete(ctx context.Context, id common.Id) error
 }

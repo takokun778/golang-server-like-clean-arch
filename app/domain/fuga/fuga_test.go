@@ -16,8 +16,15 @@ func TestNew(t *testing.T) {
 	now := common.Now()
 	createdAt := now
 	updatedAt := now
+	values := fuga.NewValues(
+		id,
+		name,
+		number,
+		now,
+		now,
+	)
 
-	result := fuga.New(id, name, number, createdAt, updatedAt)
+	result := fuga.Reconstruct(values)
 
 	assert.Equal(t, result.Id(), id)
 	assert.Equal(t, result.Name(), name)
@@ -30,7 +37,7 @@ func TestNewCreate(t *testing.T) {
 	name := fuga.Name("create")
 	number := fuga.Number(1)
 
-	result := fuga.CreateNew(name, number)
+	result := fuga.Create(name, number)
 
 	assert.Equal(t, result.Name(), name)
 	assert.Equal(t, result.Number(), number)
@@ -39,7 +46,7 @@ func TestNewCreate(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 
-	src := fuga.CreateNew(fuga.Name("new"), fuga.Number(1))
+	src := fuga.Create(fuga.Name("new"), fuga.Number(1))
 
 	time.Sleep(time.Millisecond)
 

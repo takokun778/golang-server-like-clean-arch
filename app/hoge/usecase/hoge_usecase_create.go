@@ -7,18 +7,18 @@ import (
 	"time"
 )
 
-func (u *hogeUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput) (*hoge.UsecaseCreateOutput, error) {
+func (u *hogeUsecase) Create(ctx context.Context, input hoge.UsecaseCreateInput) (hoge.UsecaseCreateOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result := hoge.CreateNew(input.Name, input.Number)
+	result := hoge.Create(input.Name, input.Number)
 
-	result, err := u.hogeRepository.Save(timeOutCtx, result)
+	_, err := u.hogeRepository.Save(timeOutCtx, result.Values())
 	if err != nil {
-		return nil, common.NewInternalServerError(err, "")
+		return hoge.UsecaseCreateOutput{}, common.NewInternalServerError(err, "")
 	}
 
-	output := new(hoge.UsecaseCreateOutput)
-	output.Hoge = result
-	return output, nil
+	return hoge.UsecaseCreateOutput{
+		Hoge: result.Values(),
+	}, nil
 }

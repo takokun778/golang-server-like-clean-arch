@@ -1,10 +1,10 @@
 package hoge
 
-type HogeList []*Hoge
+type HogeList []Hoge
 
-func NewList(list []*Hoge) *HogeList {
+func NewList(list []Hoge) HogeList {
 	hl := HogeList(list)
-	return &hl
+	return hl
 }
 
 func (l *HogeList) Len() int {

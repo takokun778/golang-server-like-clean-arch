@@ -19,8 +19,8 @@ func TestHogeUsecaseUpdate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		mockResult := hoge.CreateNew("hoge", 1)
-		mockFindResult := hoge.New(mockResult.Id(), mockResult.Name(), mockResult.Number(), mockResult.CreatedAt(), mockResult.UpdatedAt())
+		mockResult := hoge.Create("hoge", 1)
+		mockFindResult := hoge.NewValues(mockResult.Id(), mockResult.Name(), mockResult.Number(), mockResult.CreatedAt(), mockResult.UpdatedAt())
 		mockResult.Update("hogehoge", 2)
 
 		mmg := mh.NewMockRepository(ctrl)

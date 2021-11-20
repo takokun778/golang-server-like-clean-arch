@@ -18,7 +18,7 @@ func TestFugaControllerUpdate(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
-		src := fuga.CreateNew("fuga", 1)
+		src := fuga.Create("fuga", 1)
 		model := src.Update("fugafuga", 2)
 
 		mfu := mf.NewMockUsecase(ctrl)
@@ -30,7 +30,7 @@ func TestFugaControllerUpdate(t *testing.T) {
 		}
 
 		mockResult := fuga.UsecaseUpdateOutput{
-			Fuga: model,
+			Fuga: model.Values(),
 		}
 
 		mfu.EXPECT().Update(gomock.Any(), mockInput).Return(&mockResult, nil)

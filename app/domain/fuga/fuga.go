@@ -5,52 +5,42 @@ import (
 )
 
 type Fuga struct {
-	id        common.Id
-	name      Name
-	number    Number
-	createdAt common.Time
-	updatedAt common.Time
+	values
 }
 
-func (f *Fuga) Id() common.Id {
-	return f.id
+func (f Fuga) Values() Values {
+	return Values{f.values}
 }
 
-func (f *Fuga) Name() Name {
-	return f.name
-}
-
-func (f *Fuga) Number() Number {
-	return f.number
-}
-
-func (f *Fuga) CreatedAt() common.Time {
-	return f.createdAt
-}
-
-func (f *Fuga) UpdatedAt() common.Time {
-	return f.updatedAt
-}
-
-func New(
+func constructor(
 	id common.Id,
 	name Name,
 	number Number,
 	createdAt common.Time,
 	updatedAt common.Time,
-) *Fuga {
-	hoge := new(Fuga)
-	hoge.id = id
-	hoge.name = name
-	hoge.number = number
-	hoge.createdAt = createdAt
-	hoge.updatedAt = updatedAt
-	return hoge
+) Fuga {
+	fuga := new(Fuga)
+	fuga.id = id
+	fuga.name = name
+	fuga.number = number
+	fuga.createdAt = createdAt
+	fuga.updatedAt = updatedAt
+	return *fuga
 }
 
-func CreateNew(name Name, number Number) *Fuga {
+func Reconstruct(values Values) Fuga {
+	return constructor(
+		values.id,
+		values.name,
+		values.number,
+		values.createdAt,
+		values.updatedAt,
+	)
+}
+
+func Create(name Name, number Number) Fuga {
 	now := common.Now()
-	return New(
+	return constructor(
 		common.CreateRandomId(),
 		name,
 		number,
@@ -59,8 +49,8 @@ func CreateNew(name Name, number Number) *Fuga {
 	)
 }
 
-func (f *Fuga) Update(name Name, number Number) *Fuga {
-	return New(
+func (f Fuga) Update(name Name, number Number) Fuga {
+	return constructor(
 		f.id,
 		name,
 		number,
