@@ -2,6 +2,7 @@ package gateway_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	cg "xxx/app/common/gateway"
@@ -205,6 +206,17 @@ func TestXxxGatewayDelete(t *testing.T) {
 		IsErr:    false,
 	}
 	tests = append(tests, test1)
+
+	test2 := test.Case{
+		Name:     "存在しないデータを削除",
+		Setup:    func() {},
+		Ctx:      context.Background(),
+		Args:     test1Value.Id(),
+		Expected: test1Value,
+		IsErr:    true,
+		Err:      common.NewInternalServerError(errors.New(""), ""),
+	}
+	tests = append(tests, test2)
 
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {

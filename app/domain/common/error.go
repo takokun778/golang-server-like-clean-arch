@@ -2,6 +2,9 @@ package common
 
 import (
 	"encoding/json"
+	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 type Error struct {
@@ -10,6 +13,7 @@ type Error struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Reason  string `json:"reason"`
+	Stack   string `json:"stack"`
 }
 
 func (e *Error) Error() string {
@@ -21,79 +25,90 @@ func (e *Error) Format() []byte {
 	return res
 }
 
+func newError(err error, typ string, code int, msg string, reason string) *Error {
+	e := new(Error)
+	e.Err = err
+	e.Type = typ
+	e.Code = code
+	e.Message = msg
+	e.Reason = reason
+	e.Stack = fmt.Sprintf("%+v", errors.WithStack(err))
+	return e
+}
+
 // 400:クライアントから無効なリクエストが送信されたとき
 func NewBadRequestError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "InvalidArgument"
-	res.Code = 400
-	res.Message = "BadRequest"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"InvalidArgument",
+		400,
+		"BadRequest",
+		reason,
+	)
 }
 
 // 401:認証エラー
 func NewUnauthorizedError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "Unauthenticated"
-	res.Code = 401
-	res.Message = "Unauthorized"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"Unauthenticated",
+		401,
+		"Unauthorized",
+		reason,
+	)
 }
 
 // 403:認可エラー
 func NewForbiddenError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "PermissionDenied"
-	res.Code = 403
-	res.Message = "Forbidden"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"PermissionDenied",
+		403,
+		"Forbidden",
+		reason,
+	)
 }
 
 // 404:要素が見つからなかった
 func NewNotFoundError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "NotFound"
-	res.Code = 404
-	res.Message = "NotFound"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"NotFound",
+		404,
+		"NotFound",
+		reason,
+	)
 }
 
 // 409:コンフリクトが発生
 func NewConflictError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "Aborted"
-	res.Code = 409
-	res.Message = "Conflict"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"Aborted",
+		409,
+		"Conflict",
+		reason,
+	)
 }
 
 // 500:サーバーエラー
 func NewInternalServerError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "Internal"
-	res.Code = 500
-	res.Message = "InternalServerError"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"Internal",
+		500,
+		"InternalServerError",
+		reason,
+	)
 }
 
 // 504:外部通信タイムアウトエラー
 func NewGatewayTimeoutError(err error, reason string) *Error {
-	res := new(Error)
-	res.Err = err
-	res.Type = "DeadlineExceeded"
-	res.Code = 504
-	res.Message = "GatewayTimeout"
-	res.Reason = reason
-	return res
+	return newError(
+		err,
+		"DeadlineExceeded",
+		504,
+		"GatewayTimeout",
+		reason,
+	)
 }

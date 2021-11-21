@@ -28,7 +28,7 @@ func (g *xxxGateway) Save(ctx context.Context, values xxx.Values) (xxx.Values, e
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Values{}, err
+		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	return values, nil
@@ -38,7 +38,7 @@ func (g *xxxGateway) Find(ctx context.Context, id common.Id) (xxx.Values, error)
 	res, err := g.db.Xxx.Get(ctx, id.Value())
 
 	if err != nil {
-		return xxx.Values{}, err
+		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	entity := XxxEntity(*res)
@@ -51,7 +51,7 @@ func (g *xxxGateway) FindAll(ctx context.Context) ([]xxx.Values, error) {
 		Query().All(ctx)
 
 	if err != nil {
-		return nil, err
+		return nil, common.NewInternalServerError(err, "xxx gateway find all failed")
 	}
 
 	list := make([]xxx.Values, 0)
@@ -73,7 +73,7 @@ func (g *xxxGateway) Update(ctx context.Context, values xxx.Values) (xxx.Values,
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Values{}, err
+		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway update failed")
 	}
 
 	return values, nil
@@ -83,7 +83,7 @@ func (g *xxxGateway) Delete(ctx context.Context, id common.Id) error {
 	err := g.db.Xxx.DeleteOneID(id.Value()).Exec(ctx)
 
 	if err != nil {
-		return err
+		return common.NewInternalServerError(err, "xxx gateway delete failed")
 	}
 
 	return nil
