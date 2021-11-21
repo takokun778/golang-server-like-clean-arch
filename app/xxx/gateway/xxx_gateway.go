@@ -17,36 +17,36 @@ func NewXxxGateway() xxx.Repository {
 	return gw
 }
 
-func (g *xxxGateway) Save(ctx context.Context, values xxx.Values) (xxx.Values, error) {
+func (g *xxxGateway) Save(ctx context.Context, props xxx.Props) (xxx.Props, error) {
 	_, err := g.db.Xxx.
 		Create().
-		SetID(values.Id().Value()).
-		SetName(values.Name().Value()).
-		SetNumber(values.Number().Value()).
-		SetCreatedAt(values.CreatedAt().Value()).
-		SetUpdatedAt(values.UpdatedAt().Value()).
+		SetID(props.Id().Value()).
+		SetName(props.Name().Value()).
+		SetNumber(props.Number().Value()).
+		SetCreatedAt(props.CreatedAt().Value()).
+		SetUpdatedAt(props.UpdatedAt().Value()).
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, common.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
-	return values, nil
+	return props, nil
 }
 
-func (g *xxxGateway) Find(ctx context.Context, id common.Id) (xxx.Values, error) {
+func (g *xxxGateway) Find(ctx context.Context, id common.Id) (xxx.Props, error) {
 	res, err := g.db.Xxx.Get(ctx, id.Value())
 
 	if err != nil {
-		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, common.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	entity := XxxEntity(*res)
 
-	return entity.ToValues(), nil
+	return entity.ToProps(), nil
 }
 
-func (g *xxxGateway) FindAll(ctx context.Context) ([]xxx.Values, error) {
+func (g *xxxGateway) FindAll(ctx context.Context) ([]xxx.Props, error) {
 	res, err := g.db.Xxx.
 		Query().All(ctx)
 
@@ -54,29 +54,29 @@ func (g *xxxGateway) FindAll(ctx context.Context) ([]xxx.Values, error) {
 		return nil, common.NewInternalServerError(err, "xxx gateway find all failed")
 	}
 
-	list := make([]xxx.Values, 0)
+	list := make([]xxx.Props, 0)
 
 	for _, r := range res {
 		entity := XxxEntity(*r)
-		list = append(list, entity.ToValues())
+		list = append(list, entity.ToProps())
 	}
 
 	return list, nil
 }
 
-func (g *xxxGateway) Update(ctx context.Context, values xxx.Values) (xxx.Values, error) {
+func (g *xxxGateway) Update(ctx context.Context, props xxx.Props) (xxx.Props, error) {
 	_, err := g.db.Xxx.
 		Update().
-		SetName(values.Name().Value()).
-		SetNumber(values.Number().Value()).
-		SetUpdatedAt(values.UpdatedAt().Value()).
+		SetName(props.Name().Value()).
+		SetNumber(props.Number().Value()).
+		SetUpdatedAt(props.UpdatedAt().Value()).
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Values{}, common.NewInternalServerError(err, "xxx gateway update failed")
+		return xxx.Props{}, common.NewInternalServerError(err, "xxx gateway update failed")
 	}
 
-	return values, nil
+	return props, nil
 }
 
 func (g *xxxGateway) Delete(ctx context.Context, id common.Id) error {

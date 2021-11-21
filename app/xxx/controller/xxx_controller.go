@@ -21,7 +21,7 @@ func NewXxxController(xxxUsecase xxx.Usecase) *xxxController {
 	return res
 }
 
-func (*xxxController) translateToProto(xxx xxx.Values) *pbXxxx.Xxx {
+func (*xxxController) translateToProto(xxx xxx.Props) *pbXxxx.Xxx {
 	proto := new(pbXxxx.Xxx)
 	proto.Id = xxx.Id().Value().String()
 	proto.Name = xxx.Name().Value()
@@ -31,7 +31,7 @@ func (*xxxController) translateToProto(xxx xxx.Values) *pbXxxx.Xxx {
 	return proto
 }
 
-func (c *xxxController) translateToProtos(xxxs []xxx.Values) []*pbXxxx.Xxx {
+func (c *xxxController) translateToProtos(xxxs []xxx.Props) []*pbXxxx.Xxx {
 	proto := make([]*pbXxxx.Xxx, 0)
 
 	for _, xxx := range xxxs {

@@ -21,7 +21,7 @@ type UsecaseCreateInput struct {
 }
 
 type UsecaseCreateOutput struct {
-	Xxx Values
+	Xxx Props
 }
 
 type UsecaseReadInput struct {
@@ -29,14 +29,14 @@ type UsecaseReadInput struct {
 }
 
 type UsecaseReadOutput struct {
-	Xxx Values
+	Xxx Props
 }
 
 type UsecaseReadAllInput struct {
 }
 
 type UsecaseReadAllOutput struct {
-	Xxxs []Values
+	Xxxs []Props
 }
 
 type UsecaseUpdateInput struct {
@@ -46,7 +46,7 @@ type UsecaseUpdateInput struct {
 }
 
 type UsecaseUpdateOutput struct {
-	Xxx Values
+	Xxx Props
 }
 
 type UsecaseDeleteInput struct {
@@ -54,5 +54,5 @@ type UsecaseDeleteInput struct {
 }
 
 type UsecaseDeleteOutput struct {
-	Xxx Values
+	Xxx Props
 }

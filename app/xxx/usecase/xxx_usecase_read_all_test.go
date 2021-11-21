@@ -27,12 +27,12 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().FindAll(gomock.Any()).Return([]xxx.Values{test1Xxx1.Values(), test1Xxx2.Values()}, nil)
+			mxg.EXPECT().FindAll(gomock.Any()).Return([]xxx.Props{test1Xxx1.Props(), test1Xxx2.Props()}, nil)
 		},
 		Ctx:  context.Background(),
 		Args: &xxx.UsecaseReadAllInput{},
 		Expected: &xxx.UsecaseReadAllOutput{
-			Xxxs: []xxx.Values{test1Xxx1.Values(), test1Xxx2.Values()},
+			Xxxs: []xxx.Props{test1Xxx1.Props(), test1Xxx2.Props()},
 		},
 		IsErr: false,
 	}

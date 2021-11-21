@@ -20,13 +20,13 @@ func (u *xxxUsecase) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) 
 
 	dst := xxx.Reconstruct(src).Update(input.Name, input.Number)
 
-	_, err = u.xxxRepository.Update(timeOutCtx, dst.Values())
+	_, err = u.xxxRepository.Update(timeOutCtx, dst.Props())
 
 	if err != nil {
 		return nil, common.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseUpdateOutput{
-		Xxx: dst.Values(),
+		Xxx: dst.Props(),
 	}, nil
 }

@@ -24,14 +24,14 @@ func TestUserControllerReadAll(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1XxxValues1 := xxx.Create(xxx.Name("test1"), xxx.Number(1)).Values()
-	test1XxxValues2 := xxx.Create(xxx.Name("test1"), xxx.Number(2)).Values()
+	test1XxxProps1 := xxx.Create(xxx.Name("test1"), xxx.Number(1)).Props()
+	test1XxxProps2 := xxx.Create(xxx.Name("test1"), xxx.Number(2)).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
 			input := &xxx.UsecaseReadAllInput{}
 			output := &xxx.UsecaseReadAllOutput{
-				Xxxs: []xxx.Values{test1XxxValues1, test1XxxValues2},
+				Xxxs: []xxx.Props{test1XxxProps1, test1XxxProps2},
 			}
 			mxu.EXPECT().ReadAll(gomock.Any(), input).Return(output, nil)
 		},
@@ -40,18 +40,18 @@ func TestUserControllerReadAll(t *testing.T) {
 		Expected: &pbXxx.ReadAllResponse{
 			Xxxs: []*pbXxx.Xxx{
 				{
-					Id:        test1XxxValues1.Id().Value().String(),
-					Name:      test1XxxValues1.Name().Value(),
-					Number:    int32(test1XxxValues1.Number().Value()),
-					CreatedAt: timestamppb.New(test1XxxValues1.CreatedAt().Value()),
-					UpdatedAt: timestamppb.New(test1XxxValues1.UpdatedAt().Value()),
+					Id:        test1XxxProps1.Id().Value().String(),
+					Name:      test1XxxProps1.Name().Value(),
+					Number:    int32(test1XxxProps1.Number().Value()),
+					CreatedAt: timestamppb.New(test1XxxProps1.CreatedAt().Value()),
+					UpdatedAt: timestamppb.New(test1XxxProps1.UpdatedAt().Value()),
 				},
 				{
-					Id:        test1XxxValues2.Id().Value().String(),
-					Name:      test1XxxValues2.Name().Value(),
-					Number:    int32(test1XxxValues2.Number().Value()),
-					CreatedAt: timestamppb.New(test1XxxValues2.CreatedAt().Value()),
-					UpdatedAt: timestamppb.New(test1XxxValues2.UpdatedAt().Value()),
+					Id:        test1XxxProps2.Id().Value().String(),
+					Name:      test1XxxProps2.Name().Value(),
+					Number:    int32(test1XxxProps2.Number().Value()),
+					CreatedAt: timestamppb.New(test1XxxProps2.CreatedAt().Value()),
+					UpdatedAt: timestamppb.New(test1XxxProps2.UpdatedAt().Value()),
 				},
 			},
 		},

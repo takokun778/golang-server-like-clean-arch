@@ -27,8 +27,8 @@ func TestXxxUsecaseUpdate(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Values(), nil)
-			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(test1XxxUpdated.Values(), nil)
+			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Props(), nil)
+			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(test1XxxUpdated.Props(), nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseUpdateInput{
@@ -37,7 +37,7 @@ func TestXxxUsecaseUpdate(t *testing.T) {
 			Number: test1XxxUpdated.Number(),
 		},
 		Expected: &xxx.UsecaseUpdateOutput{
-			Xxx: test1XxxUpdated.Values(),
+			Xxx: test1XxxUpdated.Props(),
 		},
 		IsErr: false,
 	}

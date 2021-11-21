@@ -8,8 +8,8 @@ import (
 
 type XxxEntity ent.Xxx
 
-func (e XxxEntity) ToValues() xxx.Values {
-	return xxx.NewValues(
+func (e XxxEntity) ToProps() xxx.Props {
+	return xxx.NewProps(
 		common.Id(e.ID),
 		xxx.Name(e.Name),
 		xxx.Number(e.Number),

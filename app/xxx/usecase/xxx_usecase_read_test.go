@@ -26,14 +26,14 @@ func TestXxxUsecaseRead(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Values(), nil)
+			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Props(), nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseReadInput{
 			Id: test1Xxx.Id(),
 		},
 		Expected: &xxx.UsecaseReadOutput{
-			Xxx: test1Xxx.Values(),
+			Xxx: test1Xxx.Props(),
 		},
 		IsErr: false,
 	}

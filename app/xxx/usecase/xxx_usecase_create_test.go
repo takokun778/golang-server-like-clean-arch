@@ -26,7 +26,7 @@ func TestXxxUsecaseCreate(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Save(gomock.Any(), gomock.Any()).Return(test1Xxx.Values(), nil)
+			mxg.EXPECT().Save(gomock.Any(), gomock.Any()).Return(test1Xxx.Props(), nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseCreateInput{
@@ -34,7 +34,7 @@ func TestXxxUsecaseCreate(t *testing.T) {
 			Number: test1Xxx.Number(),
 		},
 		Expected: &xxx.UsecaseCreateOutput{
-			Xxx: test1Xxx.Values(),
+			Xxx: test1Xxx.Props(),
 		},
 		IsErr: false,
 	}

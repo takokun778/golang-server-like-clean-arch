@@ -41,7 +41,7 @@ func TestXxxGatewaySave(t *testing.T) {
 	test1Value := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 	test1 := test.Case{
 		Name:     "正常動作確認",
 		Setup:    func() {},
@@ -56,7 +56,7 @@ func TestXxxGatewaySave(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Save(tt.Ctx, tt.Args.(xxx.Values))
+			result, err := gateway.Save(tt.Ctx, tt.Args.(xxx.Props))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
@@ -65,7 +65,7 @@ func TestXxxGatewaySave(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Values), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -76,7 +76,7 @@ func TestXxxGatewayFind(t *testing.T) {
 	test1Value := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
@@ -102,7 +102,7 @@ func TestXxxGatewayFind(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Values), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -113,11 +113,11 @@ func TestXxxGatewayFindAll(t *testing.T) {
 	test1Value1 := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 	test1Value2 := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 
 	test1 := test.Case{
 		Name: "正常動作確認",
@@ -128,7 +128,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 		},
 		Ctx:      context.Background(),
 		Args:     nil,
-		Expected: []xxx.Values{test1Value1, test1Value2},
+		Expected: []xxx.Props{test1Value1, test1Value2},
 		IsErr:    false,
 	}
 	tests = append(tests, test1)
@@ -146,7 +146,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.([]xxx.Values), result)
+			assert.Equal(t, tt.Expected.([]xxx.Props), result)
 		})
 	}
 }
@@ -157,7 +157,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 	test1Value := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
@@ -174,7 +174,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Update(tt.Ctx, tt.Args.(xxx.Values))
+			result, err := gateway.Update(tt.Ctx, tt.Args.(xxx.Props))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
@@ -183,7 +183,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Values), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -194,7 +194,7 @@ func TestXxxGatewayDelete(t *testing.T) {
 	test1Value := xxx.Create(
 		xxx.Name("test1"),
 		xxx.Number(1),
-	).Values()
+	).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {

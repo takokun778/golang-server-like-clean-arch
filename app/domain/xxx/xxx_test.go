@@ -14,14 +14,14 @@ import (
 func TestXxxReconstruct(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Args := xxx.NewValues(
+	test1Args := xxx.NewProps(
 		common.CreateRandomId(),
 		xxx.Name("test1"),
 		xxx.Number(1),
 		common.Now(),
 		common.Now(),
 	)
-	test1Expected := xxx.NewValues(
+	test1Expected := xxx.NewProps(
 		test1Args.Id(),
 		test1Args.Name(),
 		test1Args.Number(),
@@ -43,11 +43,11 @@ func TestXxxReconstruct(t *testing.T) {
 			tt.Setup()
 
 			result := xxx.Reconstruct(
-				tt.Args.(xxx.Values),
+				tt.Args.(xxx.Props),
 			)
 
-			assert.Equal(t, tt.Expected.(xxx.Values).Name(), result.Name())
-			assert.Equal(t, tt.Expected.(xxx.Values).Number(), result.Number())
+			assert.Equal(t, tt.Expected.(xxx.Props).Name(), result.Name())
+			assert.Equal(t, tt.Expected.(xxx.Props).Number(), result.Number())
 		})
 	}
 }
@@ -55,7 +55,7 @@ func TestXxxReconstruct(t *testing.T) {
 func TestXxxCreate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Values := xxx.NewValues(
+	test1Props := xxx.NewProps(
 		common.CreateRandomId(),
 		xxx.Name("test1"),
 		xxx.Number(1),
@@ -66,8 +66,8 @@ func TestXxxCreate(t *testing.T) {
 		Name:     "正常動作確認",
 		Setup:    func() {},
 		Ctx:      context.Background(),
-		Args:     test1Values,
-		Expected: test1Values,
+		Args:     test1Props,
+		Expected: test1Props,
 		IsErr:    false,
 	}
 	tests = append(tests, test1)
@@ -77,12 +77,12 @@ func TestXxxCreate(t *testing.T) {
 			tt.Setup()
 
 			result := xxx.Create(
-				tt.Args.(xxx.Values).Name(),
-				tt.Args.(xxx.Values).Number(),
+				tt.Args.(xxx.Props).Name(),
+				tt.Args.(xxx.Props).Number(),
 			)
 
-			assert.Equal(t, tt.Expected.(xxx.Values).Name(), result.Name())
-			assert.Equal(t, tt.Expected.(xxx.Values).Number(), result.Number())
+			assert.Equal(t, tt.Expected.(xxx.Props).Name(), result.Name())
+			assert.Equal(t, tt.Expected.(xxx.Props).Number(), result.Number())
 		})
 	}
 }
@@ -90,14 +90,14 @@ func TestXxxCreate(t *testing.T) {
 func TestXxxUpdate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Args := xxx.NewValues(
+	test1Args := xxx.NewProps(
 		common.CreateRandomId(),
 		xxx.Name("updated"),
 		xxx.Number(2),
 		common.Now(),
 		common.Now(),
 	)
-	test1Expected := xxx.NewValues(
+	test1Expected := xxx.NewProps(
 		common.CreateRandomId(),
 		xxx.Name("updated"),
 		xxx.Number(2),
@@ -124,12 +124,12 @@ func TestXxxUpdate(t *testing.T) {
 			)
 
 			result := src.Update(
-				tt.Args.(xxx.Values).Name(),
-				tt.Args.(xxx.Values).Number(),
+				tt.Args.(xxx.Props).Name(),
+				tt.Args.(xxx.Props).Number(),
 			)
 
-			assert.Equal(t, tt.Expected.(xxx.Values).Name(), result.Name())
-			assert.Equal(t, tt.Expected.(xxx.Values).Number(), result.Number())
+			assert.Equal(t, tt.Expected.(xxx.Props).Name(), result.Name())
+			assert.Equal(t, tt.Expected.(xxx.Props).Number(), result.Number())
 		})
 	}
 }

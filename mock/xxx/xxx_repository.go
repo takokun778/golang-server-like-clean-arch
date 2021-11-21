@@ -51,10 +51,10 @@ func (mr *MockRepositoryMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
 }
 
 // Find mocks base method.
-func (m *MockRepository) Find(ctx context.Context, id common.Id) (xxx.Values, error) {
+func (m *MockRepository) Find(ctx context.Context, id common.Id) (xxx.Props, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Find", ctx, id)
-	ret0, _ := ret[0].(xxx.Values)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -66,10 +66,10 @@ func (mr *MockRepositoryMockRecorder) Find(ctx, id interface{}) *gomock.Call {
 }
 
 // FindAll mocks base method.
-func (m *MockRepository) FindAll(ctx context.Context) ([]xxx.Values, error) {
+func (m *MockRepository) FindAll(ctx context.Context) ([]xxx.Props, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "FindAll", ctx)
-	ret0, _ := ret[0].([]xxx.Values)
+	ret0, _ := ret[0].([]xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -81,31 +81,31 @@ func (mr *MockRepositoryMockRecorder) FindAll(ctx interface{}) *gomock.Call {
 }
 
 // Save mocks base method.
-func (m *MockRepository) Save(ctx context.Context, model xxx.Values) (xxx.Values, error) {
+func (m *MockRepository) Save(ctx context.Context, props xxx.Props) (xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Save", ctx, model)
-	ret0, _ := ret[0].(xxx.Values)
+	ret := m.ctrl.Call(m, "Save", ctx, props)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Save indicates an expected call of Save.
-func (mr *MockRepositoryMockRecorder) Save(ctx, model interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Save(ctx, props interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRepository)(nil).Save), ctx, model)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRepository)(nil).Save), ctx, props)
 }
 
 // Update mocks base method.
-func (m *MockRepository) Update(ctx context.Context, model xxx.Values) (xxx.Values, error) {
+func (m *MockRepository) Update(ctx context.Context, props xxx.Props) (xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, model)
-	ret0, _ := ret[0].(xxx.Values)
+	ret := m.ctrl.Call(m, "Update", ctx, props)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockRepositoryMockRecorder) Update(ctx, model interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Update(ctx, props interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, model)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, props)
 }

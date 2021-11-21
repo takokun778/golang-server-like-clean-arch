@@ -26,7 +26,7 @@ func TestXxxUsecaseDelete(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Values(), nil)
+			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Props(), nil)
 			mxg.EXPECT().Delete(gomock.Any(), test1Xxx.Id()).Return(nil)
 		},
 		Ctx: context.Background(),
@@ -34,7 +34,7 @@ func TestXxxUsecaseDelete(t *testing.T) {
 			Id: test1Xxx.Id(),
 		},
 		Expected: &xxx.UsecaseDeleteOutput{
-			Xxx: test1Xxx.Values(),
+			Xxx: test1Xxx.Props(),
 		},
 		IsErr: false,
 	}

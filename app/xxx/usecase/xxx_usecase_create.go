@@ -14,13 +14,13 @@ func (u *xxxUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) 
 
 	result := xxx.Create(input.Name, input.Number)
 
-	_, err := u.xxxRepository.Save(timeOutCtx, result.Values())
+	_, err := u.xxxRepository.Save(timeOutCtx, result.Props())
 
 	if err != nil {
 		return nil, common.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseCreateOutput{
-		Xxx: result.Values(),
+		Xxx: result.Props(),
 	}, nil
 }

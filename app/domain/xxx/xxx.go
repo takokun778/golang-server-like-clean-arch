@@ -5,11 +5,11 @@ import (
 )
 
 type Xxx struct {
-	values
+	props
 }
 
-func (x Xxx) Values() Values {
-	return Values(x)
+func (x Xxx) Props() Props {
+	return Props(x)
 }
 
 func constructor(
@@ -28,7 +28,7 @@ func constructor(
 	return *xxx
 }
 
-func Reconstruct(values Values) Xxx {
+func Reconstruct(values Props) Xxx {
 	return constructor(
 		values.id,
 		values.name,

@@ -24,16 +24,16 @@ func TestUserControllerCreate(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1XxxValues := xxx.Create(xxx.Name("test1"), xxx.Number(1)).Values()
+	test1XxxProps := xxx.Create(xxx.Name("test1"), xxx.Number(1)).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
 			input := &xxx.UsecaseCreateInput{
-				Name:   test1XxxValues.Name(),
-				Number: test1XxxValues.Number(),
+				Name:   test1XxxProps.Name(),
+				Number: test1XxxProps.Number(),
 			}
 			output := &xxx.UsecaseCreateOutput{
-				Xxx: test1XxxValues,
+				Xxx: test1XxxProps,
 			}
 			mxu.EXPECT().Create(gomock.Any(), input).Return(output, nil)
 		},
@@ -44,11 +44,11 @@ func TestUserControllerCreate(t *testing.T) {
 		},
 		Expected: &pbXxx.CreateResponse{
 			Xxx: &pbXxx.Xxx{
-				Id:        test1XxxValues.Id().Value().String(),
-				Name:      test1XxxValues.Name().Value(),
-				Number:    int32(test1XxxValues.Number().Value()),
-				CreatedAt: timestamppb.New(test1XxxValues.CreatedAt().Value()),
-				UpdatedAt: timestamppb.New(test1XxxValues.UpdatedAt().Value()),
+				Id:        test1XxxProps.Id().Value().String(),
+				Name:      test1XxxProps.Name().Value(),
+				Number:    int32(test1XxxProps.Number().Value()),
+				CreatedAt: timestamppb.New(test1XxxProps.CreatedAt().Value()),
+				UpdatedAt: timestamppb.New(test1XxxProps.UpdatedAt().Value()),
 			},
 		},
 		IsErr: false,

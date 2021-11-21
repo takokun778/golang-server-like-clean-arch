@@ -8,9 +8,9 @@ import (
 )
 
 type Repository interface {
-	Save(ctx context.Context, model Values) (Values, error)
-	Find(ctx context.Context, id common.Id) (Values, error)
-	FindAll(ctx context.Context) ([]Values, error)
-	Update(ctx context.Context, model Values) (Values, error)
+	Save(ctx context.Context, props Props) (Props, error)
+	Find(ctx context.Context, id common.Id) (Props, error)
+	FindAll(ctx context.Context) ([]Props, error)
+	Update(ctx context.Context, props Props) (Props, error)
 	Delete(ctx context.Context, id common.Id) error
 }
