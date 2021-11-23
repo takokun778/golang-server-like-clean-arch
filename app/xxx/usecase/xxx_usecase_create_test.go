@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 	xu "xxx/app/xxx/usecase"
 	mx "xxx/mock/xxx"
@@ -49,7 +49,7 @@ func TestXxxUsecaseCreate(t *testing.T) {
 			result, err := usecase.Create(test.Ctx, test.Args.(*xxx.UsecaseCreateInput))
 
 			if test.IsErr && err != nil {
-				assert.Equal(t, test.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, test.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)

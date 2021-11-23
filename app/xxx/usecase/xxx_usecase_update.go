@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	xe "xxx/app/domain/error"
+	dError "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 )
 
@@ -15,7 +15,7 @@ func (u *xxxUsecase) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) 
 	src, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dError.NewInternalServerError(err, "")
 	}
 
 	dst := xxx.Reconstruct(src).Update(input.Name, input.Number)
@@ -23,7 +23,7 @@ func (u *xxxUsecase) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) 
 	_, err = u.xxxRepository.Update(timeOutCtx, &xxx.RepositoryUpdateItem{Xxx: dst.Props()})
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dError.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseUpdateOutput{

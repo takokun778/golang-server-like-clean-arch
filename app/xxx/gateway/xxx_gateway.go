@@ -2,8 +2,9 @@ package gateway
 
 import (
 	"context"
+
 	"xxx/app/common/gateway"
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 )
 
@@ -30,7 +31,7 @@ func (g *xxxGateway) Save(ctx context.Context, item *xxx.RepositorySaveItem) (xx
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	return entity.ToProps(), nil
@@ -40,7 +41,7 @@ func (g *xxxGateway) Find(ctx context.Context, item *xxx.RepositoryFindItem) (xx
 	res, err := g.db.Xxx.Get(ctx, item.Id.Value())
 
 	if err != nil {
-		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	entity := XxxEntity(*res)
@@ -53,7 +54,7 @@ func (g *xxxGateway) FindAll(ctx context.Context, item *xxx.RepositoryFindAllIte
 		Query().All(ctx)
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "xxx gateway find all failed")
+		return nil, dErr.NewInternalServerError(err, "xxx gateway find all failed")
 	}
 
 	list := make([]xxx.Props, 0)
@@ -77,7 +78,7 @@ func (g *xxxGateway) Update(ctx context.Context, item *xxx.RepositoryUpdateItem)
 		Save(ctx)
 
 	if err != nil {
-		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway update failed")
+		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway update failed")
 	}
 
 	return entity.ToProps(), nil
@@ -87,7 +88,7 @@ func (g *xxxGateway) Delete(ctx context.Context, item *xxx.RepositoryDeleteItem)
 	err := g.db.Xxx.DeleteOneID(item.Id.Value()).Exec(ctx)
 
 	if err != nil {
-		return xe.NewInternalServerError(err, "xxx gateway delete failed")
+		return dErr.NewInternalServerError(err, "xxx gateway delete failed")
 	}
 
 	return nil

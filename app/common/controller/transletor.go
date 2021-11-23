@@ -3,7 +3,7 @@ package controller
 import (
 	"strconv"
 
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
@@ -23,7 +23,7 @@ func newTranslator() *Translator {
 	return con
 }
 
-func (t *Translator) TranslateError(err *xe.Error) error {
+func (t *Translator) TranslateError(err *dErr.Error) error {
 	switch err.Type {
 	case "InvalidArgument":
 		status := createStatus(codes.InvalidArgument, err)
@@ -51,7 +51,7 @@ func (t *Translator) TranslateError(err *xe.Error) error {
 	}
 }
 
-func createStatus(code codes.Code, err *xe.Error) *status.Status {
+func createStatus(code codes.Code, err *dErr.Error) *status.Status {
 	st := status.New(code, err.Message)
 	details := new(errdetails.BadRequest)
 	// status code

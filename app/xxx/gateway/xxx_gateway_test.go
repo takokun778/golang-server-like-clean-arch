@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	cg "xxx/app/common/gateway"
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 	xg "xxx/app/xxx/gateway"
 	"xxx/test"
@@ -58,7 +58,7 @@ func TestXxxGatewaySave(t *testing.T) {
 			result, err := gateway.Save(tt.Ctx, tt.Args.(*xxx.RepositorySaveItem))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, tt.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
@@ -94,7 +94,7 @@ func TestXxxGatewayFind(t *testing.T) {
 			result, err := gateway.Find(tt.Ctx, tt.Args.(*xxx.RepositoryFindItem))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, tt.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
@@ -131,7 +131,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 			result, err := gateway.FindAll(tt.Ctx, tt.Args.(*xxx.RepositoryFindAllItem))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, tt.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
@@ -167,7 +167,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 			result, err := gateway.Update(tt.Ctx, tt.Args.(*xxx.RepositoryUpdateItem))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, tt.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
@@ -205,7 +205,7 @@ func TestXxxGatewayDelete(t *testing.T) {
 		},
 		Expected: nil,
 		IsErr:    true,
-		Err:      xe.NewInternalServerError(errors.New(""), ""),
+		Err:      dErr.NewInternalServerError(errors.New(""), ""),
 	}
 	tests = append(tests, test2)
 
@@ -216,7 +216,7 @@ func TestXxxGatewayDelete(t *testing.T) {
 			err := gateway.Delete(tt.Ctx, tt.Args.(*xxx.RepositoryDeleteItem))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
+				assert.Equal(t, tt.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)

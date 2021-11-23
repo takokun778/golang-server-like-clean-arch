@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 )
 
@@ -15,7 +15,7 @@ func (u *xxxUsecase) Read(ctx context.Context, input *xxx.UsecaseReadInput) (*xx
 	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dErr.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseReadOutput{

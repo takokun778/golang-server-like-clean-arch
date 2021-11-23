@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 )
 
@@ -15,13 +15,13 @@ func (u *xxxUsecase) Delete(ctx context.Context, input *xxx.UsecaseDeleteInput) 
 	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dErr.NewInternalServerError(err, "")
 	}
 
 	err = u.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteItem{Id: input.Id})
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dErr.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseDeleteOutput{

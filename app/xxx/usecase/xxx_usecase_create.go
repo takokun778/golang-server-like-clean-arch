@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	xe "xxx/app/domain/error"
+	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 )
 
@@ -21,7 +21,7 @@ func (u *xxxUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) 
 	_, err := u.xxxRepository.Save(timeOutCtx, repoInput)
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "")
+		return nil, dErr.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseCreateOutput{
