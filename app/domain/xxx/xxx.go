@@ -1,9 +1,5 @@
 package xxx
 
-import (
-	"xxx/app/domain/common"
-)
-
 type Xxx struct {
 	props
 }
@@ -13,11 +9,11 @@ func (x Xxx) Props() Props {
 }
 
 func constructor(
-	id common.Id,
-	name Name,
-	number Number,
-	createdAt common.Time,
-	updatedAt common.Time,
+	id id,
+	name name,
+	number number,
+	createdAt time,
+	updatedAt time,
 ) Xxx {
 	xxx := new(Xxx)
 	xxx.id = id
@@ -38,10 +34,10 @@ func Reconstruct(values Props) Xxx {
 	)
 }
 
-func Create(name Name, number Number) Xxx {
-	now := common.Now()
+func Create(name name, number number) Xxx {
+	now := TimeNow()
 	return constructor(
-		common.CreateRandomId(),
+		CreateRandomId(),
 		name,
 		number,
 		now,
@@ -49,12 +45,12 @@ func Create(name Name, number Number) Xxx {
 	)
 }
 
-func (x Xxx) Update(name Name, number Number) Xxx {
+func (x Xxx) Update(name name, number number) Xxx {
 	return constructor(
 		x.id,
 		name,
 		number,
 		x.createdAt,
-		common.Now(),
+		TimeNow(),
 	)
 }

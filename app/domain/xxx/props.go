@@ -1,47 +1,43 @@
 package xxx
 
-import (
-	"xxx/app/domain/common"
-)
-
 type Props struct {
 	props
 }
 
 type props struct {
-	id        common.Id
-	name      Name
-	number    Number
-	createdAt common.Time
-	updatedAt common.Time
+	id
+	name
+	number
+	createdAt time
+	updatedAt time
 }
 
-func (p props) Id() common.Id {
+func (p props) Id() id {
 	return p.id
 }
 
-func (p props) Name() Name {
+func (p props) Name() name {
 	return p.name
 }
 
-func (p props) Number() Number {
+func (p props) Number() number {
 	return p.number
 }
 
-func (p props) CreatedAt() common.Time {
+func (p props) CreatedAt() time {
 	return p.createdAt
 }
 
-func (p props) UpdatedAt() common.Time {
+func (p props) UpdatedAt() time {
 	return p.updatedAt
 }
 
 func NewProps(
-	id common.Id,
-	name Name,
-	number Number,
-	createdAt common.Time,
-	updatedAt common.Time,
+	id id,
+	name name,
+	number number,
+	createdAt time,
+	updatedAt time,
 ) Props {
 	props := new(Props)
 	props.id = id

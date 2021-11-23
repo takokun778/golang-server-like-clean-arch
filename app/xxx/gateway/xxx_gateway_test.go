@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	cg "xxx/app/common/gateway"
-	"xxx/app/domain/common"
+	xe "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 	xg "xxx/app/xxx/gateway"
 	"xxx/test"
@@ -38,17 +38,18 @@ func resetTable() {
 func TestXxxGatewaySave(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Value := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
-		Name:     "正常動作確認",
-		Setup:    func() {},
-		Ctx:      context.Background(),
-		Args:     test1Value,
-		Expected: test1Value,
-		IsErr:    false,
+		Name:  "正常動作確認",
+		Setup: func() {},
+		Ctx:   context.Background(),
+		Args: &xxx.RepositorySaveInput{
+			Xxx: test1Xxx,
+		},
+		Expected: &xxx.RepositorySaveOutput{
+			Xxx: test1Xxx,
+		},
+		IsErr: false,
 	}
 	tests = append(tests, test1)
 
@@ -56,16 +57,16 @@ func TestXxxGatewaySave(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Save(tt.Ctx, tt.Args.(xxx.Props))
+			result, err := gateway.Save(tt.Ctx, tt.Args.(*xxx.RepositorySaveInput))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Props), result)
+			assert.Equal(t, tt.Expected.(*xxx.RepositorySaveOutput), result)
 		})
 	}
 }
@@ -73,19 +74,20 @@ func TestXxxGatewaySave(t *testing.T) {
 func TestXxxGatewayFind(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Value := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), test1Value)
+			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
 		},
-		Ctx:      context.Background(),
-		Args:     test1Value.Id(),
-		Expected: test1Value,
-		IsErr:    false,
+		Ctx: context.Background(),
+		Args: &xxx.RepositoryFindInput{
+			Id: test1Xxx.Id(),
+		},
+		Expected: &xxx.RepositoryFindOutput{
+			Xxx: test1Xxx,
+		},
+		IsErr: false,
 	}
 	tests = append(tests, test1)
 
@@ -93,16 +95,16 @@ func TestXxxGatewayFind(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Find(tt.Ctx, tt.Args.(common.Id))
+			result, err := gateway.Find(tt.Ctx, tt.Args.(*xxx.RepositoryFindInput))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Props), result)
+			assert.Equal(t, tt.Expected.(*xxx.RepositoryFindOutput), result)
 		})
 	}
 }
@@ -110,26 +112,21 @@ func TestXxxGatewayFind(t *testing.T) {
 func TestXxxGatewayFindAll(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Value1 := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
-	test1Value2 := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
-
+	test1Xxx1 := test.NewXxx("test1", 1).Props()
+	test1Xxx2 := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
 			resetTable()
-			gateway.Save(context.Background(), test1Value1)
-			gateway.Save(context.Background(), test1Value2)
+			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx1})
+			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx2})
 		},
-		Ctx:      context.Background(),
-		Args:     nil,
-		Expected: []xxx.Props{test1Value1, test1Value2},
-		IsErr:    false,
+		Ctx:  context.Background(),
+		Args: &xxx.RepositoryFindAllInput{},
+		Expected: &xxx.RepositoryFindAllOutput{
+			Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
+		},
+		IsErr: false,
 	}
 	tests = append(tests, test1)
 
@@ -137,16 +134,16 @@ func TestXxxGatewayFindAll(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.FindAll(tt.Ctx)
+			result, err := gateway.FindAll(tt.Ctx, tt.Args.(*xxx.RepositoryFindAllInput))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.([]xxx.Props), result)
+			assert.Equal(t, tt.Expected.(*xxx.RepositoryFindAllOutput), result)
 		})
 	}
 }
@@ -154,19 +151,20 @@ func TestXxxGatewayFindAll(t *testing.T) {
 func TestXxxGatewayUpdate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Value := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), test1Value)
+			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
 		},
-		Ctx:      context.Background(),
-		Args:     test1Value,
-		Expected: test1Value,
-		IsErr:    false,
+		Ctx: context.Background(),
+		Args: &xxx.RepositoryUpdateInput{
+			Xxx: test1Xxx,
+		},
+		Expected: &xxx.RepositoryUpdateOutput{
+			Xxx: test1Xxx,
+		},
+		IsErr: false,
 	}
 	tests = append(tests, test1)
 
@@ -174,16 +172,16 @@ func TestXxxGatewayUpdate(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Update(tt.Ctx, tt.Args.(xxx.Props))
+			result, err := gateway.Update(tt.Ctx, tt.Args.(*xxx.RepositoryUpdateInput))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Props), result)
+			assert.Equal(t, tt.Expected.(*xxx.RepositoryUpdateOutput), result)
 		})
 	}
 }
@@ -191,30 +189,31 @@ func TestXxxGatewayUpdate(t *testing.T) {
 func TestXxxGatewayDelete(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Value := xxx.Create(
-		xxx.Name("test1"),
-		xxx.Number(1),
-	).Props()
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), test1Value)
+			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
 		},
-		Ctx:      context.Background(),
-		Args:     test1Value.Id(),
-		Expected: test1Value,
+		Ctx: context.Background(),
+		Args: &xxx.RepositoryDeleteInput{
+			Id: test1Xxx.Id(),
+		},
+		Expected: &xxx.RepositoryDeleteOutput{},
 		IsErr:    false,
 	}
 	tests = append(tests, test1)
 
 	test2 := test.Case{
-		Name:     "存在しないデータを削除",
-		Setup:    func() {},
-		Ctx:      context.Background(),
-		Args:     test1Value.Id(),
-		Expected: test1Value,
+		Name:  "存在しないデータを削除",
+		Setup: func() {},
+		Ctx:   context.Background(),
+		Args: &xxx.RepositoryDeleteInput{
+			Id: test1Xxx.Id(),
+		},
+		Expected: &xxx.RepositoryDeleteOutput{},
 		IsErr:    true,
-		Err:      common.NewInternalServerError(errors.New(""), ""),
+		Err:      xe.NewInternalServerError(errors.New(""), ""),
 	}
 	tests = append(tests, test2)
 
@@ -222,16 +221,16 @@ func TestXxxGatewayDelete(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			err := gateway.Delete(tt.Ctx, tt.Args.(common.Id))
+			_, err := gateway.Delete(tt.Ctx, tt.Args.(*xxx.RepositoryDeleteInput))
 
 			if tt.IsErr && err != nil {
-				assert.Equal(t, tt.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
 			}
 
-			_, err = gateway.Find(tt.Ctx, tt.Args.(common.Id))
+			_, err = gateway.Find(tt.Ctx, &xxx.RepositoryFindInput{Id: tt.Args.(*xxx.RepositoryDeleteInput).Id})
 
 			if err == nil {
 				t.Fail()

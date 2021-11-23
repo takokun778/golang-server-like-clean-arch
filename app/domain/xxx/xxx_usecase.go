@@ -3,8 +3,6 @@ package xxx
 
 import (
 	"context"
-
-	"xxx/app/domain/common"
 )
 
 type Usecase interface {
@@ -16,8 +14,8 @@ type Usecase interface {
 }
 
 type UsecaseCreateInput struct {
-	Name   Name
-	Number Number
+	Name   name
+	Number number
 }
 
 type UsecaseCreateOutput struct {
@@ -25,7 +23,7 @@ type UsecaseCreateOutput struct {
 }
 
 type UsecaseReadInput struct {
-	Id common.Id
+	Id id
 }
 
 type UsecaseReadOutput struct {
@@ -40,9 +38,9 @@ type UsecaseReadAllOutput struct {
 }
 
 type UsecaseUpdateInput struct {
-	Id     common.Id
-	Name   Name
-	Number Number
+	Id     id
+	Name   name
+	Number number
 }
 
 type UsecaseUpdateOutput struct {
@@ -50,7 +48,7 @@ type UsecaseUpdateOutput struct {
 }
 
 type UsecaseDeleteInput struct {
-	Id common.Id
+	Id id
 }
 
 type UsecaseDeleteOutput struct {

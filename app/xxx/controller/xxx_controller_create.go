@@ -8,9 +8,21 @@ import (
 )
 
 func (c *xxxController) Create(ctx context.Context, req *pbXxxx.CreateRequest) (*pbXxxx.CreateResponse, error) {
+	name, err := xxx.NewName(req.Name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	number, err := xxx.NewNumber(int(req.Number))
+
+	if err != nil {
+		return nil, err
+	}
+
 	input := &xxx.UsecaseCreateInput{
-		Name:   xxx.Name(req.Name),
-		Number: xxx.Number(req.Number),
+		Name:   name,
+		Number: number,
 	}
 
 	output, err := c.xxxUsecase.Create(ctx, input)

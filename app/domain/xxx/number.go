@@ -1,7 +1,11 @@
 package xxx
 
-type Number int
+type number int
 
-func (n Number) Value() int {
+func NewNumber(value int) (number, error) {
+	return number(value), nil
+}
+
+func (n number) Value() int {
 	return int(n)
 }

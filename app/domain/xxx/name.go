@@ -1,7 +1,11 @@
 package xxx
 
-type Name string
+type name string
 
-func (n Name) Value() string {
+func NewName(value string) (name, error) {
+	return name(value), nil
+}
+
+func (n name) Value() string {
 	return string(n)
 }

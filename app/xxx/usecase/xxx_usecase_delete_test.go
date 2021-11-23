@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"xxx/app/domain/common"
+	xe "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 	xu "xxx/app/xxx/usecase"
 	mx "xxx/mock/xxx"
@@ -22,19 +22,19 @@ func TestXxxUsecaseDelete(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1Xxx := xxx.Create(xxx.Name("test1"), xxx.Number(1))
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), test1Xxx.Id()).Return(test1Xxx.Props(), nil)
-			mxg.EXPECT().Delete(gomock.Any(), test1Xxx.Id()).Return(nil)
+			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindInput{Id: test1Xxx.Id()}).Return(&xxx.RepositoryFindOutput{Xxx: test1Xxx}, nil)
+			mxg.EXPECT().Delete(gomock.Any(), &xxx.RepositoryDeleteInput{Id: test1Xxx.Id()}).Return(&xxx.RepositoryDeleteOutput{}, nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseDeleteInput{
 			Id: test1Xxx.Id(),
 		},
 		Expected: &xxx.UsecaseDeleteOutput{
-			Xxx: test1Xxx.Props(),
+			Xxx: test1Xxx,
 		},
 		IsErr: false,
 	}
@@ -49,7 +49,7 @@ func TestXxxUsecaseDelete(t *testing.T) {
 			result, err := usecase.Delete(test.Ctx, test.Args.(*xxx.UsecaseDeleteInput))
 
 			if test.IsErr && err != nil {
-				assert.Equal(t, test.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, test.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)

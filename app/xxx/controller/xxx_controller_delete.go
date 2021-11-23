@@ -3,13 +3,12 @@ package controller
 import (
 	"context"
 
-	"xxx/app/domain/common"
 	"xxx/app/domain/xxx"
 	pbXxxx "xxx/proto/xxx"
 )
 
 func (c *xxxController) Delete(ctx context.Context, req *pbXxxx.DeleteRequest) (*pbXxxx.DeleteResponse, error) {
-	id, err := common.ParseId(req.Id)
+	id, err := xxx.ParseId(req.Id)
 
 	if err != nil {
 		return nil, err

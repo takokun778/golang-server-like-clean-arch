@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"xxx/app/domain/common"
 	"xxx/app/domain/xxx"
 	"xxx/test"
 
@@ -14,12 +13,14 @@ import (
 func TestXxxReconstruct(t *testing.T) {
 	tests := make([]test.Case, 0)
 
+	test1Name, _ := xxx.NewName("test1")
+	test1Number, _ := xxx.NewNumber(1)
 	test1Args := xxx.NewProps(
-		common.CreateRandomId(),
-		xxx.Name("test1"),
-		xxx.Number(1),
-		common.Now(),
-		common.Now(),
+		xxx.CreateRandomId(),
+		test1Name,
+		test1Number,
+		xxx.TimeNow(),
+		xxx.TimeNow(),
 	)
 	test1Expected := xxx.NewProps(
 		test1Args.Id(),
@@ -55,12 +56,14 @@ func TestXxxReconstruct(t *testing.T) {
 func TestXxxCreate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
+	test1Name, _ := xxx.NewName("test1")
+	test1Number, _ := xxx.NewNumber(1)
 	test1Props := xxx.NewProps(
-		common.CreateRandomId(),
-		xxx.Name("test1"),
-		xxx.Number(1),
-		common.Now(),
-		common.Now(),
+		xxx.CreateRandomId(),
+		test1Name,
+		test1Number,
+		xxx.TimeNow(),
+		xxx.TimeNow(),
 	)
 	test1 := test.Case{
 		Name:     "正常動作確認",
@@ -90,19 +93,21 @@ func TestXxxCreate(t *testing.T) {
 func TestXxxUpdate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
+	test1Name, _ := xxx.NewName("test1")
+	test1Number, _ := xxx.NewNumber(1)
 	test1Args := xxx.NewProps(
-		common.CreateRandomId(),
-		xxx.Name("updated"),
-		xxx.Number(2),
-		common.Now(),
-		common.Now(),
+		xxx.CreateRandomId(),
+		test1Name,
+		test1Number,
+		xxx.TimeNow(),
+		xxx.TimeNow(),
 	)
 	test1Expected := xxx.NewProps(
-		common.CreateRandomId(),
-		xxx.Name("updated"),
-		xxx.Number(2),
-		common.Now(),
-		common.Now(),
+		xxx.CreateRandomId(),
+		test1Name,
+		test1Number,
+		xxx.TimeNow(),
+		xxx.TimeNow(),
 	)
 	test1 := test.Case{
 		Name:     "正常動作確認",
@@ -118,9 +123,11 @@ func TestXxxUpdate(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
+			name, _ := xxx.NewName("create")
+			number, _ := xxx.NewNumber(1)
 			src := xxx.Create(
-				xxx.Name("create"),
-				xxx.Number(1),
+				name,
+				number,
 			)
 
 			result := src.Update(

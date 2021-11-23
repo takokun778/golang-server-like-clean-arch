@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"xxx/app/domain/common"
+	xe "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
 	xu "xxx/app/xxx/usecase"
 	mx "xxx/mock/xxx"
@@ -22,11 +22,11 @@ func TestXxxUsecaseCreate(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1Xxx := xxx.Create(xxx.Name("test1"), xxx.Number(1))
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Save(gomock.Any(), gomock.Any()).Return(test1Xxx.Props(), nil)
+			mxg.EXPECT().Save(gomock.Any(), gomock.Any()).Return(&xxx.RepositorySaveOutput{Xxx: test1Xxx}, nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseCreateInput{
@@ -34,7 +34,7 @@ func TestXxxUsecaseCreate(t *testing.T) {
 			Number: test1Xxx.Number(),
 		},
 		Expected: &xxx.UsecaseCreateOutput{
-			Xxx: test1Xxx.Props(),
+			Xxx: test1Xxx,
 		},
 		IsErr: false,
 	}
@@ -49,7 +49,7 @@ func TestXxxUsecaseCreate(t *testing.T) {
 			result, err := usecase.Create(test.Ctx, test.Args.(*xxx.UsecaseCreateInput))
 
 			if test.IsErr && err != nil {
-				assert.Equal(t, test.Err.(*common.Error).Type, err.(*common.Error).Type)
+				assert.Equal(t, test.Err.(*xe.Error).Type, err.(*xe.Error).Type)
 				return
 			} else {
 				assert.NoError(t, err)
