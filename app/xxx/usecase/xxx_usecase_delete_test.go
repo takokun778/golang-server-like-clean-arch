@@ -26,8 +26,8 @@ func TestXxxUsecaseDelete(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindInput{Id: test1Xxx.Id()}).Return(&xxx.RepositoryFindOutput{Xxx: test1Xxx}, nil)
-			mxg.EXPECT().Delete(gomock.Any(), &xxx.RepositoryDeleteInput{Id: test1Xxx.Id()}).Return(&xxx.RepositoryDeleteOutput{}, nil)
+			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx, nil)
+			mxg.EXPECT().Delete(gomock.Any(), &xxx.RepositoryDeleteItem{Id: test1Xxx.Id()}).Return(nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseDeleteInput{

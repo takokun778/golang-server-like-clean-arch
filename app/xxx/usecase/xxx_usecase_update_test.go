@@ -29,8 +29,8 @@ func TestXxxUsecaseUpdate(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindInput{Id: test1Xxx.Id()}).Return(&xxx.RepositoryFindOutput{Xxx: test1Xxx.Props()}, nil)
-			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(&xxx.RepositoryUpdateOutput{Xxx: test1Xxx.Props()}, nil)
+			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx.Props(), nil)
+			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(test1Xxx.Props(), nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseUpdateInput{

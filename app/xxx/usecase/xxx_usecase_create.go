@@ -14,7 +14,7 @@ func (u *xxxUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) 
 
 	result := xxx.Create(input.Name, input.Number)
 
-	repoInput := &xxx.RepositorySaveInput{
+	repoInput := &xxx.RepositorySaveItem{
 		Xxx: result.Props(),
 	}
 

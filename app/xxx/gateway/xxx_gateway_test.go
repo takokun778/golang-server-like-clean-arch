@@ -43,13 +43,11 @@ func TestXxxGatewaySave(t *testing.T) {
 		Name:  "正常動作確認",
 		Setup: func() {},
 		Ctx:   context.Background(),
-		Args: &xxx.RepositorySaveInput{
+		Args: &xxx.RepositorySaveItem{
 			Xxx: test1Xxx,
 		},
-		Expected: &xxx.RepositorySaveOutput{
-			Xxx: test1Xxx,
-		},
-		IsErr: false,
+		Expected: test1Xxx,
+		IsErr:    false,
 	}
 	tests = append(tests, test1)
 
@@ -57,7 +55,7 @@ func TestXxxGatewaySave(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Save(tt.Ctx, tt.Args.(*xxx.RepositorySaveInput))
+			result, err := gateway.Save(tt.Ctx, tt.Args.(*xxx.RepositorySaveItem))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
@@ -66,7 +64,7 @@ func TestXxxGatewaySave(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(*xxx.RepositorySaveOutput), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -78,16 +76,14 @@ func TestXxxGatewayFind(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
+			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
 		},
 		Ctx: context.Background(),
-		Args: &xxx.RepositoryFindInput{
+		Args: &xxx.RepositoryFindItem{
 			Id: test1Xxx.Id(),
 		},
-		Expected: &xxx.RepositoryFindOutput{
-			Xxx: test1Xxx,
-		},
-		IsErr: false,
+		Expected: test1Xxx,
+		IsErr:    false,
 	}
 	tests = append(tests, test1)
 
@@ -95,7 +91,7 @@ func TestXxxGatewayFind(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Find(tt.Ctx, tt.Args.(*xxx.RepositoryFindInput))
+			result, err := gateway.Find(tt.Ctx, tt.Args.(*xxx.RepositoryFindItem))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
@@ -104,7 +100,7 @@ func TestXxxGatewayFind(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(*xxx.RepositoryFindOutput), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -118,15 +114,13 @@ func TestXxxGatewayFindAll(t *testing.T) {
 		Name: "正常動作確認",
 		Setup: func() {
 			resetTable()
-			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx1})
-			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx2})
+			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx1})
+			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx2})
 		},
-		Ctx:  context.Background(),
-		Args: &xxx.RepositoryFindAllInput{},
-		Expected: &xxx.RepositoryFindAllOutput{
-			Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
-		},
-		IsErr: false,
+		Ctx:      context.Background(),
+		Args:     &xxx.RepositoryFindAllItem{},
+		Expected: []xxx.Props{test1Xxx1, test1Xxx2},
+		IsErr:    false,
 	}
 	tests = append(tests, test1)
 
@@ -134,7 +128,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.FindAll(tt.Ctx, tt.Args.(*xxx.RepositoryFindAllInput))
+			result, err := gateway.FindAll(tt.Ctx, tt.Args.(*xxx.RepositoryFindAllItem))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
@@ -143,7 +137,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(*xxx.RepositoryFindAllOutput), result)
+			assert.ElementsMatch(t, tt.Expected.([]xxx.Props), result)
 		})
 	}
 }
@@ -155,16 +149,14 @@ func TestXxxGatewayUpdate(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
+			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
 		},
 		Ctx: context.Background(),
-		Args: &xxx.RepositoryUpdateInput{
+		Args: &xxx.RepositoryUpdateItem{
 			Xxx: test1Xxx,
 		},
-		Expected: &xxx.RepositoryUpdateOutput{
-			Xxx: test1Xxx,
-		},
-		IsErr: false,
+		Expected: test1Xxx,
+		IsErr:    false,
 	}
 	tests = append(tests, test1)
 
@@ -172,7 +164,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			result, err := gateway.Update(tt.Ctx, tt.Args.(*xxx.RepositoryUpdateInput))
+			result, err := gateway.Update(tt.Ctx, tt.Args.(*xxx.RepositoryUpdateItem))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
@@ -181,7 +173,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(*xxx.RepositoryUpdateOutput), result)
+			assert.Equal(t, tt.Expected.(xxx.Props), result)
 		})
 	}
 }
@@ -193,13 +185,13 @@ func TestXxxGatewayDelete(t *testing.T) {
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			gateway.Save(context.Background(), &xxx.RepositorySaveInput{Xxx: test1Xxx})
+			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
 		},
 		Ctx: context.Background(),
-		Args: &xxx.RepositoryDeleteInput{
+		Args: &xxx.RepositoryDeleteItem{
 			Id: test1Xxx.Id(),
 		},
-		Expected: &xxx.RepositoryDeleteOutput{},
+		Expected: nil,
 		IsErr:    false,
 	}
 	tests = append(tests, test1)
@@ -208,10 +200,10 @@ func TestXxxGatewayDelete(t *testing.T) {
 		Name:  "存在しないデータを削除",
 		Setup: func() {},
 		Ctx:   context.Background(),
-		Args: &xxx.RepositoryDeleteInput{
+		Args: &xxx.RepositoryDeleteItem{
 			Id: test1Xxx.Id(),
 		},
-		Expected: &xxx.RepositoryDeleteOutput{},
+		Expected: nil,
 		IsErr:    true,
 		Err:      xe.NewInternalServerError(errors.New(""), ""),
 	}
@@ -221,7 +213,7 @@ func TestXxxGatewayDelete(t *testing.T) {
 		t.Run(tt.Name, func(t *testing.T) {
 			tt.Setup()
 
-			_, err := gateway.Delete(tt.Ctx, tt.Args.(*xxx.RepositoryDeleteInput))
+			err := gateway.Delete(tt.Ctx, tt.Args.(*xxx.RepositoryDeleteItem))
 
 			if tt.IsErr && err != nil {
 				assert.Equal(t, tt.Err.(*xe.Error).Type, err.(*xe.Error).Type)
@@ -230,7 +222,7 @@ func TestXxxGatewayDelete(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			_, err = gateway.Find(tt.Ctx, &xxx.RepositoryFindInput{Id: tt.Args.(*xxx.RepositoryDeleteInput).Id})
+			_, err = gateway.Find(tt.Ctx, &xxx.RepositoryFindItem{Id: tt.Args.(*xxx.RepositoryDeleteItem).Id})
 
 			if err == nil {
 				t.Fail()

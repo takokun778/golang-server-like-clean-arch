@@ -24,13 +24,10 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 
 	test1Xxx1 := test.NewXxx("test1", 1).Props()
 	test1Xxx2 := test.NewXxx("test1", 1).Props()
-	test1Output := &xxx.RepositoryFindAllOutput{
-		Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
-	}
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().FindAll(gomock.Any(), &xxx.RepositoryFindAllInput{}).Return(test1Output, nil)
+			mxg.EXPECT().FindAll(gomock.Any(), &xxx.RepositoryFindAllItem{}).Return([]xxx.Props{test1Xxx1, test1Xxx2}, nil)
 		},
 		Ctx:  context.Background(),
 		Args: &xxx.UsecaseReadAllInput{},

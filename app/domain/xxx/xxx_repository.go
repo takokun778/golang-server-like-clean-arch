@@ -6,47 +6,28 @@ import (
 )
 
 type Repository interface {
-	Save(ctx context.Context, input *RepositorySaveInput) (*RepositorySaveOutput, error)
-	Find(ctx context.Context, input *RepositoryFindInput) (*RepositoryFindOutput, error)
-	FindAll(ctx context.Context, input *RepositoryFindAllInput) (*RepositoryFindAllOutput, error)
-	Update(ctx context.Context, input *RepositoryUpdateInput) (*RepositoryUpdateOutput, error)
-	Delete(ctx context.Context, input *RepositoryDeleteInput) (*RepositoryDeleteOutput, error)
+	Save(ctx context.Context, item *RepositorySaveItem) (Props, error)
+	Find(ctx context.Context, item *RepositoryFindItem) (Props, error)
+	FindAll(ctx context.Context, item *RepositoryFindAllItem) ([]Props, error)
+	Update(ctx context.Context, item *RepositoryUpdateItem) (Props, error)
+	Delete(ctx context.Context, item *RepositoryDeleteItem) error
 }
 
-type RepositorySaveInput struct {
+type RepositorySaveItem struct {
 	Xxx Props
 }
 
-type RepositorySaveOutput struct {
-	Xxx Props
-}
-
-type RepositoryFindInput struct {
+type RepositoryFindItem struct {
 	Id id
 }
 
-type RepositoryFindOutput struct {
+type RepositoryFindAllItem struct {
+}
+
+type RepositoryUpdateItem struct {
 	Xxx Props
 }
 
-type RepositoryFindAllInput struct {
-}
-
-type RepositoryFindAllOutput struct {
-	Xxxs []Props
-}
-
-type RepositoryUpdateInput struct {
-	Xxx Props
-}
-
-type RepositoryUpdateOutput struct {
-	Xxx Props
-}
-
-type RepositoryDeleteInput struct {
+type RepositoryDeleteItem struct {
 	Id id
-}
-
-type RepositoryDeleteOutput struct {
 }

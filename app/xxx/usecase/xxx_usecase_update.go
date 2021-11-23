@@ -12,15 +12,15 @@ func (u *xxxUsecase) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) 
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	src, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindInput{Id: input.Id})
+	src, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
 		return nil, xe.NewInternalServerError(err, "")
 	}
 
-	dst := xxx.Reconstruct(src.Xxx).Update(input.Name, input.Number)
+	dst := xxx.Reconstruct(src).Update(input.Name, input.Number)
 
-	_, err = u.xxxRepository.Update(timeOutCtx, &xxx.RepositoryUpdateInput{Xxx: dst.Props()})
+	_, err = u.xxxRepository.Update(timeOutCtx, &xxx.RepositoryUpdateItem{Xxx: dst.Props()})
 
 	if err != nil {
 		return nil, xe.NewInternalServerError(err, "")

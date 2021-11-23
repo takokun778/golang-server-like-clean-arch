@@ -12,19 +12,19 @@ func (u *xxxUsecase) Delete(ctx context.Context, input *xxx.UsecaseDeleteInput) 
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindInput{Id: input.Id})
+	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
 		return nil, xe.NewInternalServerError(err, "")
 	}
 
-	_, err = u.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteInput{Id: input.Id})
+	err = u.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteItem{Id: input.Id})
 
 	if err != nil {
 		return nil, xe.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseDeleteOutput{
-		Xxx: result.Xxx,
+		Xxx: result,
 	}, nil
 }

@@ -12,13 +12,13 @@ func (u *xxxUsecase) Read(ctx context.Context, input *xxx.UsecaseReadInput) (*xx
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindInput{Id: input.Id})
+	result, err := u.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
 
 	if err != nil {
 		return nil, xe.NewInternalServerError(err, "")
 	}
 
 	return &xxx.UsecaseReadOutput{
-		Xxx: result.Xxx,
+		Xxx: result,
 	}, nil
 }

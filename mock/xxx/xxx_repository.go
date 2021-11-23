@@ -36,76 +36,75 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // Delete mocks base method.
-func (m *MockRepository) Delete(ctx context.Context, input *xxx.RepositoryDeleteInput) (*xxx.RepositoryDeleteOutput, error) {
+func (m *MockRepository) Delete(ctx context.Context, item *xxx.RepositoryDeleteItem) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, input)
-	ret0, _ := ret[0].(*xxx.RepositoryDeleteOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret := m.ctrl.Call(m, "Delete", ctx, item)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // Delete indicates an expected call of Delete.
-func (mr *MockRepositoryMockRecorder) Delete(ctx, input interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Delete(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRepository)(nil).Delete), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockRepository)(nil).Delete), ctx, item)
 }
 
 // Find mocks base method.
-func (m *MockRepository) Find(ctx context.Context, input *xxx.RepositoryFindInput) (*xxx.RepositoryFindOutput, error) {
+func (m *MockRepository) Find(ctx context.Context, item *xxx.RepositoryFindItem) (xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Find", ctx, input)
-	ret0, _ := ret[0].(*xxx.RepositoryFindOutput)
+	ret := m.ctrl.Call(m, "Find", ctx, item)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Find indicates an expected call of Find.
-func (mr *MockRepositoryMockRecorder) Find(ctx, input interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Find(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockRepository)(nil).Find), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockRepository)(nil).Find), ctx, item)
 }
 
 // FindAll mocks base method.
-func (m *MockRepository) FindAll(ctx context.Context, input *xxx.RepositoryFindAllInput) (*xxx.RepositoryFindAllOutput, error) {
+func (m *MockRepository) FindAll(ctx context.Context, item *xxx.RepositoryFindAllItem) ([]xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindAll", ctx, input)
-	ret0, _ := ret[0].(*xxx.RepositoryFindAllOutput)
+	ret := m.ctrl.Call(m, "FindAll", ctx, item)
+	ret0, _ := ret[0].([]xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindAll indicates an expected call of FindAll.
-func (mr *MockRepositoryMockRecorder) FindAll(ctx, input interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) FindAll(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockRepository)(nil).FindAll), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAll", reflect.TypeOf((*MockRepository)(nil).FindAll), ctx, item)
 }
 
 // Save mocks base method.
-func (m *MockRepository) Save(ctx context.Context, input *xxx.RepositorySaveInput) (*xxx.RepositorySaveOutput, error) {
+func (m *MockRepository) Save(ctx context.Context, item *xxx.RepositorySaveItem) (xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Save", ctx, input)
-	ret0, _ := ret[0].(*xxx.RepositorySaveOutput)
+	ret := m.ctrl.Call(m, "Save", ctx, item)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Save indicates an expected call of Save.
-func (mr *MockRepositoryMockRecorder) Save(ctx, input interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Save(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRepository)(nil).Save), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRepository)(nil).Save), ctx, item)
 }
 
 // Update mocks base method.
-func (m *MockRepository) Update(ctx context.Context, input *xxx.RepositoryUpdateInput) (*xxx.RepositoryUpdateOutput, error) {
+func (m *MockRepository) Update(ctx context.Context, item *xxx.RepositoryUpdateItem) (xxx.Props, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, input)
-	ret0, _ := ret[0].(*xxx.RepositoryUpdateOutput)
+	ret := m.ctrl.Call(m, "Update", ctx, item)
+	ret0, _ := ret[0].(xxx.Props)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockRepositoryMockRecorder) Update(ctx, input interface{}) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) Update(ctx, item interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockRepository)(nil).Update), ctx, item)
 }

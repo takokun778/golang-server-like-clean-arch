@@ -17,8 +17,8 @@ func NewXxxGateway() xxx.Repository {
 	return gw
 }
 
-func (g *xxxGateway) Save(ctx context.Context, input *xxx.RepositorySaveInput) (*xxx.RepositorySaveOutput, error) {
-	entity := Entity(input.Xxx)
+func (g *xxxGateway) Save(ctx context.Context, item *xxx.RepositorySaveItem) (xxx.Props, error) {
+	entity := Entity(item.Xxx)
 
 	_, err := g.db.Xxx.
 		Create().
@@ -30,29 +30,25 @@ func (g *xxxGateway) Save(ctx context.Context, input *xxx.RepositorySaveInput) (
 		Save(ctx)
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
-	return &xxx.RepositorySaveOutput{
-		Xxx: entity.ToProps(),
-	}, nil
+	return entity.ToProps(), nil
 }
 
-func (g *xxxGateway) Find(ctx context.Context, input *xxx.RepositoryFindInput) (*xxx.RepositoryFindOutput, error) {
-	res, err := g.db.Xxx.Get(ctx, input.Id.Value())
+func (g *xxxGateway) Find(ctx context.Context, item *xxx.RepositoryFindItem) (xxx.Props, error) {
+	res, err := g.db.Xxx.Get(ctx, item.Id.Value())
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "xxx gateway save failed")
+		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
 	entity := XxxEntity(*res)
 
-	return &xxx.RepositoryFindOutput{
-		Xxx: entity.ToProps(),
-	}, nil
+	return entity.ToProps(), nil
 }
 
-func (g *xxxGateway) FindAll(ctx context.Context, input *xxx.RepositoryFindAllInput) (*xxx.RepositoryFindAllOutput, error) {
+func (g *xxxGateway) FindAll(ctx context.Context, item *xxx.RepositoryFindAllItem) ([]xxx.Props, error) {
 	res, err := g.db.Xxx.
 		Query().All(ctx)
 
@@ -67,13 +63,11 @@ func (g *xxxGateway) FindAll(ctx context.Context, input *xxx.RepositoryFindAllIn
 		list = append(list, entity.ToProps())
 	}
 
-	return &xxx.RepositoryFindAllOutput{
-		Xxxs: list,
-	}, nil
+	return list, nil
 }
 
-func (g *xxxGateway) Update(ctx context.Context, input *xxx.RepositoryUpdateInput) (*xxx.RepositoryUpdateOutput, error) {
-	entity := Entity(input.Xxx)
+func (g *xxxGateway) Update(ctx context.Context, item *xxx.RepositoryUpdateItem) (xxx.Props, error) {
+	entity := Entity(item.Xxx)
 
 	_, err := g.db.Xxx.
 		Update().
@@ -83,20 +77,18 @@ func (g *xxxGateway) Update(ctx context.Context, input *xxx.RepositoryUpdateInpu
 		Save(ctx)
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "xxx gateway update failed")
+		return xxx.Props{}, xe.NewInternalServerError(err, "xxx gateway update failed")
 	}
 
-	return &xxx.RepositoryUpdateOutput{
-		Xxx: entity.ToProps(),
-	}, nil
+	return entity.ToProps(), nil
 }
 
-func (g *xxxGateway) Delete(ctx context.Context, input *xxx.RepositoryDeleteInput) (*xxx.RepositoryDeleteOutput, error) {
-	err := g.db.Xxx.DeleteOneID(input.Id.Value()).Exec(ctx)
+func (g *xxxGateway) Delete(ctx context.Context, item *xxx.RepositoryDeleteItem) error {
+	err := g.db.Xxx.DeleteOneID(item.Id.Value()).Exec(ctx)
 
 	if err != nil {
-		return nil, xe.NewInternalServerError(err, "xxx gateway delete failed")
+		return xe.NewInternalServerError(err, "xxx gateway delete failed")
 	}
 
-	return &xxx.RepositoryDeleteOutput{}, nil
+	return nil
 }
