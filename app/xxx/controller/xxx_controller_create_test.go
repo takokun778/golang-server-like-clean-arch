@@ -19,7 +19,11 @@ func TestUserControllerCreate(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mxu := mx.NewMockUsecase(ctrl)
+	mxuc := mx.NewMockUsecaseCreate(ctrl)
+	mxur := mx.NewMockUsecaseRead(ctrl)
+	mxura := mx.NewMockUsecaseReadAll(ctrl)
+	mxuu := mx.NewMockUsecaseUpdate(ctrl)
+	mxud := mx.NewMockUsecaseDelete(ctrl)
 
 	tests := make([]test.Case, 0)
 
@@ -34,7 +38,7 @@ func TestUserControllerCreate(t *testing.T) {
 			output := &xxx.UsecaseCreateOutput{
 				Xxx: test1Xxx,
 			}
-			mxu.EXPECT().Create(gomock.Any(), input).Return(output, nil)
+			mxuc.EXPECT().Handle(gomock.Any(), input).Return(output, nil)
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.CreateRequest{
@@ -58,7 +62,7 @@ func TestUserControllerCreate(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			controller := mc.NewXxxController(mxu)
+			controller := mc.NewXxxController(mxuc, mxur, mxura, mxuu, mxud)
 
 			result, err := controller.Create(test.Ctx, test.Args.(*pbXxx.CreateRequest))
 

@@ -1,4 +1,4 @@
-package usecase_test
+package interactor_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	xu "xxx/app/xxx/usecase"
+	xi "xxx/app/xxx/interactor"
 	mx "xxx/mock/xxx"
 	"xxx/test"
 
@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestXxxUsecaseReadAll(t *testing.T) {
+func TestXxxInteractorReadAll(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -42,9 +42,9 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			usecase := xu.NewXxxUsecase(mxg)
+			usecase := xi.NewXxxInteractorReadAll(mxg)
 
-			result, err := usecase.ReadAll(test.Ctx, test.Args.(*xxx.UsecaseReadAllInput))
+			result, err := usecase.Handle(test.Ctx, test.Args.(*xxx.UsecaseReadAllInput))
 
 			if test.IsErr && err != nil {
 				assert.Equal(t, test.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)

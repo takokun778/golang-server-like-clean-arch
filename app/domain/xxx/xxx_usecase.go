@@ -5,12 +5,8 @@ import (
 	"context"
 )
 
-type Usecase interface {
-	Create(ctx context.Context, input *UsecaseCreateInput) (*UsecaseCreateOutput, error)
-	Read(ctx context.Context, input *UsecaseReadInput) (*UsecaseReadOutput, error)
-	ReadAll(ctx context.Context, input *UsecaseReadAllInput) (*UsecaseReadAllOutput, error)
-	Update(ctx context.Context, input *UsecaseUpdateInput) (*UsecaseUpdateOutput, error)
-	Delete(ctx context.Context, input *UsecaseDeleteInput) (*UsecaseDeleteOutput, error)
+type UsecaseCreate interface {
+	Handle(ctx context.Context, input *UsecaseCreateInput) (*UsecaseCreateOutput, error)
 }
 
 type UsecaseCreateInput struct {
@@ -22,6 +18,10 @@ type UsecaseCreateOutput struct {
 	Xxx Props
 }
 
+type UsecaseRead interface {
+	Handle(ctx context.Context, input *UsecaseReadInput) (*UsecaseReadOutput, error)
+}
+
 type UsecaseReadInput struct {
 	Id id
 }
@@ -30,11 +30,19 @@ type UsecaseReadOutput struct {
 	Xxx Props
 }
 
+type UsecaseReadAll interface {
+	Handle(ctx context.Context, input *UsecaseReadAllInput) (*UsecaseReadAllOutput, error)
+}
+
 type UsecaseReadAllInput struct {
 }
 
 type UsecaseReadAllOutput struct {
 	Xxxs []Props
+}
+
+type UsecaseUpdate interface {
+	Handle(ctx context.Context, input *UsecaseUpdateInput) (*UsecaseUpdateOutput, error)
 }
 
 type UsecaseUpdateInput struct {
@@ -45,6 +53,10 @@ type UsecaseUpdateInput struct {
 
 type UsecaseUpdateOutput struct {
 	Xxx Props
+}
+
+type UsecaseDelete interface {
+	Handle(ctx context.Context, input *UsecaseDeleteInput) (*UsecaseDeleteOutput, error)
 }
 
 type UsecaseDeleteInput struct {

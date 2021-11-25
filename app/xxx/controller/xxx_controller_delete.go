@@ -18,7 +18,7 @@ func (c *xxxController) Delete(ctx context.Context, req *pbXxxx.DeleteRequest) (
 		Id: id,
 	}
 
-	output, err := c.xxxUsecase.Delete(ctx, input)
+	output, err := c.xxxUsecaseDelete.Handle(ctx, input)
 
 	if err != nil {
 		return nil, err

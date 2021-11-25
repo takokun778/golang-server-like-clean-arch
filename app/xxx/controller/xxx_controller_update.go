@@ -32,7 +32,7 @@ func (c *xxxController) Update(ctx context.Context, req *pbXxx.UpdateRequest) (*
 		Number: number,
 	}
 
-	output, err := c.xxxUsecase.Update(ctx, input)
+	output, err := c.xxxUsecaseUpdate.Handle(ctx, input)
 
 	if err != nil {
 		return nil, err

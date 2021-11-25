@@ -18,7 +18,7 @@ func (c *xxxController) Read(ctx context.Context, req *pbXxxx.ReadRequest) (*pbX
 		Id: id,
 	}
 
-	output, err := c.xxxUsecase.Read(ctx, input)
+	output, err := c.xxxUsecaseRead.Handle(ctx, input)
 
 	if err != nil {
 		return nil, err

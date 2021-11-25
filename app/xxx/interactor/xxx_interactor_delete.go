@@ -1,4 +1,4 @@
-package usecase
+package interactor
 
 import (
 	"context"
@@ -8,7 +8,17 @@ import (
 	"xxx/app/domain/xxx"
 )
 
-func (u *xxxUsecase) Delete(ctx context.Context, input *xxx.UsecaseDeleteInput) (*xxx.UsecaseDeleteOutput, error) {
+type xxxInteractorDelete struct {
+	xxxRepository xxx.Repository
+}
+
+func NewXxxInteractorDelete(xxxRepository xxx.Repository) xxx.UsecaseDelete {
+	interactor := new(xxxInteractorDelete)
+	interactor.xxxRepository = xxxRepository
+	return interactor
+}
+
+func (u *xxxInteractorDelete) Handle(ctx context.Context, input *xxx.UsecaseDeleteInput) (*xxx.UsecaseDeleteOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 

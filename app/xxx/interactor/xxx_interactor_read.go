@@ -1,4 +1,4 @@
-package usecase
+package interactor
 
 import (
 	"context"
@@ -8,7 +8,17 @@ import (
 	"xxx/app/domain/xxx"
 )
 
-func (u *xxxUsecase) Read(ctx context.Context, input *xxx.UsecaseReadInput) (*xxx.UsecaseReadOutput, error) {
+type xxxInteractorRead struct {
+	xxxRepository xxx.Repository
+}
+
+func NewXxxInteractorRead(xxxRepository xxx.Repository) xxx.UsecaseRead {
+	interactor := new(xxxInteractorRead)
+	interactor.xxxRepository = xxxRepository
+	return interactor
+}
+
+func (u *xxxInteractorRead) Handle(ctx context.Context, input *xxx.UsecaseReadInput) (*xxx.UsecaseReadOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 

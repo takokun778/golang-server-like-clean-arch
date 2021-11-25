@@ -19,7 +19,11 @@ func TestUserControllerDelete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mxu := mx.NewMockUsecase(ctrl)
+	mxuc := mx.NewMockUsecaseCreate(ctrl)
+	mxur := mx.NewMockUsecaseRead(ctrl)
+	mxura := mx.NewMockUsecaseReadAll(ctrl)
+	mxuu := mx.NewMockUsecaseUpdate(ctrl)
+	mxud := mx.NewMockUsecaseDelete(ctrl)
 
 	tests := make([]test.Case, 0)
 
@@ -33,7 +37,7 @@ func TestUserControllerDelete(t *testing.T) {
 			output := &xxx.UsecaseDeleteOutput{
 				Xxx: test1Xxx,
 			}
-			mxu.EXPECT().Delete(gomock.Any(), input).Return(output, nil)
+			mxud.EXPECT().Handle(gomock.Any(), input).Return(output, nil)
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.DeleteRequest{
@@ -56,7 +60,7 @@ func TestUserControllerDelete(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			controller := mc.NewXxxController(mxu)
+			controller := mc.NewXxxController(mxuc, mxur, mxura, mxuu, mxud)
 
 			result, err := controller.Delete(test.Ctx, test.Args.(*pbXxx.DeleteRequest))
 

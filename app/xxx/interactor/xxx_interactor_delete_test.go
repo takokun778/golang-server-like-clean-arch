@@ -1,4 +1,4 @@
-package usecase_test
+package interactor_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	xu "xxx/app/xxx/usecase"
+	xi "xxx/app/xxx/interactor"
 	mx "xxx/mock/xxx"
 	"xxx/test"
 
@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestXxxUsecaseRead(t *testing.T) {
+func TestXxxInteractorDelete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -27,12 +27,13 @@ func TestXxxUsecaseRead(t *testing.T) {
 		Name: "正常動作確認",
 		Setup: func() {
 			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx, nil)
+			mxg.EXPECT().Delete(gomock.Any(), &xxx.RepositoryDeleteItem{Id: test1Xxx.Id()}).Return(nil)
 		},
 		Ctx: context.Background(),
-		Args: &xxx.UsecaseReadInput{
+		Args: &xxx.UsecaseDeleteInput{
 			Id: test1Xxx.Id(),
 		},
-		Expected: &xxx.UsecaseReadOutput{
+		Expected: &xxx.UsecaseDeleteOutput{
 			Xxx: test1Xxx,
 		},
 		IsErr: false,
@@ -43,9 +44,9 @@ func TestXxxUsecaseRead(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			usecase := xu.NewXxxUsecase(mxg)
+			usecase := xi.NewXxxInteractorDelete(mxg)
 
-			result, err := usecase.Read(test.Ctx, test.Args.(*xxx.UsecaseReadInput))
+			result, err := usecase.Handle(test.Ctx, test.Args.(*xxx.UsecaseDeleteInput))
 
 			if test.IsErr && err != nil {
 				assert.Equal(t, test.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
@@ -54,7 +55,7 @@ func TestXxxUsecaseRead(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, test.Expected.(*xxx.UsecaseReadOutput).Xxx, result.Xxx)
+			assert.Equal(t, test.Expected.(*xxx.UsecaseDeleteOutput).Xxx, result.Xxx)
 		})
 	}
 }

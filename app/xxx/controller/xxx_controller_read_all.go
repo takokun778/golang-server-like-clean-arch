@@ -10,7 +10,7 @@ import (
 func (c *xxxController) ReadAll(ctx context.Context, req *pbXxxx.ReadAllRequest) (*pbXxxx.ReadAllResponse, error) {
 	input := &xxx.UsecaseReadAllInput{}
 
-	output, err := c.xxxUsecase.ReadAll(ctx, input)
+	output, err := c.xxxUsecaseReadAll.Handle(ctx, input)
 
 	if err != nil {
 		return nil, err

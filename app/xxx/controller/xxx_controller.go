@@ -9,15 +9,29 @@ import (
 )
 
 type xxxController struct {
-	*controller.Translator
-	xxxUsecase xxx.Usecase
 	pbXxxx.UnimplementedXxxServiceServer
+	*controller.Translator
+	xxxUsecaseCreate  xxx.UsecaseCreate
+	xxxUsecaseRead    xxx.UsecaseRead
+	xxxUsecaseReadAll xxx.UsecaseReadAll
+	xxxUsecaseUpdate  xxx.UsecaseUpdate
+	xxxUsecaseDelete  xxx.UsecaseDelete
 }
 
-func NewXxxController(xxxUsecase xxx.Usecase) *xxxController {
+func NewXxxController(
+	xxxUsecaseCreate xxx.UsecaseCreate,
+	xxxUsecaseRead xxx.UsecaseRead,
+	xxxUsecaseReadAll xxx.UsecaseReadAll,
+	xxxUsecaseUpdate xxx.UsecaseUpdate,
+	xxxUsecaseDelete xxx.UsecaseDelete,
+) *xxxController {
 	res := new(xxxController)
 	res.Translator = controller.SetTranslator()
-	res.xxxUsecase = xxxUsecase
+	res.xxxUsecaseCreate = xxxUsecaseCreate
+	res.xxxUsecaseRead = xxxUsecaseRead
+	res.xxxUsecaseReadAll = xxxUsecaseReadAll
+	res.xxxUsecaseUpdate = xxxUsecaseUpdate
+	res.xxxUsecaseDelete = xxxUsecaseDelete
 	return res
 }
 

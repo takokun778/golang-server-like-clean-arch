@@ -19,7 +19,11 @@ func TestUserControllerUpdate(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mxu := mx.NewMockUsecase(ctrl)
+	mxuc := mx.NewMockUsecaseCreate(ctrl)
+	mxur := mx.NewMockUsecaseRead(ctrl)
+	mxura := mx.NewMockUsecaseReadAll(ctrl)
+	mxuu := mx.NewMockUsecaseUpdate(ctrl)
+	mxud := mx.NewMockUsecaseDelete(ctrl)
 
 	tests := make([]test.Case, 0)
 
@@ -35,7 +39,7 @@ func TestUserControllerUpdate(t *testing.T) {
 			output := &xxx.UsecaseUpdateOutput{
 				Xxx: test1Xxx,
 			}
-			mxu.EXPECT().Update(gomock.Any(), input).Return(output, nil)
+			mxuu.EXPECT().Handle(gomock.Any(), input).Return(output, nil)
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.UpdateRequest{
@@ -60,7 +64,7 @@ func TestUserControllerUpdate(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			controller := mc.NewXxxController(mxu)
+			controller := mc.NewXxxController(mxuc, mxur, mxura, mxuu, mxud)
 
 			result, err := controller.Update(test.Ctx, test.Args.(*pbXxx.UpdateRequest))
 

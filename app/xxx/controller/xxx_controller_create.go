@@ -25,7 +25,7 @@ func (c *xxxController) Create(ctx context.Context, req *pbXxxx.CreateRequest) (
 		Number: number,
 	}
 
-	output, err := c.xxxUsecase.Create(ctx, input)
+	output, err := c.xxxUsecaseCreate.Handle(ctx, input)
 
 	if err != nil {
 		return nil, err

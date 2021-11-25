@@ -19,7 +19,11 @@ func TestUserControllerReadAll(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mxu := mx.NewMockUsecase(ctrl)
+	mxuc := mx.NewMockUsecaseCreate(ctrl)
+	mxur := mx.NewMockUsecaseRead(ctrl)
+	mxura := mx.NewMockUsecaseReadAll(ctrl)
+	mxuu := mx.NewMockUsecaseUpdate(ctrl)
+	mxud := mx.NewMockUsecaseDelete(ctrl)
 
 	tests := make([]test.Case, 0)
 
@@ -32,7 +36,7 @@ func TestUserControllerReadAll(t *testing.T) {
 			output := &xxx.UsecaseReadAllOutput{
 				Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
 			}
-			mxu.EXPECT().ReadAll(gomock.Any(), input).Return(output, nil)
+			mxura.EXPECT().Handle(gomock.Any(), input).Return(output, nil)
 		},
 		Ctx:  context.Background(),
 		Args: &pbXxx.ReadAllRequest{},
@@ -62,7 +66,7 @@ func TestUserControllerReadAll(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			controller := mc.NewXxxController(mxu)
+			controller := mc.NewXxxController(mxuc, mxur, mxura, mxuu, mxud)
 
 			result, err := controller.ReadAll(test.Ctx, test.Args.(*pbXxx.ReadAllRequest))
 
