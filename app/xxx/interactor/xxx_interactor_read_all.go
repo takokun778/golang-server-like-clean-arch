@@ -1,4 +1,4 @@
-package usecase
+package interactor
 
 import (
 	"context"
@@ -8,11 +8,11 @@ import (
 	"xxx/app/domain/xxx"
 )
 
-func (u *xxxUsecase) ReadAll(ctx context.Context, input *xxx.UsecaseReadAllInput) (*xxx.UsecaseReadAllOutput, error) {
+func (i *xxxInteractor) ReadAll(ctx context.Context, input *xxx.UsecaseReadAllInput) (*xxx.UsecaseReadAllOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, err := u.xxxRepository.FindAll(timeOutCtx, &xxx.RepositoryFindAllItem{})
+	result, err := i.xxxRepository.FindAll(timeOutCtx, &xxx.RepositoryFindAllItem{})
 
 	if err != nil {
 		return nil, dErr.NewInternalServerError(err, "")

@@ -1,4 +1,4 @@
-package usecase_test
+package interactor_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	xu "xxx/app/xxx/usecase"
+	xi "xxx/app/xxx/interactor"
 	mx "xxx/mock/xxx"
 	"xxx/test"
 
@@ -49,7 +49,7 @@ func TestXxxUsecaseUpdate(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			usecase := xu.NewXxxUsecase(mxg)
+			usecase := xi.NewXxxInteractor(mxg)
 
 			result, err := usecase.Update(test.Ctx, test.Args.(*xxx.UsecaseUpdateInput))
 

@@ -1,4 +1,4 @@
-package usecase_test
+package interactor_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	xu "xxx/app/xxx/usecase"
+	xi "xxx/app/xxx/interactor"
 	mx "xxx/mock/xxx"
 	"xxx/test"
 
@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestXxxUsecaseReadAll(t *testing.T) {
+func TestXxxInteractorDelete(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -22,17 +22,19 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1Xxx1 := test.NewXxx("test1", 1).Props()
-	test1Xxx2 := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().FindAll(gomock.Any(), &xxx.RepositoryFindAllItem{}).Return([]xxx.Props{test1Xxx1, test1Xxx2}, nil)
+			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx, nil)
+			mxg.EXPECT().Delete(gomock.Any(), &xxx.RepositoryDeleteItem{Id: test1Xxx.Id()}).Return(nil)
 		},
-		Ctx:  context.Background(),
-		Args: &xxx.UsecaseReadAllInput{},
-		Expected: &xxx.UsecaseReadAllOutput{
-			Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
+		Ctx: context.Background(),
+		Args: &xxx.UsecaseDeleteInput{
+			Id: test1Xxx.Id(),
+		},
+		Expected: &xxx.UsecaseDeleteOutput{
+			Xxx: test1Xxx,
 		},
 		IsErr: false,
 	}
@@ -42,9 +44,9 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 		t.Run(test.Name, func(t *testing.T) {
 			test.Setup()
 
-			usecase := xu.NewXxxUsecase(mxg)
+			usecase := xi.NewXxxInteractor(mxg)
 
-			result, err := usecase.ReadAll(test.Ctx, test.Args.(*xxx.UsecaseReadAllInput))
+			result, err := usecase.Delete(test.Ctx, test.Args.(*xxx.UsecaseDeleteInput))
 
 			if test.IsErr && err != nil {
 				assert.Equal(t, test.Err.(*dErr.Error).Type, err.(*dErr.Error).Type)
@@ -53,7 +55,7 @@ func TestXxxUsecaseReadAll(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, test.Expected.(*xxx.UsecaseReadAllOutput).Xxxs, result.Xxxs)
+			assert.Equal(t, test.Expected.(*xxx.UsecaseDeleteOutput).Xxx, result.Xxx)
 		})
 	}
 }

@@ -8,7 +8,7 @@ import (
 
 	xc "xxx/app/xxx/controller"
 	xg "xxx/app/xxx/gateway"
-	xu "xxx/app/xxx/usecase"
+	xi "xxx/app/xxx/interactor"
 	pbx "xxx/proto/xxx"
 
 	"google.golang.org/grpc"
@@ -29,9 +29,9 @@ func main() {
 
 	xxxGateway := xg.NewXxxGateway()
 
-	xxxUsecase := xu.NewXxxUsecase(xxxGateway)
+	xxxInteractor := xi.NewXxxInteractor(xxxGateway)
 
-	xxxController := xc.NewXxxController(xxxUsecase)
+	xxxController := xc.NewXxxController(xxxInteractor)
 
 	pbx.RegisterXxxServiceServer(server, xxxController)
 

@@ -1,4 +1,4 @@
-package usecase
+package interactor
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"xxx/app/domain/xxx"
 )
 
-func (u *xxxUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) (*xxx.UsecaseCreateOutput, error) {
+func (i *xxxInteractor) Create(ctx context.Context, input *xxx.UsecaseCreateInput) (*xxx.UsecaseCreateOutput, error) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -18,7 +18,7 @@ func (u *xxxUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) 
 		Xxx: result.Props(),
 	}
 
-	_, err := u.xxxRepository.Save(timeOutCtx, repoInput)
+	_, err := i.xxxRepository.Save(timeOutCtx, repoInput)
 
 	if err != nil {
 		return nil, dErr.NewInternalServerError(err, "")
