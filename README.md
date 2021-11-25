@@ -20,7 +20,7 @@
 - Domainモデルを永続化を管理
 - DB管理には[ent.](https://entgo.io/)を採用
 
-## Usecase
+## Interactor(Usecase)
 - アプリケーションのユースケースを管理
 - シーケンス図のコーディング
 - `for`による動作/`if`利用のための詳細ロジックはDomainモデルに記述できないか検討
@@ -35,11 +35,11 @@
 │   ├── xxx
 │   │   ├── controller  # Xxxモデルにおける入出力変換機能
 │   │   ├── gateway     # Xxxモデルにおける永続化機能
-│   │   └── usecase     # Xxxモデルにおけるユースケース
+│   │   └── interactor  # Xxxモデルにおけるユースケース
 │   └── yyy
 │       ├── controller  # Yyyモデルにおける入出力変換機能
 │       ├── gateway     # Yyyモデルにおける永続化機能
-│       └── usecase     # Yyyモデルにおけるユースケース
+│       └── interactor  # Yyyモデルにおけるユースケース
 │
 ├── ent                 # entによるDB管理
 ├── logger              # zapによるログ形式管理
@@ -88,17 +88,17 @@
     │   │   # entモデル <-> domainモデル
     │   └── xxx_entity.go
     │   # usecaseの実装
-    └── usecase
+    └── interactor
         │   # 各種操作メソッド実装とそのテスト
-        ├── xxx_usecase.gp
-        ├── xxx_usecase_create.go
-        ├── xxx_usecase_create_test.go
-        ├── xxx_usecase_read.go
-        ├── xxx_usecase_read_test.go
-        ├── xxx_usecase_update.go
-        ├── xxx_usecase_update_test.go
-        ├── xxx_usecase_delete.go
-        └── xxx_usecase_delete_test.go
+        ├── xxx_interactor.gp
+        ├── xxx_interactor_create.go
+        ├── xxx_interactor_create_test.go
+        ├── xxx_interactor_read.go
+        ├── xxx_interactor_read_test.go
+        ├── xxx_interactor_update.go
+        ├── xxx_interactor_update_test.go
+        ├── xxx_interactor_delete.go
+        └── xxx_interactor_delete_test.go
 ```
 
 # 命名規則
