@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestXxxUsecaseRead(t *testing.T) {
+func TestXxxInteractorRead(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
