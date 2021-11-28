@@ -1,8 +1,8 @@
 package xxx
 
-type XxxList []Xxx
+type xxxList []xxx
 
-func NewList(list []Xxx) XxxList {
-	hl := XxxList(list)
+func NewList(list []xxx) xxxList {
+	hl := xxxList(list)
 	return hl
 }

@@ -38,7 +38,7 @@ func resetTable() {
 func TestXxxGatewaySave(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Xxx := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name:  "正常動作確認",
 		Setup: func() {},
@@ -72,7 +72,7 @@ func TestXxxGatewaySave(t *testing.T) {
 func TestXxxGatewayFind(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Xxx := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
@@ -100,7 +100,9 @@ func TestXxxGatewayFind(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.Equal(t, tt.Expected.(xxx.Props), result)
+			assert.Equal(t, tt.Expected.(xxx.Props).Id().Value(), result.Id().Value())
+			assert.Equal(t, tt.Expected.(xxx.Props).Name().Value(), result.Name().Value())
+			assert.Equal(t, tt.Expected.(xxx.Props).Number().Value(), result.Number().Value())
 		})
 	}
 }
@@ -108,8 +110,8 @@ func TestXxxGatewayFind(t *testing.T) {
 func TestXxxGatewayFindAll(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Xxx1 := test.NewXxx("test1", 1).Props()
-	test1Xxx2 := test.NewXxx("test1", 1).Props()
+	test1Xxx1 := test.NewXxx("test1", 1)
+	test1Xxx2 := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
@@ -137,7 +139,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 				assert.NoError(t, err)
 			}
 
-			assert.ElementsMatch(t, tt.Expected.([]xxx.Props), result)
+			assert.Len(t, tt.Expected.([]xxx.Props), len(result))
 		})
 	}
 }
@@ -145,7 +147,7 @@ func TestXxxGatewayFindAll(t *testing.T) {
 func TestXxxGatewayUpdate(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Xxx := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
@@ -181,7 +183,7 @@ func TestXxxGatewayUpdate(t *testing.T) {
 func TestXxxGatewayDelete(t *testing.T) {
 	tests := make([]test.Case, 0)
 
-	test1Xxx := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {

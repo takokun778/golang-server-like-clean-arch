@@ -25,12 +25,12 @@ func TestXxxInteractorUpdate(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1Name, _ := xxx.NewName("updated")
 	test1Number, _ := xxx.NewNumber(2)
-	test1XxxUpdated := test1Xxx.Update(test1Name, test1Number)
+	test1XxxUpdated := xxx.Reconstruct(test1Xxx).Update(test1Name, test1Number).Props()
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {
-			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx.Props(), nil)
-			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(test1Xxx.Props(), nil)
+			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx, nil)
+			mxg.EXPECT().Update(gomock.Any(), gomock.Any()).Return(test1XxxUpdated, nil)
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseUpdateInput{
@@ -39,7 +39,7 @@ func TestXxxInteractorUpdate(t *testing.T) {
 			Number: test1XxxUpdated.Number(),
 		},
 		Expected: &xxx.UsecaseUpdateOutput{
-			Xxx: test1XxxUpdated.Props(),
+			Xxx: test1XxxUpdated,
 		},
 		IsErr: false,
 	}

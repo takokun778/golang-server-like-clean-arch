@@ -22,8 +22,8 @@ func TestXxxInteractorReadAll(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1Xxx1 := test.NewXxx("test1", 1).Props()
-	test1Xxx2 := test.NewXxx("test1", 1).Props()
+	test1Xxx1 := test.NewXxx("test1", 1)
+	test1Xxx2 := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {

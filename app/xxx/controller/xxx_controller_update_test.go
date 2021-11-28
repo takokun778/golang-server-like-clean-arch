@@ -23,7 +23,7 @@ func TestUserControllerUpdate(t *testing.T) {
 
 	tests := make([]test.Case, 0)
 
-	test1Xxx := test.NewXxx("test1", 1).Props()
+	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
 		Setup: func() {

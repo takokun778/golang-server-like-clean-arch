@@ -1,10 +1,10 @@
 package xxx
 
-type Xxx struct {
+type xxx struct {
 	props
 }
 
-func (x Xxx) Props() Props {
+func (x xxx) Props() Props {
 	return Props(x)
 }
 
@@ -14,8 +14,8 @@ func constructor(
 	number number,
 	createdAt time,
 	updatedAt time,
-) Xxx {
-	xxx := new(Xxx)
+) xxx {
+	xxx := new(xxx)
 	xxx.id = id
 	xxx.name = name
 	xxx.number = number
@@ -24,7 +24,7 @@ func constructor(
 	return *xxx
 }
 
-func Reconstruct(values Props) Xxx {
+func Reconstruct(values Props) xxx {
 	return constructor(
 		values.id,
 		values.name,
@@ -34,7 +34,7 @@ func Reconstruct(values Props) Xxx {
 	)
 }
 
-func Create(name name, number number) Xxx {
+func Create(name name, number number) xxx {
 	now := TimeNow()
 	return constructor(
 		CreateRandomId(),
@@ -45,7 +45,7 @@ func Create(name name, number number) Xxx {
 	)
 }
 
-func (x Xxx) Update(name name, number number) Xxx {
+func (x xxx) Update(name name, number number) xxx {
 	return constructor(
 		x.id,
 		name,
