@@ -5,9 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	cg "xxx/app/common/gateway"
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
+	"xxx/app/infra"
 	xg "xxx/app/xxx/gateway"
 	"xxx/test"
 
@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 }
 
 func resetTable() {
-	database := cg.DatabaseConnect()
+	database := infra.DatabaseConnect()
 
 	ctx := context.Background()
 

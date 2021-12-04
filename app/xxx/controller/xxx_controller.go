@@ -1,22 +1,22 @@
 package controller
 
 import (
-	"xxx/app/common/controller"
 	"xxx/app/domain/xxx"
+	"xxx/app/infra"
 	pbXxxx "xxx/proto/xxx"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type xxxController struct {
-	*controller.Translator
+	*infra.Translator
 	xxxUsecase xxx.Usecase
 	pbXxxx.UnimplementedXxxServiceServer
 }
 
 func NewXxxController(xxxUsecase xxx.Usecase) *xxxController {
 	res := new(xxxController)
-	res.Translator = controller.SetTranslator()
+	res.Translator = infra.SetTranslator()
 	res.xxxUsecase = xxxUsecase
 	return res
 }

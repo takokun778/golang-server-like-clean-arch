@@ -36,10 +36,11 @@
 │   │   ├── controller  # Xxxモデルにおける入出力変換機能
 │   │   ├── gateway     # Xxxモデルにおける永続化機能
 │   │   └── interactor  # Xxxモデルにおけるユースケース
-│   └── yyy
-│       ├── controller  # Yyyモデルにおける入出力変換機能
-│       ├── gateway     # Yyyモデルにおける永続化機能
-│       └── interactor  # Yyyモデルにおけるユースケース
+│   ├── yyy
+│   │   ├── controller  # Yyyモデルにおける入出力変換機能
+│   │   ├── gateway     # Yyyモデルにおける永続化機能
+│   │   └── interactor  # Yyyモデルにおけるユースケース
+│   └── infra           # infra層
 │
 ├── ent                 # entによるDB管理
 ├── logger              # zapによるログ形式管理

@@ -3,18 +3,18 @@ package gateway
 import (
 	"context"
 
-	"xxx/app/common/gateway"
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
+	"xxx/app/infra"
 )
 
 type xxxGateway struct {
-	db *gateway.Database
+	db *infra.Database
 }
 
 func NewXxxGateway() xxx.Repository {
 	gw := new(xxxGateway)
-	gw.db = gateway.DatabaseConnect()
+	gw.db = infra.DatabaseConnect()
 	return gw
 }
 
