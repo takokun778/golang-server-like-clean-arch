@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"

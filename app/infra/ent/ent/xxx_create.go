@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"

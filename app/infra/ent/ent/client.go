@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	"xxx/ent/migrate"
+	"xxx/app/infra/ent/ent/migrate"
 
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

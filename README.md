@@ -41,8 +41,8 @@
 │   │   ├── gateway     # Yyyモデルにおける永続化機能
 │   │   └── interactor  # Yyyモデルにおけるユースケース
 │   └── infra           # infra層
+│       └── ent         # entによるDB管理
 │
-├── ent                 # entによるDB管理
 ├── logger              # zapによるログ形式管理
 ├── migration           # entを利用したDBマイグレーション管理
 ├── mock                # テスト用のモック実装(自動生成)
@@ -83,9 +83,11 @@
     │   └── xxx_translator.go
     │   # repositoryの実装
     ├── gateway
-    │   │   # entを利用した実装とそのテスト
+    │   │   # sqlを利用した実装とそのテスト
     │   ├── xxx_gateway.go
     │   ├── xxx_gateway_test.go
+    │   │   # sqlメソッド抽象モデル
+    │   ├── xxx_sql.go
     │   │   # entモデル <-> domainモデル
     │   └── xxx_entity.go
     │   # usecaseの実装

@@ -4,8 +4,8 @@ package ent
 
 import (
 	"time"
-	"xxx/ent/schema"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/schema"
+	"xxx/app/infra/ent/ent/xxx"
 )
 
 // The init function reads all schema descriptors with runtime code

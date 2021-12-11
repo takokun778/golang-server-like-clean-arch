@@ -5,30 +5,22 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	"xxx/app/infra"
 )
 
 type xxxGateway struct {
-	db *infra.Database
+	sql XxxSql
 }
 
-func NewXxxGateway() xxx.Repository {
+func NewXxxGateway(sql XxxSql) xxx.Repository {
 	gw := new(xxxGateway)
-	gw.db = infra.DatabaseConnect()
+	gw.sql = sql
 	return gw
 }
 
 func (g *xxxGateway) Save(ctx context.Context, item *xxx.RepositorySaveItem) (xxx.Props, error) {
 	entity := Entity(item.Xxx)
 
-	_, err := g.db.Xxx.
-		Create().
-		SetID(entity.ID).
-		SetName(entity.Name).
-		SetNumber(entity.Number).
-		SetCreatedAt(entity.CreatedAt).
-		SetUpdatedAt(entity.UpdatedAt).
-		Save(ctx)
+	err := g.sql.InsertXxx(ctx, entity)
 
 	if err != nil {
 		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway save failed")
@@ -38,20 +30,19 @@ func (g *xxxGateway) Save(ctx context.Context, item *xxx.RepositorySaveItem) (xx
 }
 
 func (g *xxxGateway) Find(ctx context.Context, item *xxx.RepositoryFindItem) (xxx.Props, error) {
-	res, err := g.db.Xxx.Get(ctx, item.Id.Value())
+	res, err := g.sql.SelectXxx(ctx, item.Id.Value())
 
 	if err != nil {
 		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway save failed")
 	}
 
-	entity := XxxEntity(*res)
+	entity := XxxEntity(res)
 
 	return entity.ToProps(), nil
 }
 
 func (g *xxxGateway) FindAll(ctx context.Context, item *xxx.RepositoryFindAllItem) ([]xxx.Props, error) {
-	res, err := g.db.Xxx.
-		Query().All(ctx)
+	res, err := g.sql.SelectXxxAll(ctx)
 
 	if err != nil {
 		return nil, dErr.NewInternalServerError(err, "xxx gateway find all failed")
@@ -60,7 +51,7 @@ func (g *xxxGateway) FindAll(ctx context.Context, item *xxx.RepositoryFindAllIte
 	list := make([]xxx.Props, 0)
 
 	for _, r := range res {
-		entity := XxxEntity(*r)
+		entity := XxxEntity(r)
 		list = append(list, entity.ToProps())
 	}
 
@@ -70,12 +61,7 @@ func (g *xxxGateway) FindAll(ctx context.Context, item *xxx.RepositoryFindAllIte
 func (g *xxxGateway) Update(ctx context.Context, item *xxx.RepositoryUpdateItem) (xxx.Props, error) {
 	entity := Entity(item.Xxx)
 
-	_, err := g.db.Xxx.
-		Update().
-		SetName(entity.Name).
-		SetNumber(entity.Number).
-		SetUpdatedAt(entity.UpdatedAt).
-		Save(ctx)
+	err := g.sql.UpdateXxx(ctx, entity)
 
 	if err != nil {
 		return xxx.Props{}, dErr.NewInternalServerError(err, "xxx gateway update failed")
@@ -85,7 +71,7 @@ func (g *xxxGateway) Update(ctx context.Context, item *xxx.RepositoryUpdateItem)
 }
 
 func (g *xxxGateway) Delete(ctx context.Context, item *xxx.RepositoryDeleteItem) error {
-	err := g.db.Xxx.DeleteOneID(item.Id.Value()).Exec(ctx)
+	err := g.sql.DeleteXxx(ctx, item.Id.Value())
 
 	if err != nil {
 		return dErr.NewInternalServerError(err, "xxx gateway delete failed")

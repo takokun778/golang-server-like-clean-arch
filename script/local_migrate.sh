@@ -9,4 +9,4 @@ export DB_USER=${APP_NAME}
 export DB_PASS=${APP_NAME}
 export DB_PORT=5432
 
-go run ./migration/main.go
+go run ./app/infra/ent/migration/main.go

@@ -1,27 +1,17 @@
-package infra
+package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 
-	"xxx/ent"
+	"xxx/app/infra/ent/ent"
 
 	_ "github.com/lib/pq"
 )
 
-type Database struct {
-	*ent.Client
-}
-
-// singleton
-var database = newDatabase()
-
-func DatabaseConnect() *Database {
-	return database
-}
-
-func newDatabase() *Database {
+func main() {
 	entOptions := []ent.Option{}
 
 	env := os.Getenv("ENV")
@@ -39,7 +29,13 @@ func newDatabase() *Database {
 		log.Fatal(err)
 	}
 
-	return &Database{client}
+	defer client.Close()
+
+	ctx := context.TODO()
+
+	if err := client.Schema.Create(ctx); err != nil {
+		log.Fatal(err)
+	}
 }
 
 type dbConfig struct {
@@ -68,19 +64,19 @@ func newDbConfig() dbConfig {
 
 	user := os.Getenv("DB_USER")
 	if user == "" {
-		user = "xxx"
+		user = "clean"
 	}
 	conf.user = user
 
 	name := os.Getenv("DB_NAME")
 	if name == "" {
-		name = "xxx"
+		name = "clean"
 	}
 	conf.name = name
 
 	pass := os.Getenv("DB_PASS")
 	if pass == "" {
-		pass = "xxx"
+		pass = "clean"
 	}
 	conf.pass = pass
 

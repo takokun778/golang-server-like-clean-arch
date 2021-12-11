@@ -6,7 +6,7 @@ format:
 	go fmt ./...	
 .PHONY: ent
 ent:
-	go generate ./ent
+	go generate ./app/infra/ent/ent
 buflint:
 	(cd proto && buf lint)
 .PHONY: proto

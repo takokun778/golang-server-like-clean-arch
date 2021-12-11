@@ -4,7 +4,7 @@ package xxx
 
 import (
 	"time"
-	"xxx/ent/predicate"
+	"xxx/app/infra/ent/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"

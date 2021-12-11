@@ -7,6 +7,8 @@ export DB_USER=${ENV}
 export DB_PASS=${ENV}
 export DB_PORT=54321
 
-go run ./migration/main.go
+go run ./app/infra/ent/migration/main.go
 
-go test ./app/...
+go test ./app/domain/...
+
+go test ./app/xxx/...

@@ -5,7 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-	"xxx/ent"
+	"xxx/app/infra/ent/ent"
 )
 
 // The XxxFunc type is an adapter to allow the use of ordinary

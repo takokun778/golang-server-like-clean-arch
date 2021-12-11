@@ -7,14 +7,14 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
-	"xxx/app/infra"
+	"xxx/app/infra/ent"
 	xg "xxx/app/xxx/gateway"
 	"xxx/test"
 
 	"github.com/stretchr/testify/assert"
 )
 
-var gateway = xg.NewXxxGateway()
+var gateway = xg.NewXxxGateway(ent.DatabaseConnect())
 
 func TestMain(m *testing.M) {
 	// テスト前処理
@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
 }
 
 func resetTable() {
-	database := infra.DatabaseConnect()
+	database := ent.DatabaseConnect()
 
 	ctx := context.Background()
 

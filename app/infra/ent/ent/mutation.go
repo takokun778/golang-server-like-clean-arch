@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
-	"xxx/ent/predicate"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/predicate"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"github.com/google/uuid"
 

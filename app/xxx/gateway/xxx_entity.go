@@ -1,15 +1,24 @@
 package gateway
 
 import (
+	"time"
+
 	"xxx/app/domain/xxx"
-	"xxx/ent"
+
+	"github.com/google/uuid"
 )
 
-type XxxEntity ent.Xxx
+type XxxEntity struct {
+	Id        uuid.UUID
+	Name      string
+	Number    int
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
 
 func Entity(props xxx.Props) XxxEntity {
 	return XxxEntity{
-		ID:        props.Id().Value(),
+		Id:        props.Id().Value(),
 		Name:      props.Name().Value(),
 		Number:    props.Number().Value(),
 		CreatedAt: props.CreatedAt().Value(),
@@ -18,7 +27,7 @@ func Entity(props xxx.Props) XxxEntity {
 }
 
 func (e XxxEntity) ToProps() xxx.Props {
-	id, _ := xxx.ParseId(e.ID.String())
+	id, _ := xxx.ParseId(e.Id.String())
 	name, _ := xxx.NewName(e.Name)
 	number, _ := xxx.NewNumber(e.Number)
 	return xxx.NewProps(

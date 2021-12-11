@@ -7,8 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"xxx/ent/predicate"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/predicate"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

@@ -6,6 +6,7 @@ import (
 
 	"xxx/logger"
 
+	"xxx/app/infra/ent"
 	xc "xxx/app/xxx/controller"
 	xg "xxx/app/xxx/gateway"
 	xi "xxx/app/xxx/interactor"
@@ -27,7 +28,9 @@ func main() {
 
 	server := grpc.NewServer()
 
-	xxxGateway := xg.NewXxxGateway()
+	db := ent.DatabaseConnect()
+
+	xxxGateway := xg.NewXxxGateway(db)
 
 	xxxInteractor := xi.NewXxxInteractor(xxxGateway)
 

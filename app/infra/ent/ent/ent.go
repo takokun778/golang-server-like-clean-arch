@@ -5,7 +5,7 @@ package ent
 import (
 	"errors"
 	"fmt"
-	"xxx/ent/xxx"
+	"xxx/app/infra/ent/ent/xxx"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
