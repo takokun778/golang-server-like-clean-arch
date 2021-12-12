@@ -69,7 +69,7 @@ func (c *Connector) SelectXxxAll(ctx context.Context) ([]gateway.XxxEntity, erro
 
 func (c *Connector) UpdateXxx(ctx context.Context, xxx gateway.XxxEntity) error {
 	_, err := c.Xxx.
-		Update().
+		UpdateOneID(xxx.Id).
 		SetName(xxx.Name).
 		SetNumber(xxx.Number).
 		SetUpdatedAt(xxx.UpdatedAt).
