@@ -1,4 +1,4 @@
-package infra
+package proto
 
 import (
 	"strconv"
@@ -10,20 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type Translator struct{}
-
-var singleton = newTranslator()
-
-func SetTranslator() *Translator {
-	return singleton
-}
-
-func newTranslator() *Translator {
-	con := new(Translator)
-	return con
-}
-
-func (t *Translator) TranslateError(err *dErr.Error) error {
+func (*Proto) TranslateError(err *dErr.Error) error {
 	switch err.Type {
 	case "InvalidArgument":
 		status := createStatus(codes.InvalidArgument, err)

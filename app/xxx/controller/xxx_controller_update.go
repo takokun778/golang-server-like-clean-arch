@@ -39,6 +39,6 @@ func (c *xxxController) Update(ctx context.Context, req *pbXxx.UpdateRequest) (*
 	}
 
 	return &pbXxx.UpdateResponse{
-		Xxx: c.translateToProto(output.Xxx),
+		Xxx: c.Proto.Translate(output.Xxx),
 	}, nil
 }

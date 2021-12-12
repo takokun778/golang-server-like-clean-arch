@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxxx "xxx/proto/xxx"
+	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Create(ctx context.Context, req *pbXxxx.CreateRequest) (*pbXxxx.CreateResponse, error) {
+func (c *xxxController) Create(ctx context.Context, req *pbXxx.CreateRequest) (*pbXxx.CreateResponse, error) {
 	name, err := xxx.NewName(req.Name)
 
 	if err != nil {
@@ -31,7 +31,7 @@ func (c *xxxController) Create(ctx context.Context, req *pbXxxx.CreateRequest) (
 		return nil, err
 	}
 
-	return &pbXxxx.CreateResponse{
-		Xxx: c.translateToProto(output.Xxx),
+	return &pbXxx.CreateResponse{
+		Xxx: c.Proto.Translate(output.Xxx),
 	}, nil
 }

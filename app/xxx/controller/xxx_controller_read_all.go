@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxxx "xxx/proto/xxx"
+	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) ReadAll(ctx context.Context, req *pbXxxx.ReadAllRequest) (*pbXxxx.ReadAllResponse, error) {
+func (c *xxxController) ReadAll(ctx context.Context, req *pbXxx.ReadAllRequest) (*pbXxx.ReadAllResponse, error) {
 	input := &xxx.UsecaseReadAllInput{}
 
 	output, err := c.xxxUsecase.ReadAll(ctx, input)
@@ -16,7 +16,7 @@ func (c *xxxController) ReadAll(ctx context.Context, req *pbXxxx.ReadAllRequest)
 		return nil, err
 	}
 
-	return &pbXxxx.ReadAllResponse{
-		Xxxs: c.translateToProtos(output.Xxxs),
+	return &pbXxx.ReadAllResponse{
+		Xxxs: c.Proto.TranslateArray(output.Xxxs),
 	}, nil
 }

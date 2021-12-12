@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxxx "xxx/proto/xxx"
+	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Delete(ctx context.Context, req *pbXxxx.DeleteRequest) (*pbXxxx.DeleteResponse, error) {
+func (c *xxxController) Delete(ctx context.Context, req *pbXxx.DeleteRequest) (*pbXxx.DeleteResponse, error) {
 	id, err := xxx.ParseId(req.Id)
 
 	if err != nil {
@@ -24,7 +24,7 @@ func (c *xxxController) Delete(ctx context.Context, req *pbXxxx.DeleteRequest) (
 		return nil, err
 	}
 
-	return &pbXxxx.DeleteResponse{
-		Xxx: c.translateToProto(output.Xxx),
+	return &pbXxx.DeleteResponse{
+		Xxx: c.Proto.Translate(output.Xxx),
 	}, nil
 }

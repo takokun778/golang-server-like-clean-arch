@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxxx "xxx/proto/xxx"
+	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Read(ctx context.Context, req *pbXxxx.ReadRequest) (*pbXxxx.ReadResponse, error) {
+func (c *xxxController) Read(ctx context.Context, req *pbXxx.ReadRequest) (*pbXxx.ReadResponse, error) {
 	id, err := xxx.ParseId(req.Id)
 
 	if err != nil {
@@ -24,7 +24,7 @@ func (c *xxxController) Read(ctx context.Context, req *pbXxxx.ReadRequest) (*pbX
 		return nil, err
 	}
 
-	return &pbXxxx.ReadResponse{
-		Xxx: c.translateToProto(output.Xxx),
+	return &pbXxx.ReadResponse{
+		Xxx: c.Proto.Translate(output.Xxx),
 	}, nil
 }
