@@ -1,5 +1,10 @@
 build:
+	go build -o ./bin/app ./app/main.go && \
+	go build -o ./bin/migration ./app/infra/ent/migration/main.go
+build_app:
 	go build -o ./bin/app ./app/main.go
+build_migration:
+	go build -o ./bin/migration ./app/infra/ent/migration/main.go
 lint:
 	go vet ./... && staticcheck ./...
 format:

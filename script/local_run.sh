@@ -9,4 +9,6 @@ export DB_USER=${APP_NAME}
 export DB_PASS=${APP_NAME}
 export DB_PORT=5432
 
-go run ./app/main.go
+go build -o ./bin/app ./app/main.go
+
+./bin/app
