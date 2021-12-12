@@ -1,24 +1,11 @@
 version: '3.8'
 
 services:
-    dev_db:
-        container_name: ${APP_NAME}_dev_db
+    db_test:
+        container_name: ${APP_NAME}_db_test
         image: postgres:13.3-alpine
         ports:
-            - 5432:5432
-        environment:
-            TZ: "UTC"
-            LANG: ja_JP.UTF-8
-            POSTGRES_DB: ${APP_NAME}
-            POSTGRES_USER: ${APP_NAME}
-            POSTGRES_PASSWORD: ${APP_NAME}
-            POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-            POSTGRES_HOST_AUTH_METHOD: trust
-    test_db:
-        container_name: ${APP_NAME}_test_db
-        image: postgres:13.3-alpine
-        ports:
-            - 54321:5432
+            - ${TEST_DB_PORT}:5432
         environment:
             TZ: "UTC"
             LANG: ja_JP.UTF-8
@@ -27,3 +14,61 @@ services:
             POSTGRES_PASSWORD: test
             POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
             POSTGRES_HOST_AUTH_METHOD: trust
+    db:
+        container_name: ${APP_NAME}_db
+        image: postgres:13.3-alpine
+        ports:
+            - ${DB_PORT}:5432
+        environment:
+            TZ: "UTC"
+            LANG: ja_JP.UTF-8
+            POSTGRES_DB: ${APP_NAME}
+            POSTGRES_USER: ${APP_NAME}
+            POSTGRES_PASSWORD: ${APP_NAME}
+            POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+            POSTGRES_HOST_AUTH_METHOD: trust
+        healthcheck:
+            test: pg_isready -U ${APP_NAME} -d ${APP_NAME}
+            interval: 10s
+            timeout: 5s
+            retries: 3
+    migration:
+        container_name: ${APP_NAME}_migration
+        build:
+            context: ./
+            dockerfile: ./docker/migration/Dockerfile
+            args:
+            - GOLANG_VERSION=${GOLANG_VERSION}
+            - PORT=${APP_PORT}
+            - APP_NAME=${APP_NAME}
+            - ENV=${ENV}
+            - DB_HOST=${DB_HOST}
+            - DB_NAME=${APP_NAME}
+            - DB_USER=${APP_NAME}
+            - DB_PASS=${APP_NAME}
+            - DB_PORT=${DB_PORT}
+            - DB_DRIVER=${DB_DRIVER}
+        depends_on:
+            db:
+                condition: service_healthy
+    app:
+        container_name: ${APP_NAME}_app
+        build:
+            context: ./
+            dockerfile: ./docker/app/Dockerfile
+            args:
+            - GOLANG_VERSION=${GOLANG_VERSION}
+            - PORT=${APP_PORT}
+            - APP_NAME=${APP_NAME}
+            - ENV=${ENV}
+            - DB_HOST=${DB_HOST}
+            - DB_NAME=${APP_NAME}
+            - DB_USER=${APP_NAME}
+            - DB_PASS=${APP_NAME}
+            - DB_PORT=${DB_PORT}
+            - DB_DRIVER=${DB_DRIVER}
+        ports:
+            - ${APP_PORT}:${APP_PORT}
+        depends_on:
+            db:
+                condition: service_healthy

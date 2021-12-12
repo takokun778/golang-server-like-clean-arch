@@ -22,7 +22,7 @@ func main() {
 
 	dbConf := newDbConfig()
 
-	datasource := fmt.Sprintf("host=%s port=%s user=%s dbname= %s password=%s sslmode=disable", dbConf.host, dbConf.port, dbConf.user, dbConf.name, dbConf.pass)
+	datasource := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbConf.host, dbConf.port, dbConf.user, dbConf.name, dbConf.pass)
 
 	client, err := ent.Open(dbConf.driver, datasource, entOptions...)
 	if err != nil {
