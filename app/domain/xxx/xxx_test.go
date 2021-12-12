@@ -30,8 +30,10 @@ func TestXxxReconstruct(t *testing.T) {
 		test1Args.UpdatedAt(),
 	)
 	test1 := test.Case{
-		Name:     "正常動作確認",
-		Setup:    func() {},
+		Name: "正常動作確認",
+		Setup: func() interface{} {
+			return nil
+		},
 		Ctx:      context.Background(),
 		Args:     test1Args,
 		Expected: test1Expected,
@@ -66,8 +68,10 @@ func TestXxxCreate(t *testing.T) {
 		xxx.TimeNow(),
 	)
 	test1 := test.Case{
-		Name:     "正常動作確認",
-		Setup:    func() {},
+		Name: "正常動作確認",
+		Setup: func() interface{} {
+			return nil
+		},
 		Ctx:      context.Background(),
 		Args:     test1Props,
 		Expected: test1Props,
@@ -110,8 +114,10 @@ func TestXxxUpdate(t *testing.T) {
 		xxx.TimeNow(),
 	)
 	test1 := test.Case{
-		Name:     "正常動作確認",
-		Setup:    func() {},
+		Name: "正常動作確認",
+		Setup: func() interface{} {
+			return nil
+		},
 		Ctx:      context.Background(),
 		Args:     test1Args,
 		Expected: test1Expected,

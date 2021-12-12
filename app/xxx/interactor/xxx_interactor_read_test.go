@@ -25,8 +25,9 @@ func TestXxxInteractorRead(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			mxg.EXPECT().Find(gomock.Any(), &xxx.RepositoryFindItem{Id: test1Xxx.Id()}).Return(test1Xxx, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseReadInput{

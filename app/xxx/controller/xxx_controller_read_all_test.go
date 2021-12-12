@@ -27,12 +27,13 @@ func TestUserControllerReadAll(t *testing.T) {
 	test1Xxx2 := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			input := &xxx.UsecaseReadAllInput{}
 			output := &xxx.UsecaseReadAllOutput{
 				Xxxs: []xxx.Props{test1Xxx1, test1Xxx2},
 			}
 			mxu.EXPECT().ReadAll(gomock.Any(), input).Return(output, nil)
+			return nil
 		},
 		Ctx:  context.Background(),
 		Args: &pbXxx.ReadAllRequest{},

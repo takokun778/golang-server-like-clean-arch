@@ -40,9 +40,11 @@ func TestXxxGatewaySave(t *testing.T) {
 
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
-		Name:  "正常動作確認",
-		Setup: func() {},
-		Ctx:   context.Background(),
+		Name: "正常動作確認",
+		Setup: func() interface{} {
+			return nil
+		},
+		Ctx: context.Background(),
 		Args: &xxx.RepositorySaveItem{
 			Xxx: test1Xxx,
 		},
@@ -75,8 +77,9 @@ func TestXxxGatewayFind(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &xxx.RepositoryFindItem{
@@ -114,10 +117,11 @@ func TestXxxGatewayFindAll(t *testing.T) {
 	test1Xxx2 := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			resetTable()
 			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx1})
 			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx2})
+			return nil
 		},
 		Ctx:      context.Background(),
 		Args:     &xxx.RepositoryFindAllItem{},
@@ -150,8 +154,9 @@ func TestXxxGatewayUpdate(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &xxx.RepositoryUpdateItem{
@@ -186,8 +191,9 @@ func TestXxxGatewayDelete(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			gateway.Save(context.Background(), &xxx.RepositorySaveItem{Xxx: test1Xxx})
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &xxx.RepositoryDeleteItem{
@@ -199,9 +205,11 @@ func TestXxxGatewayDelete(t *testing.T) {
 	tests = append(tests, test1)
 
 	test2 := test.Case{
-		Name:  "存在しないデータを削除",
-		Setup: func() {},
-		Ctx:   context.Background(),
+		Name: "存在しないデータを削除",
+		Setup: func() interface{} {
+			return nil
+		},
+		Ctx: context.Background(),
 		Args: &xxx.RepositoryDeleteItem{
 			Id: test1Xxx.Id(),
 		},

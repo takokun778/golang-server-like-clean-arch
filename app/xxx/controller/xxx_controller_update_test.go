@@ -26,7 +26,7 @@ func TestUserControllerUpdate(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			input := &xxx.UsecaseUpdateInput{
 				Id:     test1Xxx.Id(),
 				Name:   test1Xxx.Name(),
@@ -36,6 +36,7 @@ func TestUserControllerUpdate(t *testing.T) {
 				Xxx: test1Xxx,
 			}
 			mxu.EXPECT().Update(gomock.Any(), input).Return(output, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.UpdateRequest{

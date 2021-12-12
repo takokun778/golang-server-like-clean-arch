@@ -26,7 +26,7 @@ func TestUserControllerCreate(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			input := &xxx.UsecaseCreateInput{
 				Name:   test1Xxx.Name(),
 				Number: test1Xxx.Number(),
@@ -35,6 +35,7 @@ func TestUserControllerCreate(t *testing.T) {
 				Xxx: test1Xxx,
 			}
 			mxu.EXPECT().Create(gomock.Any(), input).Return(output, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.CreateRequest{

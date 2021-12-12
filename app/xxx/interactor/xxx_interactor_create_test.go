@@ -25,8 +25,9 @@ func TestXxxInteractorCreate(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			mxg.EXPECT().Save(gomock.Any(), gomock.Any()).Return(test1Xxx, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &xxx.UsecaseCreateInput{

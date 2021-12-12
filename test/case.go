@@ -6,7 +6,7 @@ import (
 
 type Case struct {
 	Name     string
-	Setup    func()
+	Setup    func() interface{}
 	Ctx      context.Context
 	Args     interface{}
 	Expected interface{}

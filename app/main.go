@@ -17,11 +17,13 @@ import (
 
 func main() {
 	port := os.Getenv("PORT")
+
 	if port == "" {
 		port = "19003"
 	}
 
-	listenPort, err := net.Listen("tcp", ":"+port)
+	listener, err := net.Listen("tcp", ":"+port)
+
 	if err != nil {
 		panic(err)
 	}
@@ -40,5 +42,5 @@ func main() {
 
 	logger.StartLog()
 
-	server.Serve(listenPort)
+	server.Serve(listener)
 }

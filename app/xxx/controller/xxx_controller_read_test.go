@@ -26,7 +26,7 @@ func TestUserControllerRead(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			input := &xxx.UsecaseReadInput{
 				Id: test1Xxx.Id(),
 			}
@@ -34,6 +34,7 @@ func TestUserControllerRead(t *testing.T) {
 				Xxx: test1Xxx,
 			}
 			mxu.EXPECT().Read(gomock.Any(), input).Return(output, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.ReadRequest{

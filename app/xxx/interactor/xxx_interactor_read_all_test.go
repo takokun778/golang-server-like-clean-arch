@@ -26,8 +26,9 @@ func TestXxxInteractorReadAll(t *testing.T) {
 	test1Xxx2 := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			mxg.EXPECT().FindAll(gomock.Any(), &xxx.RepositoryFindAllItem{}).Return([]xxx.Props{test1Xxx1, test1Xxx2}, nil)
+			return nil
 		},
 		Ctx:  context.Background(),
 		Args: &xxx.UsecaseReadAllInput{},

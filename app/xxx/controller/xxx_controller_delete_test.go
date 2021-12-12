@@ -26,7 +26,7 @@ func TestUserControllerDelete(t *testing.T) {
 	test1Xxx := test.NewXxx("test1", 1)
 	test1 := test.Case{
 		Name: "正常動作確認",
-		Setup: func() {
+		Setup: func() interface{} {
 			input := &xxx.UsecaseDeleteInput{
 				Id: test1Xxx.Id(),
 			}
@@ -34,6 +34,7 @@ func TestUserControllerDelete(t *testing.T) {
 				Xxx: test1Xxx,
 			}
 			mxu.EXPECT().Delete(gomock.Any(), input).Return(output, nil)
+			return nil
 		},
 		Ctx: context.Background(),
 		Args: &pbXxx.DeleteRequest{

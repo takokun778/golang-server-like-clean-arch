@@ -12,8 +12,10 @@ func TestXxx(t *testing.T) {
 	tests := make([]Case, 0)
 
 	test1 := Case{
-		Name:     "",
-		Setup:    func() {},
+		Name: "",
+		Setup: func() interface{} {
+			return nil
+		},
 		Ctx:      context.Background(),
 		Args:     nil,
 		Expected: nil,
