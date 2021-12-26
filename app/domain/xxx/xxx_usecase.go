@@ -6,51 +6,31 @@ import (
 )
 
 type Usecase interface {
-	Create(ctx context.Context, input *UsecaseCreateInput) (*UsecaseCreateOutput, error)
-	Read(ctx context.Context, input *UsecaseReadInput) (*UsecaseReadOutput, error)
-	ReadAll(ctx context.Context, input *UsecaseReadAllInput) (*UsecaseReadAllOutput, error)
-	Update(ctx context.Context, input *UsecaseUpdateInput) (*UsecaseUpdateOutput, error)
-	Delete(ctx context.Context, input *UsecaseDeleteInput) (*UsecaseDeleteOutput, error)
+	Create(ctx context.Context, dto *UsecaseCreateDto)
+	Read(ctx context.Context, dto *UsecaseReadDto)
+	ReadAll(ctx context.Context, dto *UsecaseReadAllDto)
+	Update(ctx context.Context, dto *UsecaseUpdateDto)
+	Delete(ctx context.Context, dto *UsecaseDeleteDto)
 }
 
-type UsecaseCreateInput struct {
+type UsecaseCreateDto struct {
 	Name   name
 	Number number
 }
 
-type UsecaseCreateOutput struct {
-	Xxx Props
-}
-
-type UsecaseReadInput struct {
+type UsecaseReadDto struct {
 	Id id
 }
 
-type UsecaseReadOutput struct {
-	Xxx Props
+type UsecaseReadAllDto struct {
 }
 
-type UsecaseReadAllInput struct {
-}
-
-type UsecaseReadAllOutput struct {
-	Xxxs []Props
-}
-
-type UsecaseUpdateInput struct {
+type UsecaseUpdateDto struct {
 	Id     id
 	Name   name
 	Number number
 }
 
-type UsecaseUpdateOutput struct {
-	Xxx Props
-}
-
-type UsecaseDeleteInput struct {
+type UsecaseDeleteDto struct {
 	Id id
-}
-
-type UsecaseDeleteOutput struct {
-	Xxx Props
 }

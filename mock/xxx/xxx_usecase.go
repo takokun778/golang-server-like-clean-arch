@@ -36,76 +36,61 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockUsecase) Create(ctx context.Context, input *xxx.UsecaseCreateInput) (*xxx.UsecaseCreateOutput, error) {
+func (m *MockUsecase) Create(ctx context.Context, dto *xxx.UsecaseCreateDto) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, input)
-	ret0, _ := ret[0].(*xxx.UsecaseCreateOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	m.ctrl.Call(m, "Create", ctx, dto)
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockUsecaseMockRecorder) Create(ctx, input interface{}) *gomock.Call {
+func (mr *MockUsecaseMockRecorder) Create(ctx, dto interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUsecase)(nil).Create), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUsecase)(nil).Create), ctx, dto)
 }
 
 // Delete mocks base method.
-func (m *MockUsecase) Delete(ctx context.Context, input *xxx.UsecaseDeleteInput) (*xxx.UsecaseDeleteOutput, error) {
+func (m *MockUsecase) Delete(ctx context.Context, dto *xxx.UsecaseDeleteDto) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, input)
-	ret0, _ := ret[0].(*xxx.UsecaseDeleteOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	m.ctrl.Call(m, "Delete", ctx, dto)
 }
 
 // Delete indicates an expected call of Delete.
-func (mr *MockUsecaseMockRecorder) Delete(ctx, input interface{}) *gomock.Call {
+func (mr *MockUsecaseMockRecorder) Delete(ctx, dto interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockUsecase)(nil).Delete), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockUsecase)(nil).Delete), ctx, dto)
 }
 
 // Read mocks base method.
-func (m *MockUsecase) Read(ctx context.Context, input *xxx.UsecaseReadInput) (*xxx.UsecaseReadOutput, error) {
+func (m *MockUsecase) Read(ctx context.Context, dto *xxx.UsecaseReadDto) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Read", ctx, input)
-	ret0, _ := ret[0].(*xxx.UsecaseReadOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	m.ctrl.Call(m, "Read", ctx, dto)
 }
 
 // Read indicates an expected call of Read.
-func (mr *MockUsecaseMockRecorder) Read(ctx, input interface{}) *gomock.Call {
+func (mr *MockUsecaseMockRecorder) Read(ctx, dto interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*MockUsecase)(nil).Read), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*MockUsecase)(nil).Read), ctx, dto)
 }
 
 // ReadAll mocks base method.
-func (m *MockUsecase) ReadAll(ctx context.Context, input *xxx.UsecaseReadAllInput) (*xxx.UsecaseReadAllOutput, error) {
+func (m *MockUsecase) ReadAll(ctx context.Context, dto *xxx.UsecaseReadAllDto) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadAll", ctx, input)
-	ret0, _ := ret[0].(*xxx.UsecaseReadAllOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	m.ctrl.Call(m, "ReadAll", ctx, dto)
 }
 
 // ReadAll indicates an expected call of ReadAll.
-func (mr *MockUsecaseMockRecorder) ReadAll(ctx, input interface{}) *gomock.Call {
+func (mr *MockUsecaseMockRecorder) ReadAll(ctx, dto interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadAll", reflect.TypeOf((*MockUsecase)(nil).ReadAll), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadAll", reflect.TypeOf((*MockUsecase)(nil).ReadAll), ctx, dto)
 }
 
 // Update mocks base method.
-func (m *MockUsecase) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) (*xxx.UsecaseUpdateOutput, error) {
+func (m *MockUsecase) Update(ctx context.Context, dto *xxx.UsecaseUpdateDto) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", ctx, input)
-	ret0, _ := ret[0].(*xxx.UsecaseUpdateOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	m.ctrl.Call(m, "Update", ctx, dto)
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockUsecaseMockRecorder) Update(ctx, input interface{}) *gomock.Call {
+func (mr *MockUsecaseMockRecorder) Update(ctx, dto interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUsecase)(nil).Update), ctx, input)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUsecase)(nil).Update), ctx, dto)
 }

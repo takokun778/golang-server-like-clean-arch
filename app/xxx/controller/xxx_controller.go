@@ -2,19 +2,14 @@ package controller
 
 import (
 	"xxx/app/domain/xxx"
-	"xxx/app/infra/proto"
-	pbXxx "xxx/proto/xxx"
 )
 
-type xxxController struct {
-	*proto.Proto
+type XxxController struct {
 	xxxUsecase xxx.Usecase
-	pbXxx.UnimplementedXxxServiceServer
 }
 
-func NewXxxController(xxxUsecase xxx.Usecase) *xxxController {
-	res := new(xxxController)
-	res.Proto = proto.NewProto()
+func NewXxxController(xxxUsecase xxx.Usecase) *XxxController {
+	res := new(XxxController)
 	res.xxxUsecase = xxxUsecase
 	return res
 }

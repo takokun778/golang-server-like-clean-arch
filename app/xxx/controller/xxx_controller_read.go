@@ -4,27 +4,23 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Read(ctx context.Context, req *pbXxx.ReadRequest) (*pbXxx.ReadResponse, error) {
-	id, err := xxx.ParseId(req.Id)
+type ReadPort struct {
+	Id string
+}
+
+func (c *XxxController) Read(ctx context.Context, port *ReadPort) {
+	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	input := &xxx.UsecaseReadInput{
+	dto := &xxx.UsecaseReadDto{
 		Id: id,
 	}
 
-	output, err := c.xxxUsecase.Read(ctx, input)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &pbXxx.ReadResponse{
-		Xxx: c.Proto.Translate(output.Xxx),
-	}, nil
+	c.xxxUsecase.Read(ctx, dto)
 }

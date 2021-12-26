@@ -6,27 +6,30 @@ import (
 
 	dError "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
+	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Update(ctx context.Context, input *xxx.UsecaseUpdateInput) (*xxx.UsecaseUpdateOutput, error) {
+func (i *xxxInteractor) Update(ctx context.Context, dto *xxx.UsecaseUpdateDto) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	src, err := i.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
+	src, err := i.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: dto.Id})
 
 	if err != nil {
-		return nil, dError.NewInternalServerError(err, "")
+		i.xxxPresenter.Update(ctx, nil, dError.NewInternalServerError(err, ""))
+		return
 	}
 
-	dst := xxx.Reconstruct(src).Update(input.Name, input.Number)
+	dst := xxx.Reconstruct(src).Update(dto.Name, dto.Number)
 
 	_, err = i.xxxRepository.Update(timeOutCtx, &xxx.RepositoryUpdateItem{Xxx: dst.Props()})
 
 	if err != nil {
-		return nil, dError.NewInternalServerError(err, "")
+		i.xxxPresenter.Update(ctx, nil, dError.NewInternalServerError(err, ""))
+		return
 	}
 
-	return &xxx.UsecaseUpdateOutput{
+	i.xxxPresenter.Update(ctx, &presenter.PresenterUpdateDto{
 		Xxx: dst.Props(),
-	}, nil
+	}, nil)
 }

@@ -7,6 +7,7 @@ import (
 	"xxx/logger"
 
 	"xxx/app/infra/ent"
+	xp "xxx/app/infra/proto/xxx"
 	xc "xxx/app/xxx/controller"
 	xg "xxx/app/xxx/gateway"
 	xi "xxx/app/xxx/interactor"
@@ -34,11 +35,15 @@ func main() {
 
 	xxxGateway := xg.NewXxxGateway(db)
 
-	xxxInteractor := xi.NewXxxInteractor(xxxGateway)
+	xxxAdapter := xp.NewXxxAdapter()
+
+	xxxInteractor := xi.NewXxxInteractor(xxxGateway, xxxAdapter)
 
 	xxxController := xc.NewXxxController(xxxInteractor)
 
-	pbx.RegisterXxxServiceServer(server, xxxController)
+	xxxService := xp.NewXxxService(xxxController)
+
+	pbx.RegisterXxxServiceServer(server, xxxService)
 
 	logger.StartLog()
 

@@ -4,41 +4,41 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Update(ctx context.Context, req *pbXxx.UpdateRequest) (*pbXxx.UpdateResponse, error) {
-	id, err := xxx.ParseId(req.Id)
+type UpdatePort struct {
+	Id     string
+	Name   string
+	Number int
+}
+
+func (c *XxxController) Update(ctx context.Context, port *UpdatePort) {
+	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	name, err := xxx.NewName(req.Name)
+	name, err := xxx.NewName(port.Name)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	number, err := xxx.NewNumber(int(req.Number))
+	number, err := xxx.NewNumber(int(port.Number))
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	input := &xxx.UsecaseUpdateInput{
+	dto := &xxx.UsecaseUpdateDto{
 		Id:     id,
 		Name:   name,
 		Number: number,
 	}
 
-	output, err := c.xxxUsecase.Update(ctx, input)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &pbXxx.UpdateResponse{
-		Xxx: c.Proto.Translate(output.Xxx),
-	}, nil
+	c.xxxUsecase.Update(ctx, dto)
 }

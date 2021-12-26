@@ -6,25 +6,27 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
+	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Create(ctx context.Context, input *xxx.UsecaseCreateInput) (*xxx.UsecaseCreateOutput, error) {
+func (i *xxxInteractor) Create(ctx context.Context, dto *xxx.UsecaseCreateDto) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result := xxx.Create(input.Name, input.Number)
+	createdXxx := xxx.Create(dto.Name, dto.Number)
 
-	repoInput := &xxx.RepositorySaveItem{
-		Xxx: result.Props(),
+	item := &xxx.RepositorySaveItem{
+		Xxx: createdXxx.Props(),
 	}
 
-	_, err := i.xxxRepository.Save(timeOutCtx, repoInput)
+	_, err := i.xxxRepository.Save(timeOutCtx, item)
 
 	if err != nil {
-		return nil, dErr.NewInternalServerError(err, "")
+		i.xxxPresenter.Create(ctx, nil, dErr.NewInternalServerError(err, ""))
+		return
 	}
 
-	return &xxx.UsecaseCreateOutput{
-		Xxx: result.Props(),
-	}, nil
+	i.xxxPresenter.Create(ctx, &presenter.PresenterCreateDto{
+		Xxx: createdXxx.Props(),
+	}, nil)
 }

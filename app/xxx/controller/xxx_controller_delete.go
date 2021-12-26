@@ -4,27 +4,23 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Delete(ctx context.Context, req *pbXxx.DeleteRequest) (*pbXxx.DeleteResponse, error) {
-	id, err := xxx.ParseId(req.Id)
+type DeletePort struct {
+	Id string
+}
+
+func (c *XxxController) Delete(ctx context.Context, port *DeletePort) {
+	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	input := &xxx.UsecaseDeleteInput{
+	dto := &xxx.UsecaseDeleteDto{
 		Id: id,
 	}
 
-	output, err := c.xxxUsecase.Delete(ctx, input)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &pbXxx.DeleteResponse{
-		Xxx: c.Proto.Translate(output.Xxx),
-	}, nil
+	c.xxxUsecase.Delete(ctx, dto)
 }

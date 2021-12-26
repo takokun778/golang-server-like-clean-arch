@@ -1,6 +1,8 @@
 package proto
 
 import (
+	"context"
+	"fmt"
 	"strconv"
 
 	dErr "xxx/app/domain/error"
@@ -10,7 +12,31 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (*Proto) TranslateError(err *dErr.Error) error {
+type (
+	ErrorKey string
+)
+
+const (
+	ErrorCtxKey ErrorKey = "error"
+)
+
+func SetError(src context.Context, err error) context.Context {
+	return context.WithValue(src, ErrorCtxKey, err)
+}
+
+func GetError(ctx context.Context) (error, error) {
+	v := ctx.Value(ErrorCtxKey)
+
+	err, ok := v.(error)
+
+	if !ok {
+		return nil, fmt.Errorf("error not found")
+	}
+
+	return err, nil
+}
+
+func TranslateError(err *dErr.Error) error {
 	switch err.Type {
 	case "InvalidArgument":
 		status := createStatus(codes.InvalidArgument, err)

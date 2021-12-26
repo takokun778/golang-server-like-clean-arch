@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-export PORT=19003
+export PORT=19004
 export ENV=test
 export DB_NAME=${ENV}
 export DB_USER=${ENV}

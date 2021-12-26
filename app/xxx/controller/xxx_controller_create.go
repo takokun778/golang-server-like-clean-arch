@@ -4,34 +4,32 @@ import (
 	"context"
 
 	"xxx/app/domain/xxx"
-	pbXxx "xxx/proto/xxx"
 )
 
-func (c *xxxController) Create(ctx context.Context, req *pbXxx.CreateRequest) (*pbXxx.CreateResponse, error) {
-	name, err := xxx.NewName(req.Name)
+type CreatePort struct {
+	Name   string
+	Number int
+}
+
+func (c *XxxController) Create(ctx context.Context, port *CreatePort) {
+	name, err := xxx.NewName(port.Name)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	number, err := xxx.NewNumber(int(req.Number))
+	number, err := xxx.NewNumber(port.Number)
 
 	if err != nil {
-		return nil, err
+		// error
+		return
 	}
 
-	input := &xxx.UsecaseCreateInput{
+	dto := &xxx.UsecaseCreateDto{
 		Name:   name,
 		Number: number,
 	}
 
-	output, err := c.xxxUsecase.Create(ctx, input)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &pbXxx.CreateResponse{
-		Xxx: c.Proto.Translate(output.Xxx),
-	}, nil
+	c.xxxUsecase.Create(ctx, dto)
 }

@@ -6,25 +6,28 @@ import (
 
 	dErr "xxx/app/domain/error"
 	"xxx/app/domain/xxx"
+	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Delete(ctx context.Context, input *xxx.UsecaseDeleteInput) (*xxx.UsecaseDeleteOutput, error) {
+func (i *xxxInteractor) Delete(ctx context.Context, dto *xxx.UsecaseDeleteDto) {
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	result, err := i.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: input.Id})
+	foundXxx, err := i.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: dto.Id})
 
 	if err != nil {
-		return nil, dErr.NewInternalServerError(err, "")
+		i.xxxPresenter.Delete(ctx, nil, dErr.NewInternalServerError(err, ""))
+		return
 	}
 
-	err = i.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteItem{Id: input.Id})
+	err = i.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteItem{Id: dto.Id})
 
 	if err != nil {
-		return nil, dErr.NewInternalServerError(err, "")
+		i.xxxPresenter.Delete(ctx, nil, dErr.NewInternalServerError(err, ""))
+		return
 	}
 
-	return &xxx.UsecaseDeleteOutput{
-		Xxx: result,
-	}, nil
+	i.xxxPresenter.Delete(ctx, &presenter.PresenterDeleteDto{
+		Xxx: foundXxx,
+	}, nil)
 }
