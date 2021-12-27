@@ -9,14 +9,19 @@ import (
 	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Update(ctx context.Context, dto *xxx.UsecaseUpdateDto) {
+func (i *xxxInteractor) Update(ctx context.Context, dto *xxx.UsecaseUpdateDto, err error) {
+	if err != nil {
+		i.xxxPresenter.Update(ctx, nil, err)
+		return
+	}
+
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
 	src, err := i.xxxRepository.Find(timeOutCtx, &xxx.RepositoryFindItem{Id: dto.Id})
 
 	if err != nil {
-		i.xxxPresenter.Update(ctx, nil, dError.NewInternalServerError(err, ""))
+		i.xxxPresenter.Update(timeOutCtx, nil, dError.NewInternalServerError(err, ""))
 		return
 	}
 
@@ -25,11 +30,11 @@ func (i *xxxInteractor) Update(ctx context.Context, dto *xxx.UsecaseUpdateDto) {
 	_, err = i.xxxRepository.Update(timeOutCtx, &xxx.RepositoryUpdateItem{Xxx: dst.Props()})
 
 	if err != nil {
-		i.xxxPresenter.Update(ctx, nil, dError.NewInternalServerError(err, ""))
+		i.xxxPresenter.Update(timeOutCtx, nil, dError.NewInternalServerError(err, ""))
 		return
 	}
 
-	i.xxxPresenter.Update(ctx, &presenter.PresenterUpdateDto{
+	i.xxxPresenter.Update(timeOutCtx, &presenter.PresenterUpdateDto{
 		Xxx: dst.Props(),
 	}, nil)
 }

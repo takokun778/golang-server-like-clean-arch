@@ -9,7 +9,12 @@ import (
 	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Create(ctx context.Context, dto *xxx.UsecaseCreateDto) {
+func (i *xxxInteractor) Create(ctx context.Context, dto *xxx.UsecaseCreateDto, err error) {
+	if err != nil {
+		i.xxxPresenter.Create(ctx, nil, err)
+		return
+	}
+
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -19,14 +24,14 @@ func (i *xxxInteractor) Create(ctx context.Context, dto *xxx.UsecaseCreateDto) {
 		Xxx: createdXxx.Props(),
 	}
 
-	_, err := i.xxxRepository.Save(timeOutCtx, item)
+	_, err = i.xxxRepository.Save(timeOutCtx, item)
 
 	if err != nil {
-		i.xxxPresenter.Create(ctx, nil, dErr.NewInternalServerError(err, ""))
+		i.xxxPresenter.Create(timeOutCtx, nil, dErr.NewInternalServerError(err, ""))
 		return
 	}
 
-	i.xxxPresenter.Create(ctx, &presenter.PresenterCreateDto{
+	i.xxxPresenter.Create(timeOutCtx, &presenter.PresenterCreateDto{
 		Xxx: createdXxx.Props(),
 	}, nil)
 }

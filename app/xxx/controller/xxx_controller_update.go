@@ -16,21 +16,21 @@ func (c *XxxController) Update(ctx context.Context, port *UpdatePort) {
 	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Update(ctx, nil, err)
 		return
 	}
 
 	name, err := xxx.NewName(port.Name)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Update(ctx, nil, err)
 		return
 	}
 
 	number, err := xxx.NewNumber(int(port.Number))
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Update(ctx, nil, err)
 		return
 	}
 
@@ -40,5 +40,5 @@ func (c *XxxController) Update(ctx context.Context, port *UpdatePort) {
 		Number: number,
 	}
 
-	c.xxxUsecase.Update(ctx, dto)
+	c.xxxUsecase.Update(ctx, dto, nil)
 }

@@ -9,7 +9,12 @@ import (
 	"xxx/app/xxx/presenter"
 )
 
-func (i *xxxInteractor) Delete(ctx context.Context, dto *xxx.UsecaseDeleteDto) {
+func (i *xxxInteractor) Delete(ctx context.Context, dto *xxx.UsecaseDeleteDto, err error) {
+	if err != nil {
+		i.xxxPresenter.Delete(ctx, nil, err)
+		return
+	}
+
 	timeOutCtx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
@@ -23,11 +28,11 @@ func (i *xxxInteractor) Delete(ctx context.Context, dto *xxx.UsecaseDeleteDto) {
 	err = i.xxxRepository.Delete(timeOutCtx, &xxx.RepositoryDeleteItem{Id: dto.Id})
 
 	if err != nil {
-		i.xxxPresenter.Delete(ctx, nil, dErr.NewInternalServerError(err, ""))
+		i.xxxPresenter.Delete(timeOutCtx, nil, dErr.NewInternalServerError(err, ""))
 		return
 	}
 
-	i.xxxPresenter.Delete(ctx, &presenter.PresenterDeleteDto{
+	i.xxxPresenter.Delete(timeOutCtx, &presenter.PresenterDeleteDto{
 		Xxx: foundXxx,
 	}, nil)
 }

@@ -15,14 +15,14 @@ func (c *XxxController) Create(ctx context.Context, port *CreatePort) {
 	name, err := xxx.NewName(port.Name)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Create(ctx, nil, err)
 		return
 	}
 
 	number, err := xxx.NewNumber(port.Number)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Create(ctx, nil, err)
 		return
 	}
 
@@ -31,5 +31,5 @@ func (c *XxxController) Create(ctx context.Context, port *CreatePort) {
 		Number: number,
 	}
 
-	c.xxxUsecase.Create(ctx, dto)
+	c.xxxUsecase.Create(ctx, dto, nil)
 }

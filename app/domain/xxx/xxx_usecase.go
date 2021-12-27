@@ -6,11 +6,11 @@ import (
 )
 
 type Usecase interface {
-	Create(ctx context.Context, dto *UsecaseCreateDto)
-	Read(ctx context.Context, dto *UsecaseReadDto)
-	ReadAll(ctx context.Context, dto *UsecaseReadAllDto)
-	Update(ctx context.Context, dto *UsecaseUpdateDto)
-	Delete(ctx context.Context, dto *UsecaseDeleteDto)
+	Create(ctx context.Context, dto *UsecaseCreateDto, err error)
+	Read(ctx context.Context, dto *UsecaseReadDto, err error)
+	ReadAll(ctx context.Context, dto *UsecaseReadAllDto, err error)
+	Update(ctx context.Context, dto *UsecaseUpdateDto, err error)
+	Delete(ctx context.Context, dto *UsecaseDeleteDto, err error)
 }
 
 type UsecaseCreateDto struct {

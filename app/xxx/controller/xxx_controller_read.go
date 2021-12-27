@@ -14,7 +14,7 @@ func (c *XxxController) Read(ctx context.Context, port *ReadPort) {
 	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Read(ctx, nil, err)
 		return
 	}
 
@@ -22,5 +22,5 @@ func (c *XxxController) Read(ctx context.Context, port *ReadPort) {
 		Id: id,
 	}
 
-	c.xxxUsecase.Read(ctx, dto)
+	c.xxxUsecase.Read(ctx, dto, nil)
 }

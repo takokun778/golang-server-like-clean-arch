@@ -14,7 +14,7 @@ func (c *XxxController) Delete(ctx context.Context, port *DeletePort) {
 	id, err := xxx.ParseId(port.Id)
 
 	if err != nil {
-		// error
+		c.xxxUsecase.Delete(ctx, nil, err)
 		return
 	}
 
@@ -22,5 +22,5 @@ func (c *XxxController) Delete(ctx context.Context, port *DeletePort) {
 		Id: id,
 	}
 
-	c.xxxUsecase.Delete(ctx, dto)
+	c.xxxUsecase.Delete(ctx, dto, nil)
 }

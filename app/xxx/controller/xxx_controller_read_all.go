@@ -12,5 +12,5 @@ type ReadAllPort struct {
 func (c *XxxController) ReadAll(ctx context.Context, port *ReadAllPort) {
 	dto := &xxx.UsecaseReadAllDto{}
 
-	c.xxxUsecase.ReadAll(ctx, dto)
+	c.xxxUsecase.ReadAll(ctx, dto, nil)
 }
